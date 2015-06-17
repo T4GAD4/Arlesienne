@@ -10,6 +10,7 @@ class Accueil extends CI_Controller {
     
 	public function index()
 	{
+            echo 'test';
             $data = array();
             $data['user'] = $this->session->userdata('user');
             $data['nb_messages'] = $this->nb_messages;
