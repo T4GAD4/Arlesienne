@@ -4,13 +4,12 @@ class Accueil extends CI_Controller {
     
     /**
      * 
-     * Auteur : CAPI Aurélien
+     * Auteur : CAPI Aurélienà
      * 
      */
     
 	public function index()
 	{
-            echo 'test';
             $data = array();
             $data['user'] = $this->session->userdata('user');
             $data['nb_messages'] = $this->nb_messages;
