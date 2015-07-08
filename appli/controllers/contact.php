@@ -17,6 +17,10 @@ class Contact extends CI_Controller {
         $data['nb_messages'] = $this->nb_messages;
         $data['user'] = $this->session->userdata('user');
         $data['contacts'] = $this->contacts->getAll();
+        var_dump($data['contacts'][0]);
+        foreach ($contacts as $contact){
+            $contact->entreprises = 
+        }
         $data['entreprises'] = $this->entreprises->getAll();
         $data['menu'] = $this->load->view('template/menu', $data, true);
         $this->load->view('template/header');
@@ -58,7 +62,7 @@ class Contact extends CI_Controller {
             if($this->input->post('autoentrepreneur') != false){
                 // Créer entreprise au nom du contact!
                 $entreprise = new stdClass();
-                $entreprise->nom = $contact->nom .' '. $contact->prenom;
+                $entreprise->nom = '[AE] '.$contact->nom .' '. $contact->prenom;
                 $entreprise->siret = $this->input->post('siret');
                 $entreprise->id = $this->entreprises->creer($entreprise);
                 // Ajouter le poste entre les deux!
@@ -77,7 +81,7 @@ class Contact extends CI_Controller {
                 $poste_entreprises->poste = $liaison->poste;
                 $this->poste_entreprise->creer($poste_entreprises);
             }
-            
+            redirect(base_url().'contact');
         }
         $data = array();
         $data['nb_messages'] = $this->nb_messages;
