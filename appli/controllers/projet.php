@@ -5,7 +5,6 @@ class Projet extends CI_Controller {
     /**
      * 
      * Auteur : CAPI Aurélien
-     * Co-développeur : LEFEBVRE Anthony
      * 
      */
     
@@ -21,6 +20,7 @@ class Projet extends CI_Controller {
       $this->load->view('pages/projet/liste');
       $this->load->view('template/footer');
     }
+    
     public function ajouter() {
 
      $this->form_validation->set_rules('nom', '"Nom"', 'trim|required|encode_php_tags|xss_clean|is_unique[projet.nom]');
@@ -44,6 +44,8 @@ class Projet extends CI_Controller {
       
       if($result == true){
                 //Requete reussie! :)
+          //Il faut créer le dossier du projet  
+          
         redirect('projet/'.$data['projet']->id);
       }
     } 

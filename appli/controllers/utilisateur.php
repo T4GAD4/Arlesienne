@@ -113,7 +113,7 @@ class Utilisateur extends CI_Controller {
     public function modifyourself($id = "") {
         $data = array();$data['nb_messages'] = $this->nb_messages;
         $data['user'] = $this->session->userdata('user');
-        if($id == "" || $data['user'][0]->compte == "normal" || $id != $data['user'][0]->id){
+        if($id == "" || $id != $data['user'][0]->id){
             redirect($_SERVER['HTTP_REFERER']);
         }
         $data['utilisateur'] = $this->utilisateurs->getId($id)[0];
@@ -122,17 +122,13 @@ class Utilisateur extends CI_Controller {
         $this->form_validation->set_rules('prenom', '"Prénom"', 'trim|required|max_length[500]|encode_php_tags|xss_clean');
         $this->form_validation->set_rules('mail', '"Email"', 'trim|required|max_length[500]|valid_email|update_unique[utilisateur.mail.id.'.$data['utilisateur']->id.']|encode_php_tags|xss_clean');
         $this->form_validation->set_rules('pseudo', '"Pseudo"', 'trim|required|update_unique[utilisateur.pseudo.id.'.$data['utilisateur']->id.']|encode_php_tags|xss_clean');
-        $this->form_validation->set_rules('actif', '"Actif"', 'trim|encode_php_tags|xss_clean');
-        $this->form_validation->set_rules('compte', '"Type de compte"', 'trim|required|max_length[20]|encode_php_tags|xss_clean');
-
+        
         if ($this->form_validation->run()) {
             $utilisateur = new stdClass();
             $utilisateur->nom = $this->input->post('nom');
             $utilisateur->prenom = $this->input->post('prenom');
             $utilisateur->mail = $this->input->post('mail');
             $utilisateur->pseudo = $this->input->post('pseudo');
-            $utilisateur->actif = $this->input->post('actif');
-            $utilisateur->compte = $this->input->post('compte');
             $result = $this->utilisateurs->modify($utilisateur,$id);
             if($result == true){
                 //Requete reussie! :)
@@ -144,7 +140,7 @@ class Utilisateur extends CI_Controller {
                 $this->load->view('template/header');
                 $this->load->view('template/sidebar', $data);
                 echo '<h3 style="color:red">Une erreur s\'est produite lors de la modification de l\'utilisateur, Contactez le pôle informatique!</h3>';
-                $this->load->view('pages/utilisateur/modifier');
+                $this->load->view('pages/utilisateur/modify_yourself');
                 $this->load->view('template/footer');
                 //$this->output->enable_profiler(TRUE);
                 return false;
@@ -155,7 +151,7 @@ class Utilisateur extends CI_Controller {
         $data['menu'] = $this->load->view('template/menu', $data, true);
         $this->load->view('template/header');
         $this->load->view('template/sidebar', $data);
-        $this->load->view('pages/utilisateur/modifier');
+        $this->load->view('pages/utilisateur/modify_yourself');
         $this->load->view('template/footer');
         
     }
