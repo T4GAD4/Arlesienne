@@ -28,15 +28,8 @@
     </div>
 </div>
 
-<footer>
-    <center>
-        <h5 style="color:black">Application développé pour 
-            <a href="http://www.saint-roch-habitat.fr" target="_blank">Saint Roch Habitat</a>
-        </h5>
-    </center> 
-</footer>
 </body>
-<?php $style = json_decode($user[0]->style); ?>
+
 <script type="text/javascript" src="<?php echo js_url('vendors/CIConfig'); ?>"></script>
 <script type="text/javascript" src="<?php echo js_url('vendors/bootstrap.min'); ?>"></script>
 <script type="text/javascript" src="<?php echo js_url('vendors/modernizr'); ?>"></script>
@@ -51,37 +44,24 @@
 <script type="text/javascript" src="<?php echo js_url('vendors/notify'); ?>"></script>
 <script type="text/javascript" src="<?php echo js_url('vendors/chosen.min'); ?>"></script>
 <script type="text/javascript" src="<?php echo js_url('scriptAurelien'); ?>"></script>
+
+<?php 
+if(isset($user)){
+    $style = json_decode($user->style); 
+?>
 <script>
     $(document).ready(function () {
         $('.navbar-default').css({
             'background-color': "<?php echo $style->menu; ?>"
         });
-        $('body').css({
-            'color': "<?php echo $style->texte; ?>"
-        });
-        $('p').css({
+        $('legend').css({
             'color': "<?php echo $style->texte; ?>"
         });
         $('h1').css({
             'color': "<?php echo $style->texte; ?>"
         });
-        $('span:not(.not-color)').css({
+        $('label').css({
             'color': "<?php echo $style->texte; ?>"
-        });
-        $('h2').css({
-            'color': "<?php echo $style->texte; ?>"
-        });
-        $('h3').css({
-            'color': "<?php echo $style->texte; ?>"
-        });
-        $('h4').css({
-            'color': "<?php echo $style->texte; ?>"
-        });
-        $('h5').css({
-            'color': "<?php echo $style->texte; ?>"
-        });
-        $('body').css({
-            'background-color': "<?php echo $style->background; ?>"
         });
         $('#sidebar-wrapper').css({
             'background-color': "<?php echo $style->panneau_lateral; ?>"
@@ -96,4 +76,7 @@
         $("#wrapper").toggleClass("toggled");
     });
 </script>
+<?php
+}
+?>
 </html>

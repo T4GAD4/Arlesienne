@@ -4,7 +4,7 @@ class Accueil extends CI_Controller {
     
     /**
      * 
-     * Auteur : CAPI Aurélienà
+     * Auteur : CAPI Aurélien
      * 
      */
     

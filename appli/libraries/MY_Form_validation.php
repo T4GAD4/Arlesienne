@@ -1,6 +1,14 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class MY_Form_validation extends CI_Form_validation {
+    
+    public function __construct() {
+        parent::__construct();
+        
+        $this->_error_prefix = '<p class="perror"><i class="fa fa-exclamation-triangle"></i>';
+        $this->_error_sufix = '</p>';
+        $this->set_message('update_unique', 'La valeur existe déjà dans la base de donnée!');
+    }
  
     function update_unique($value, $params) {
  

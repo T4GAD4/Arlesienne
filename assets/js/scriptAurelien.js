@@ -1,5 +1,35 @@
 $(document).ready(function () {
     
+    //Function pour l'ajout de champs
+    $('.addchamps').click(function(){
+        $valeur = $('.champ').length + 1;
+        $('#boxchamps').append('<div id="champs'+$valeur+'" class="control-group champ"><label class="control-label col-sm-2 col-centered">Programme '+$valeur+'</label><div class="controls col-xs-12 col-sm-8 col-md-6 col-centered"><input type="text" class="col-sm-10 col-md-10 col-xs-10 form-control" name="champs'+$valeur+'"/></div></div>');    
+        $('#number_champs')[0].value = parseInt($valeur);
+        $('.removechamps').removeClass('hidden');
+    });
+    
+    //Function pour l'ajout de champs
+    $('.removechamps').click(function(){
+        $valeur = $('.champ').length;
+        $('#champs'+$valeur).remove();
+        if($valeur == 1){
+            $('.removechamps').addClass('hidden');
+        }
+        $valeur--;
+        $('#number_champs')[0].value = parseInt($valeur);
+    });
+    
+    //Fonction changement eye open/close
+    $('.eye').on('click',function(){
+        if($(this).attr('class').indexOf("open") != -1){
+            $(this).removeClass('glyphicon-eye-open');
+            $(this).addClass('glyphicon-eye-close');
+        }else{
+            $(this).removeClass('glyphicon-eye-close');
+            $(this).addClass('glyphicon-eye-open');
+        }
+    });
+    
     //Chosen
     $(".chosen-select").chosen();
     
@@ -72,48 +102,6 @@ $(document).ready(function () {
         progressBar.css({'width': complexity + '%'});
 
         $('#complexity').text(Math.round(complexity) + '%');
-    });
-
-
-    //On va vérifier si l'utilisateur est connecté ou non et va afficher la pop-up de connexion
-      $.post("/AJAX/connexion/test_connexion")
-            .success(function (data) {
-                data = JSON.parse(data);
-                if (data.result === false) {
-                    //utilisateur non connecté!
-                    //On afiche la pop-up
-                    $('.modal_connexion').modal('show');
-                }
-            });
-
-    //On va envoyer le formulaire pour se connecter
-    $('.submit_connexion').on('click', function () {
-        var password = $('.modal_connexion').find('input[type=password]').val();
-        var pseudo = $('.modal_connexion').find('input[type=text]').val();
-        var object = {"password": password, "pseudo": pseudo};
-          $.post("/AJAX/connexion/connex", object)
-                .success(function (data) {
-                    data = JSON.parse(data);
-                    switch (data.result) {
-                        case "identifiant" :
-                            $('.modal_error').html("Identifiant invalide!");
-                            break;
-                        case "ok" :
-                            $('.modal_error').html("");
-                            $('.modal_connexion').modal('hide');
-                            if (confirm('Vous êtes connectés! Voulez vous recharger la page?')) {
-                                window.location.reload();
-                            }
-                            ;
-                            break;
-                        case "mot de passe" :
-                            $('.modal_error').html("Mot de passe invalide!");
-                            break;
-                        default :
-                            $('.modal_error').html("");
-                            break;
-                    }
-                });
     });
 
     //Datetime-picker
@@ -307,6 +295,13 @@ function remove_widget(element){
             cb(matches);
         };
     };
+    
+    function explorer($url){
+        console.log($url);
+        var data = [];
+        data.url = $url;
+        $.post("/AJAX/explorer/ouvrir",data);
+    }
     
     
 

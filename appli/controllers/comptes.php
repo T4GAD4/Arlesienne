@@ -19,7 +19,7 @@ class Comptes extends CI_Controller {
     public function supprimer($id = 0){
         $data = array();$data['nb_messages'] = $this->nb_messages;
         $data['user'] = $this->session->userdata('user');
-        if($id == 0 || $data['user'][0]->compte != "associé"){
+        if($id == 0 || $data['user']->compte != "associé"){
             redirect($_SERVER['HTTP_REFERER']);
         }
         $result = $this->comptes_bancaires->delete($id);
@@ -32,7 +32,7 @@ class Comptes extends CI_Controller {
     public function details($id = "") {
         $data = array();$data['nb_messages'] = $this->nb_messages;
         $data['user'] = $this->session->userdata('user');
-        if($id == "" || $data['user'][0]->compte != "associé"){
+        if($id == "" || $data['user']->compte != "associé"){
             redirect($_SERVER['HTTP_REFERER']);
         }
         $data['compte'] = $this->comptes_bancaires->getCompte($id);
@@ -63,7 +63,7 @@ class Comptes extends CI_Controller {
         $data = array();$data['nb_messages'] = $this->nb_messages;
         $data['user'] = $this->session->userdata('user');
         $data['societe'] = $this->societes->getSociete($idSociete)[0];
-        if($idSociete == "" || $data['user'][0]->compte != "associé"){
+        if($idSociete == "" || $data['user']->compte != "associé"){
             redirect($_SERVER['HTTP_REFERER']);
         }
         
@@ -110,7 +110,7 @@ class Comptes extends CI_Controller {
     public function modifier($id = "") {
         $data = array();$data['nb_messages'] = $this->nb_messages;
         $data['user'] = $this->session->userdata('user');
-        if($id == "" || $data['user'][0]->compte != "associé"){
+        if($id == "" || $data['user']->compte != "associé"){
             redirect($_SERVER['HTTP_REFERER']);
         }
         $data['compte'] = $this->comptes_bancaires->getCompte($id)[0];

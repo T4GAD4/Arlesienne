@@ -13,9 +13,10 @@ class Message extends CI_Controller {
      */
     
     public function index(){
-        $data = array();$data['nb_messages'] = $this->nb_messages;
+        $data = array();
+        $data['nb_messages'] = $this->nb_messages;
         $data['user'] = $this->session->userdata('user');
-        $messages = $this->messages->getAll($data['user'][0]->id);
+        $messages = $this->messages->getAll($data['user']->id);
         $data['non_lus'] = array();
         $data['lus'] = array();
         foreach($messages as $message){

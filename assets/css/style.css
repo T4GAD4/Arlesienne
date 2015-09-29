@@ -7,7 +7,7 @@
 */
 body{
     margin :0px !important;
-    background: url('../images/logo_arlesienne_moyen.png') center fixed no-repeat;
+    background: url('../images/texture.png');
 }
 
 /*
@@ -45,7 +45,7 @@ body{
 height: auto;
 margin: 0 9px;
 border-left: 1px solid #f2f2f2;
-border-right: 1px solid #ffffff;
+border-right: 1px solid #eaeaeafff;
 }
 
 /*
@@ -109,6 +109,14 @@ border-right: 1px solid #ffffff;
     text-align:center;
 }
 
+.modal-body .form-group label{
+    color : black !important;
+}
+
+.modal-body .checkbox label{
+    color : black !important;
+}
+
 .date{
   padding-left: -15px !important;
   padding-right: -15px !important;
@@ -136,6 +144,7 @@ div.col-md-6{
     //box-shadow:#555 3px 3px 10px;
     margin-bottom: 15px;
     display: inline-block;
+    background-color: rgba(255,255,255,0.6);
 }
 
 .box h3{
@@ -181,8 +190,6 @@ div.col-md-6{
     margin-right:-4px;
 }
 
-
-
 .mouvements {
 	margin:0px;padding:0px;
 	width:100%;
@@ -213,7 +220,7 @@ div.col-md-6{
     border-bottom-left-radius:0px;
 }
 .mouvements tr:nth-child(odd){ background-color:#e5e5e5; }
-.mouvements tr:nth-child(even)    { background-color:#ffffff; }
+.mouvements tr:nth-child(even)    { background-color:#eaeaeafff; }
 .mouvements td{
 	vertical-align:middle;
 	border:1px solid #000000;
@@ -365,7 +372,11 @@ a{
 }
 
 .text-right{
-    text-align:right;
+    text-align:right !important;
+}
+
+.text-left{
+    text-align:left !important;
 }
 
 .not-color{
@@ -430,4 +441,263 @@ label.control-label
 
 .marginRight{
     margin-right: 20px;
+}
+
+.perror{
+    text-align : center;
+    padding : 5px;
+    margin : 15px;
+    color : #d5d5d5 !important;
+    font-weight : 600;
+}
+
+.perror i{
+    padding : 10px;
+}
+
+/*
+    LOGIN
+*/
+
+.admin-log-on p {
+  line-height: 18px;
+}
+.admin-log-on a.small {
+  display: block;
+  color: #eaeaea;
+  margin-top: 25px;
+}
+.admin-log-on a.small:hover, .admin-log-on a.small:focus {
+  color: #d5d5d5;
+}
+.admin-log-on .login-panel {
+  display: block;
+  width: 300px;
+  margin: 0 auto;
+  padding: 8% 0;
+}
+.admin-log-on .login-panel .panel-logo {
+  margin-bottom: 8%;
+}
+.admin-log-on .login-panel .panel-logo > img {
+  display: block;
+  margin: 0 auto;
+  max-height : 150px;
+}
+.admin-log-on .login-panel .panel-form .error, .admin-log-on .login-panel .panel-form .checked {
+  margin: 0 auto 25px auto;
+}
+.admin-log-on .login-panel .panel-form .checked {
+  color: green;
+}
+.admin-log-on .login-panel .panel-form .form-group {
+  margin-bottom: 25px;
+  margin-top: 25px;
+  text-align: center;
+}
+.admin-log-on .login-panel .panel-form .form-group label {
+  color: #d5d5d5;
+  padding : 5px;
+}
+.admin-log-on .login-panel .panel-form .form-group input {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  width : 80%;
+}
+.admin-log-on .login-panel .panel-form .form-group:last-child {
+  margin-bottom: 0 !important;
+  margin-top: 50px !important;
+}
+.admin-log-on .login-panel .panel-form .button {
+  width: 200px;
+  border-color: #eaeaea;
+  color: #eaeaea;
+  background-color:transparent;
+  padding : 10px;
+}
+.admin-log-on .login-panel .panel-form .button:hover, .admin-log-on .login-panel .panel-form .button:focus {
+  color: #d5d5d5;
+  border-color: #d5d5d5;
+}
+
+.fa-size{
+    font-size : 35px !important;
+    color:white;
+    text-align:center;
+}
+
+.fa-size:hover{
+    cursor : pointer;
+}
+
+/*
+*
+*  Nav tabs
+*
+*/
+.nav-tabs{
+    margin-top : 25px;
+    border : none;
+    text-align:center;
+}
+
+.nav-tabs li{
+    text-align:center;
+    float : none;
+    display:inline-block;
+    *display : inline;
+    zoom : 1;
+}
+
+.nav-tabs li:hover a{
+    color:black;
+}
+
+.nav-tabs li a{
+    background : transparent;
+    font-size : 10px;
+    border : solid 1px #e5e5e5;
+    border-radius : 0px;
+    color : white;
+    padding: 10px;
+}
+
+/*
+
+    Projet liste
+
+*/
+.projet{
+    border : solid 1px grey;
+    background : white;
+}
+
+.projet .projet-header{
+    padding : 15px;
+    text-align:center;
+}
+
+.projet .projet-header:after{
+    content: "";
+    display: block;
+    height: 1px;
+    width: 40%;
+    background: black;
+    text-align:center;
+    margin:0 auto;
+    margin-top: 10px;
+}
+
+.projet .projet-title a{
+    color : black;
+    font-size : 25px;
+    font-weight : 700;
+}
+
+.projet .projet-container{
+    padding-left : 50px;
+    padding-right : 50px;
+    color : black;
+}
+
+.projet .projet-body{
+    text-align:center;
+}
+
+.projet .projet-body .projet-aide{
+    margin-left : 5px;
+    padding : 0;
+}
+
+.projet .projet-body .projet-btn{
+    float : none;
+    display:inline;
+}
+
+.projet .projet-body .projet-btn a{
+    margin : 10px;
+    background : transparent;
+    color:black;
+    width : auto;
+    border-radius : 0px;
+    border : solid 1px black;
+    padding : 6px 12px;
+}
+
+.projet .projet-body .projet-btn a.active{
+    background : black !important;
+    color: white !important;
+}
+
+.projet .projet-body .projet-btn a:hover{
+    margin : 10px;
+    background : black;
+    color:white;
+    border-radius : 0px;
+    border : solid 1px black;
+}
+.projet .projet-body .small{
+    margin : 5px !important;
+    background : transparent !important;
+    color:black !important;
+    width : auto !important;
+    border-radius : 0px !important;
+    border : solid 1px black !important;
+    padding : 3px 6px !important;
+    font-size : 10px !important;
+    margin-top : 17.5px !important;
+}
+
+/*
+
+    Bouttons
+
+*/
+.btn{
+    border-radius : 0px;
+    background : transparent;
+}
+
+.btn-warning{
+    color:orange;
+}
+
+.btn-success{
+    color: #4CAE4C;
+}
+
+.btn-info{
+    color: #46B8DA;
+}
+
+.btn-primary{
+    color: #204D74;
+}
+
+.btn-default{
+    color: #ADADAD;
+}
+
+/*
+
+    Legend des formulaires
+
+*/
+legend{
+    padding : 15px;
+    text-align:center;
+    font-size: 25px;
+    border : none;
+}
+
+legend:after{
+    content: "";
+    display: block;
+    height: 1px;
+    width: 40%;
+    background: #eaeaea;
+    text-align:center;
+    margin:0 auto;
+    margin-top: 10px;
 }

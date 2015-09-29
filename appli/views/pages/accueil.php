@@ -4,7 +4,7 @@
           <div class="gridster" id="gridster-accueil">
                 <ul>
                     <?php 
-                    $interface = json_decode($user[0]->interface);
+                    $interface = json_decode($user->interface);
                     foreach($interface as $data){
                     ?>
                     <li onclick="window.open('<?php echo $data->url; ?>','<?php echo $data->target; ?>');" style="background:url('<?php echo $data->image; ?>') 100% 100% no-repeat;background-size:contain;background-position: center center;" data-row="<?php echo $data->row; ?>" data-col="<?php echo $data->col; ?>" data-sizex="<?php echo $data->size_x; ?>" data-sizey="<?php echo $data->size_y; ?>"></li>

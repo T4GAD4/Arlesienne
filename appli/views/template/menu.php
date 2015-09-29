@@ -15,9 +15,9 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Bienvenue <?php if($user){echo $user[0]->prenom;}else{echo 'inconnu';} ?><span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Bienvenue <?php if($user){echo $user->prenom;}else{echo 'inconnu';} ?><span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="<?php echo site_url('utilisateur/modifyourself/'.$user[0]->id); ?>">Modifier mon compte</a></li>
+                            <li><a href="<?php echo site_url('utilisateur/modifyourself/'.$user->id); ?>">Modifier mon compte</a></li>
                             <li><a href="<?php echo site_url('utilisateur/personnaliser'); ?>">Personnalisation de l'interface</a></li>
                             <li><a href="<?php echo site_url('message'); ?>"><span class="not-color">Mes messages <b class="badge text-right"><?php echo $nb_messages ?></b></span></a></li>
                             <li><a href="<?php echo site_url('deconnexion'); ?>">Déconnexion</a></li>
@@ -27,7 +27,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Mes raccourcis<span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <?php 
-                            $favoris = explode(",",$user[0]->favoris);
+                            $favoris = explode(",",$user->favoris);
                             foreach($favoris as $favori){ 
                                 if($favori != ""){?>
                             <li class="favoris"><span><i data-value="<?php echo $favori; ?>" class="glyphicon glyphicon-remove"></i><a href="<?php echo site_url($favori); ?>"/><?php echo $favori; ?></a></span></li>

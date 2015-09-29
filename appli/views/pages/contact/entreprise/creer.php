@@ -68,7 +68,7 @@
             <div class="control-group">
               <label class="control-label col-sm-2 col-centered" for="commentaire">Commentaire :</label>
               <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">                     
-                <textarea class="col-xs-12" id="commentaire" name="commentaire"></textarea>
+                <textarea class="col-xs-12 form-control" id="commentaire" name="commentaire"></textarea>
                 <?php echo form_error('commentaire'); ?>
               </div>
             </div>

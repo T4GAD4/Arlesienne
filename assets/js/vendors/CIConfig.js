@@ -1,4 +1,4 @@
-var base_url = "http://arlesienne.saint-roch-habitat.fr:8080/arlesienne/V3-aurelien";
+var base_url = "http://arlesienne.saint-roch-habitat.fr/arlesiennev3";
 
 var __POST = $.post;
 $.post = function(url, data, success, type)

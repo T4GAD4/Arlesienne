@@ -17,9 +17,17 @@ class Contact extends CI_Controller {
         $data['nb_messages'] = $this->nb_messages;
         $data['user'] = $this->session->userdata('user');
         $data['contacts'] = $this->contacts->getAll();
-        var_dump($data['contacts'][0]);
-        foreach ($contacts as $contact){
-            $contact->entreprises = 
+        foreach ($data['contacts'] as $contact){
+            $temp = array();
+            $poste_entreprises = $this->poste_entreprise->getId($contact->id);            
+            foreach($poste_entreprises as $poste_entreprise){
+                $entreprise = new stdClass();
+                $entreprise = $this->entreprises->getId($poste_entreprise->idEntreprise);
+                $entreprise[0]->poste = $poste_entreprise->poste;
+                $entreprise[0]->autoentreprise = $poste_entreprise->autoentreprise;
+                array_push($temp, $entreprise);
+            }
+            $contact->entreprises = $temp;
         }
         $data['entreprises'] = $this->entreprises->getAll();
         $data['menu'] = $this->load->view('template/menu', $data, true);
@@ -70,6 +78,7 @@ class Contact extends CI_Controller {
                 $poste_entreprise->idContact = $contact->id;
                 $poste_entreprise->idEntreprise = $entreprise->id;
                 $poste_entreprise->poste = "Gérant";
+                $poste_entreprise->autoentreprise = 1;
                 $this->poste_entreprise->creer($poste_entreprise);
             }            
             //Ensuite ajouter les postes dans l'entreprise
@@ -91,6 +100,7 @@ class Contact extends CI_Controller {
         $data['type_contact'] = explode(';',$this->configurations->getValeur('type_contact')[0]->valeur);
         $data['liste_diffusions'] = explode(';',$this->configurations->getValeur('liste_diffusion')[0]->valeur);
         $data['entreprises'] = $this->entreprises->getAll();
+        $data['checkbox'] = $this->input->post('autoentrepreneur');
         $this->load->view('template/header');
         $this->load->view('template/sidebar', $data);
         $this->load->view('pages/contact/creer');

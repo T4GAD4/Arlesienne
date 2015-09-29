@@ -1,6 +1,6 @@
 <div class="container">
     <br/>
-    <?php if ($user[0]->compte == "associé") { ?>
+    <?php if ($user->compte == "associé") { ?>
         <div class="row parametres">
             <input type="button" class="btn btn-warning pull-left" onclick="history.go(-1)" value="Retour"/>
             <a href="<?php echo site_url("/comptes/modifier/" . $compte[0]->id); ?>" class="btn btn-warning">Modifier le compte</a>      

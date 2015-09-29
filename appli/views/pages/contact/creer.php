@@ -148,3 +148,10 @@
     </div>
 </div>
 <script type="text/javascript" src="<?php echo js_url('contact'); ?>"></script>
+<?php if($checkbox == "on"){?>
+<script>
+    $(function(){
+        $('[name=autoentrepreneur]').bootstrapSwitch('state', true);
+    });    
+</script>
+<?php } ?>

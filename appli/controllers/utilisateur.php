@@ -8,7 +8,6 @@ class Utilisateur extends CI_Controller {
     /**
      * 
      * Auteur : CAPI Aurélien
-     * Co-développeur : LEFEBVRE Anthony
      * 
      */
     
@@ -25,17 +24,12 @@ class Utilisateur extends CI_Controller {
     }
     
     public function personnaliser(){
-        $data = array();$data['nb_messages'] = $this->nb_messages;
-        $data['user'] = '';
-        $id = $this->session->userdata('user')[0]->id;
-        $this->session->unset_userdata('user');
-        $user = $this->utilisateurs->getId($id);
-        $this->session->set_userdata('user',$user);
+        $data = array();
+        $data['nb_messages'] = $this->nb_messages;
         $data['user'] = $this->session->userdata('user');
         
         $this->form_validation->set_rules('menu', '"Couleur menu"', 'trim|encode_php_tags|xss_clean');
         $this->form_validation->set_rules('texte', '"Couleur texte"', 'trim|encode_php_tags|xss_clean');
-        $this->form_validation->set_rules('background', '"Couleur fond"', 'trim|encode_php_tags|xss_clean');
         $this->form_validation->set_rules('panneau', '"Couleur fond panneau lateral"', 'trim|encode_php_tags|xss_clean');
         $this->form_validation->set_rules('texte_panneau', '"Couleur fond du texte du panneau lateral"', 'trim|encode_php_tags|xss_clean');
         
@@ -43,12 +37,11 @@ class Utilisateur extends CI_Controller {
             $arr['style'] = array(
                 'menu' => $this->input->post('menu'),
                 'texte' => $this->input->post('texte'),
-                'background' => $this->input->post('background'),
                 'texte_panneau' => $this->input->post('texte_panneau'),
                 'panneau_lateral' => $this->input->post('panneau')
             );
             $perso = json_encode($arr['style']);
-            $this->utilisateurs->personnaliser($perso,$data['user'][0]->id);
+            $this->utilisateurs->personnaliser($perso,$data['user']->id);
             redirect('/utilisateur/personnaliser');
         }
         
@@ -62,7 +55,7 @@ class Utilisateur extends CI_Controller {
     public function modifier($id = "") {
         $data = array();$data['nb_messages'] = $this->nb_messages;
         $data['user'] = $this->session->userdata('user');
-        if($id == "" || $data['user'][0]->compte == "normal"){
+        if($id == "" || $data['user']->compte == "normal"){
             redirect($_SERVER['HTTP_REFERER']);
         }
         $data['utilisateur'] = $this->utilisateurs->getId($id)[0];
@@ -113,7 +106,7 @@ class Utilisateur extends CI_Controller {
     public function modifyourself($id = "") {
         $data = array();$data['nb_messages'] = $this->nb_messages;
         $data['user'] = $this->session->userdata('user');
-        if($id == "" || $id != $data['user'][0]->id){
+        if($id == "" || $id != $data['user']->id){
             redirect($_SERVER['HTTP_REFERER']);
         }
         $data['utilisateur'] = $this->utilisateurs->getId($id)[0];
@@ -159,7 +152,7 @@ class Utilisateur extends CI_Controller {
     public function ajouter() {
        $data = array();$data['nb_messages'] = $this->nb_messages;
        $data['user'] = $this->session->userdata('user');
-       if($data['user'][0]->compte == "normal"){
+       if($data['user']->compte == "normal"){
            redirect($_SERVER['HTTP_REFERER']);
        }
 
