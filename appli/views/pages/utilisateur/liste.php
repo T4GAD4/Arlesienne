@@ -2,7 +2,7 @@
     <br/>
     <div class="row parametres">
         <input type="button" class="btn btn-warning pull-left" onclick="history.go(-1)" value="Retour"/>
-    <?php if ($user[0]->compte == "developpeur") { ?>
+    <?php if ($user->compte == "developpeur") { ?>
             <a href="utilisateur/ajouter" class="btn btn-info">Créer un nouvel utilisateur</a>      
     <?php } ?>
     </div>
@@ -27,7 +27,7 @@
                     <p>Email : <span><?php echo $utilisateur->mail ?></span></p>
                     <p>Pseudo : <span><?php echo $utilisateur->pseudo; ?></span></p>
                     <p>Etat : <span><b><?php echo $utilisateur->actif; ?></b></span></p>
-                    <?php if ($user[0]->compte == "developpeur") { ?>
+                    <?php if ($user->compte == "developpeur") { ?>
                         <a href="<?php echo site_url('utilisateur/modifier/'.$utilisateur->id); ?>" class="btn btn-info pull-right">Modifier</a> 
                     <?php } ?>
                 </div>

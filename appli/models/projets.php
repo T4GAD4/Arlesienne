@@ -16,6 +16,39 @@ class Projets extends CI_Model {
         
         return $projets;
     }
+    
+    public function constructeur($id = 0){
+        
+        if($id == 0){
+            return false;
+        }
+        
+        $projet = $this->db->select('*')
+                             ->from($this->table)
+                             ->where('id',$id)
+                             ->limit(1)
+                             ->get()
+                             ->result();
+        
+        return $projet;
+    }
+    
+    public function getFromUrl($nom = ""){
+        
+        if($nom == ""){
+            return false;
+        }
+        
+        $projet = $this->db->select('*')
+                             ->from($this->table)
+                             ->where('url',$nom)
+                             ->limit(1)
+                             ->get()
+                             ->result();
+        
+        return $projet;
+    }
+    
     public function add($data = ''){
         
         if($data == ''){
@@ -25,6 +58,18 @@ class Projets extends CI_Model {
         $result = new stdClass();
         $result->query = $this->db->insert($this->table, $data);
         $result->id = $this->db->insert_id();
+        return $result;
+    }
+    
+    public function modify($data = '', $id = 0){
+        
+        if($data == '' || $id == 0){
+            return false;
+        }
+        
+        $result = new stdClass();
+        $result =    $this->db->where('id', $id);
+                            $this->db->update($this->table, $data); 
         return $result;
     }
     /*

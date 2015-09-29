@@ -1,5 +1,5 @@
 <?php
-$style = json_decode($user[0]->style);
+$style = json_decode($user->style);
 $page = "personnaliser";
 ?>
 
@@ -26,7 +26,7 @@ $page = "personnaliser";
                         <div class="gridster" id="gridster">
                             <ul>
                                 <?php
-                                $interface = json_decode($user[0]->interface);
+                                $interface = json_decode($user->interface);
                                 foreach ($interface as $data) {
                                     ?>
                                     <li draggable="true" data-target="<?php echo $data->target; ?>" data-image="<?php echo $data->image; ?>" style="background:url('<?php echo $data->image; ?>') 100% 100% no-repeat;background-size:contain;background-position: center center;" data-url="<?php echo $data->url; ?>" data-row="<?php echo $data->row; ?>" data-col="<?php echo $data->col; ?>" data-sizex="<?php echo $data->size_x; ?>" data-sizey="<?php echo $data->size_y; ?>"><i class="glyphicon glyphicon-trash remove" onclick="remove_widget(this)"></i></li>
@@ -80,7 +80,7 @@ $page = "personnaliser";
 
                     <!-- Text input-->
                     <div class="form-group paddingTop">
-                        <label class="col-md-3 control-label col-md-offset-1" for="menu">Couleur du menu :</label>  
+                        <label class="col-md-3 control-label col-md-offset-1" for="menu">Couleur du menu</label>  
                         <div class="col-md-6">
                             <input type="text" name='menu' value='<?php echo $style->menu; ?>' class="colorpicker form-control input-md" />
                             <?php echo form_error('menu'); ?>
@@ -89,7 +89,7 @@ $page = "personnaliser";
 
                     <!-- Text input-->
                     <div class="form-group paddingTop">
-                        <label class="col-md-3 control-label col-md-offset-1" for="texte">Couleur du texte :</label>  
+                        <label class="col-md-3 control-label col-md-offset-1" for="texte">Couleur du texte</label>  
                         <div class="col-md-6">
                             <input type="text" name='texte' value='<?php echo $style->texte; ?>' class="colorpicker form-control input-md" />
                             <?php echo form_error('texte'); ?>
@@ -98,16 +98,7 @@ $page = "personnaliser";
 
                     <!-- Text input-->
                     <div class="form-group paddingTop">
-                        <label class="col-md-3 control-label col-md-offset-1" for="background">Couleur du fond d'écran :</label>  
-                        <div class="col-md-6">
-                            <input type="text" name='background' value='<?php echo $style->background; ?>' class="colorpicker form-control input-md" />
-                            <?php echo form_error('background'); ?>
-                        </div>
-                    </div>
-
-                    <!-- Text input-->
-                    <div class="form-group paddingTop">
-                        <label class="col-md-3 control-label col-md-offset-1" for="panneau">Couleur du panneau lateral :</label>  
+                        <label class="col-md-3 control-label col-md-offset-1" for="panneau">Couleur du panneau lateral</label>  
                         <div class="col-md-6">
                             <input type="text" name='panneau' value='<?php echo $style->panneau; ?>' class="colorpicker form-control input-md" />
                             <?php echo form_error('panneau'); ?>
@@ -116,7 +107,7 @@ $page = "personnaliser";
 
                     <!-- Text input-->
                     <div class="form-group paddingTop">
-                        <label class="col-md-3 control-label col-md-offset-1" for="texte_panneau">Couleur du texte du panneau lateral :</label>  
+                        <label class="col-md-3 control-label col-md-offset-1" for="texte_panneau">Couleur du texte du panneau lateral</label>  
                         <div class="col-md-6">
                             <input type="text" name='texte_panneau' value='<?php echo $style->texte_panneau; ?>' class="colorpicker form-control input-md" />
                             <?php echo form_error('texte_panneau'); ?>
@@ -157,7 +148,6 @@ $page = "personnaliser";
             $('[name=menu]').val('#f8f8f8');
             $('[name=panneau]').val('#000000');
             $('[name=texte_panneau]').val('#adadad');
-            $('[name=background]').val('#ffffff');
             $('[name=texte]').val('#000000');
         });
         $('[name=menu]').colorpicker().on('changeColor.colorpicker', function (event) {
@@ -193,12 +183,6 @@ $page = "personnaliser";
             });
             $('h5').css({
                 'color': $(this).val()
-            });
-        });
-
-        $('[name=background]').colorpicker().on('changeColor.colorpicker', function (event) {
-            $('body').css({
-                'background-color': $(this).val()
             });
         });
     });

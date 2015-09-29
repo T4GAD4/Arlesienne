@@ -46,6 +46,10 @@
                                             foreach($data->champs_persos as $key => $value){
                                                 echo "<p>$key : $value</p>";
                                             }
+                                            echo '<br/><h4>Entreprises : </h4>';
+                                            foreach($contact->entreprises as $entreprise){
+                                                echo $entreprise[0]->poste.' de '.$entreprise[0]->nom.'<br/>';
+                                            }
                                         ?>
                                     </div> 
                                 </div>      

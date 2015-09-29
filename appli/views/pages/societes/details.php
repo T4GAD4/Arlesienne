@@ -1,6 +1,6 @@
 <div class="container">
     <br/>
-    <?php if($user[0]->compte == "associé"){?>
+    <?php if($user->compte == "associé"){?>
     <div class="row parametres">
         <input type="button" class="btn btn-warning pull-left" onclick="history.go(-1)" value="Retour"/>
         <a href="<?php echo site_url("/societe/modifier/".$societes[0]->id); ?>" class="btn btn-warning">Modifier la société</a>      
@@ -30,7 +30,7 @@
             <p>Type de compte : <span><?php echo $compte->type; ?></span></p>
             <p>Numéro de compte : <span><?php echo $compte->numero; ?></span></p>
             <p>Découvert autorisé de : <span><?php echo $compte->decouvert; ?> €</span></p>
-            <?php if($user[0]->compte == "associé"){?>
+            <?php if($user->compte == "associé"){?>
                 <a href="<?php echo site_url('comptes/details/'.$compte->id); ?>" class="btn btn-default">Détails</a>
             <?php } ?>
         </div>

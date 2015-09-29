@@ -14,7 +14,10 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://arlesienne.saint-roch-habitat.fr:8080/arlesienne/V3-aurelien/';
+
+$config['server_url'] = "/home/srh/";
+
+$config['base_url']	= 'http://arlesienne.saint-roch-habitat.fr/arlesiennev3/';
 
 /*
 |--------------------------------------------------------------------------

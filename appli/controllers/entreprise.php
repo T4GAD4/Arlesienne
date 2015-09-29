@@ -142,7 +142,7 @@ class Entreprise extends CI_Controller {
         $data['entreprises'] = $this->entreprises->getAll();
         $this->load->view('template/header');
         $this->load->view('template/sidebar', $data);
-        $this->load->view('pages/contact/modifier'); 
+        $this->load->view('pages/contact/entreprise/modifier'); 
         $this->load->view('template/footer');
     }
     

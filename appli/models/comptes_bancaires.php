@@ -7,6 +7,21 @@ class Comptes_bancaires extends CI_Model {
 
     private $table = 'comptes_bancaires';
     
+    public function constructeur($id = 0){
+        
+        if($id == 0){
+            return false;
+        }
+        
+        $compte = $this->db->select('*')
+                                  ->from($this->table)
+                                  ->where('id',$id)
+                                  ->limit(1)
+                                  ->get()
+                                  ->result();
+        return $compte;
+    }
+    
     public function creer($data = ''){
         
         if($data == ''){

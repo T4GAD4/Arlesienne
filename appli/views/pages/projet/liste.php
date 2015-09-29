@@ -2,37 +2,79 @@
     <br/>
     <div class="row">
         <input type="button" class="btn btn-warning pull-left" onclick="history.go(-1)" value="Retour"/>
-        <a href="projet/ajouter" class="btn btn-info pull-right">Créer un nouveau projet</a>      
+        <a href="projet/ajouter" class="btn btn-success pull-right">Créer un nouveau projet</a>      
     </div>
     <input id="search" type="text" class="input-md form-control" placeholder="Rechercher..."/>
-    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    <ul class="nav nav-tabs" role="tablist">
         <?php
-        $x = 0;
-        foreach ($projets as $projet) {
-        $x++;
-        ?>
-        <div class="panel panel-default searchable" data-search="<?php echo $projet->nom ?>">
-            <div class="panel-heading" role="tab" id="headingOne">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $x; ?>" aria-expanded="false" aria-controls="collapseOne">
-                        <?php echo $projet->nom; ?>
-                    </a>
-                </h4>
-            </div>
-            <div id="collapse<?php echo $x; ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                <div class="panel-body">
-                    <p>Budget : <span><?php echo $projet->budget; ?>€</span></p>
-                    <p>Etat : <span><?php echo $projet->etat; ?></span></p>
-                    <p>Adresse : <span><?php echo $projet->adresse; ?></span></p>
-                    <p>Code postal : <span><?php echo $projet->cp; ?></span></p>
-                    <p>Ville : <span><?php echo $projet->ville; ?></span></p>
-                    <p>Commentaire : <span><?php echo $projet->commentaire; ?></span></p>
-                    <a href="" class="btn btn-info pull-right">Modifier</a>
-                </div>
-            </div>
-        </div>
-        <?php
+        $x = "active";
+        foreach ($etats as $etat) {
+            ?>
+        <li class="<?php echo $x; ?>" role="presentation"><a href="#<?php echo slugify($etat); ?>" aria-controls="<?php echo $etat; ?>" role="tab" data-toggle="tab"><?php echo $etat; ?></a></li>
+            <?php
+            $x = "";
         }
         ?>
+    </ul>
+    <div class="tab-content">
+        <?php
+        $x = "active in";
+        foreach ($etats as $etat) {
+            ?>
+        <div role="tabpanel" class="tab-pane fade <?php echo $x; ?>" id="<?php echo slugify($etat); ?>">
+            <div class="projets">
+                    <?php
+                    $x = 0;
+                    foreach ($projets as $projet) {
+                        if ($projet->etat == $etat) {
+                            $x++;
+                            ?>
+                            <div class="projet searchable" data-search="<?php echo $projet->nom ?>">
+                                <div class="projet-header">
+                                    <h4 class="projet-title">
+                                        <a href="<?php echo base_url("projet/$projet->url"); ?>">
+                                            <?php echo $projet->nom; ?>
+                                        </a>
+                                    </h4>               
+                                </div>
+                                <div class="projet-body">
+                                    <p><span><?php echo $projet->adresse; ?> <?php echo $projet->cp; ?> <?php echo $projet->ville; ?></span></p>
+                                    <div class="row projet-aide">
+                                        <div class="col-md-12 text-left">
+                                            Changer l'état du projet :
+                                        </div>
+                                    </div>
+                                    <div class="row projet-btn">
+                                        <div class="col-md-10 text-left">
+                                            <a href="<?php if($etat != "Projets en cours"){echo base_url("projet/en_cours/$projet->id");} ?>" class="btn small text-left <?php if($etat == "Projets en cours"){ echo "active"; } ?>">Projet en cours</a>
+                                            <a href="<?php if($etat != "Projets terminés"){echo base_url("projet/termine/$projet->id");} ?>" class="btn small text-left <?php if($etat == "Projets terminés"){ echo "active"; } ?>">Projet terminé</a>
+                                            <a href="<?php if($etat != "Projets abandonnés"){echo base_url("projet/abandonne/$projet->id");} ?>" class="btn small text-left <?php if($etat == "Projets abandonnés"){ echo "active"; } ?>">Projet abandonné</a>
+                                            <a href="<?php if($etat != "Projets à l étude"){echo base_url("projet/etude/$projet->id");} ?>" class="btn small text-left <?php if($etat == "Projets à l étude"){ echo "active"; } ?>">Projet à l'étude</a>
+                                        </div>
+                                        <div class="col-md-2 text-right">
+                                            <a href="<?php echo base_url("projet/modifier/$projet->url"); ?>" class="btn text-right">Modifier</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                        $x="";
+        }
+                    ?>
+                </div>
+        </div>
+        <?php 
+        $x = "";
+        } 
+        ?>
     </div>
+
+
+
+
+
+
+
+
 </div>
