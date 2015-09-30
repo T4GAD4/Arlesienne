@@ -2,7 +2,7 @@
     <br/>
     <div class="row">
         <input type="button" class="btn btn-warning pull-left" onclick="history.go(-1)" value="Retour"/>
-        <a href="projet/ajouter" class="btn btn-success pull-right">Créer un nouveau projet</a>      
+        <a href="<?php echo base_url().'projet/ajouter'; ?>" class="btn btn-success pull-right">Créer un nouveau projet</a>      
     </div>
     <input id="search" type="text" class="input-md form-control" placeholder="Rechercher..."/>
     <ul class="nav nav-tabs" role="tablist">
@@ -32,13 +32,26 @@
                             <div class="projet searchable" data-search="<?php echo $projet->nom ?>">
                                 <div class="projet-header">
                                     <h4 class="projet-title">
-                                        <a href="<?php echo base_url("projet/$projet->url"); ?>">
+                                        <a href="<?php echo base_url("projet/detail/$projet->url"); ?>">
                                             <?php echo $projet->nom; ?>
                                         </a>
                                     </h4>               
                                 </div>
                                 <div class="projet-body">
-                                    <p><span><?php echo $projet->adresse; ?> <?php echo $projet->cp; ?> <?php echo $projet->ville; ?></span></p>
+                                    <p><span style="font-size : 18px;"><?php echo $projet->adresse; ?> <?php echo $projet->cp; ?> <?php echo $projet->ville; ?>&nbsp;&nbsp;&nbsp;<a href="http://www.maps.google.fr/maps?f=q&hl=fr&q=<?php echo str_replace(' ','+',$projet->adresse); ?>+<?php echo str_replace(' ','+',$projet->cp); ?>+<?php echo str_replace(' ','+',$projet->ville); ?>" target="_blank"><i class="fa fa-location-arrow"></i></a></span></p>
+                                    <div class="row projet-details">
+                                        <div class="col-md-6 detail-left">
+                                            <p>Budget global : <?php echo number_format($projet->budget,2,'.',' '); ?> €</p>
+                                            <p>Marchés signés : </p>
+                                            <p>Factures reçues : </p>
+                                            <p>Factures payés : </p>
+                                        </div>
+                                        <div class="col-md-6 detail-right">
+                                            <p>Lots totaux : </p>
+                                            <p>Lots sous compromis : </p>
+                                            <p>Lots actés : </p>
+                                        </div>
+                                    </div>
                                     <div class="row projet-aide">
                                         <div class="col-md-12 text-left">
                                             Changer l'état du projet :

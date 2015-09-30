@@ -531,6 +531,9 @@ label.control-label
     cursor : pointer;
 }
 
+.fa-location-arrow{
+    font-size:18px !important;
+}
 /*
 *
 *  Nav tabs
@@ -544,6 +547,7 @@ label.control-label
 
 .nav-tabs li{
     text-align:center;
+    text-transform : uppercase;
     float : none;
     display:inline-block;
     *display : inline;
@@ -568,9 +572,11 @@ label.control-label
     Projet liste
 
 */
+
 .projet{
     border : solid 1px grey;
     background : white;
+    margin-bottom:15px;
 }
 
 .projet .projet-header{
@@ -593,6 +599,7 @@ label.control-label
     color : black;
     font-size : 25px;
     font-weight : 700;
+    text-decoration: none;
 }
 
 .projet .projet-container{
@@ -603,6 +610,16 @@ label.control-label
 
 .projet .projet-body{
     text-align:center;
+}
+
+.projet .projet-body .projet-details .detail-left{
+    text-align:right;
+    padding-right : 30px;
+}
+
+.projet .projet-body .projet-details .detail-right{
+    text-align:left;
+    padding-left : 30px;
 }
 
 .projet .projet-body .projet-aide{
@@ -691,7 +708,7 @@ legend{
     border : none;
 }
 
-legend:after{
+legend:after, .hr:after{
     content: "";
     display: block;
     height: 1px;
@@ -700,4 +717,79 @@ legend:after{
     text-align:center;
     margin:0 auto;
     margin-top: 10px;
+}
+
+/*
+
+    Détail d'un projet
+
+*/
+.detail-projet h1{
+    text-align:center;
+}
+
+.nav-tabs span{
+    color : #eaeaea;
+    margin : 20px;
+}
+
+h3{
+    text-align:center;
+    color: #eaeaea;
+}
+
+/*
+
+    Marches
+
+*/
+.marche{
+    background-color : #eaeaea;
+    padding : 10px;
+    margin : 20px;
+}
+
+.marche h4{
+    font-weight : 900;
+    text-decoration : underline;
+}
+
+.marche h4 a{
+    color : black;
+    text-decoration : none;
+}
+
+.marche .col-md-6{
+    padding : 10px;
+}
+
+.marche-content{
+    padding : 0;
+}
+
+.marche-footer{
+    padding : 0;
+}
+
+.marche-footer a{
+    margin : 10px;
+    background : transparent;
+    color:black;
+    width : auto;
+    border-radius : 0px;
+    border : solid 1px black;
+    padding : 6px 12px;
+}
+
+.marche-footer a.active{
+    background : black !important;
+    color: white !important;
+}
+
+.marche-footer a:hover{
+    margin : 10px;
+    background : black;
+    color:white;
+    border-radius : 0px;
+    border : solid 1px black;
 }
