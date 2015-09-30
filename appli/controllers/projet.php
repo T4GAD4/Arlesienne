@@ -1,5 +1,5 @@
 <?php
-
+header('Content-Type: text/html; charset=utf-8');
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
@@ -10,7 +10,9 @@ class Projet extends CI_Controller {
      * Auteur : CAPI Aurélien
      * 
      */
-    public function index() {
+    
+    public function index($nom = "") {
+        //On est sur la liste des projets
         $data = array();
         $data['nb_messages'] = $this->nb_messages;
         $data['user'] = $this->session->userdata('user');
@@ -20,6 +22,26 @@ class Projet extends CI_Controller {
         $this->load->view('template/header');
         $this->load->view('template/sidebar', $data);
         $this->load->view('pages/projet/liste');
+        $this->load->view('template/footer');
+    }
+    
+    public function detail($nom = "") {
+        if($nom == ""){
+            redirect($_SERVER['HTTP_REFERER']);
+        }
+        $data = array();
+        $data['nb_messages'] = $this->nb_messages;
+        $data['user'] = $this->session->userdata('user');
+        $data['projet'] = $this->projets->getFromUrl($nom)[0]; 
+        $data['programmes'] = $this->programmes->getFromProjet($data['projet']->id);
+        $data['marches_cat'] = $this->marches->getCategorie();
+        foreach($data['programmes'] as $programme){
+            $programme->marches = $this->marches->getFromProgramme($programme->idProgramme);       
+        }
+        $data['menu'] = $this->load->view('template/menu', $data, true);
+        $this->load->view('template/header');
+        $this->load->view('template/sidebar', $data);
+        $this->load->view('pages/projet/detail');
         $this->load->view('template/footer');
     }
 
@@ -74,7 +96,10 @@ class Projet extends CI_Controller {
                             $programme->nom = slugify($this->input->post("champs$i"));
                             $programme->idProjet = $result->id;
                             //On ajoute le programme en BDD
-                            $this->programmes->add($programme);
+                            $resultat = $this->programmes->add($programme);
+                            
+                            //On récupére id programme enregistré pour créer ses marchés
+                            creer_marches($resultat);
                             //On crée le dossier du programme
                             shell_exec('cd "/home/srh/serveur/' . $projet->etat . '/' . $projet->url . '";'
                                     . 'mkdir ' . $programme->nom . ';');
@@ -86,8 +111,11 @@ class Projet extends CI_Controller {
                     $programme = new stdClass();
                     $programme->nom = slugify("Général");
                     $programme->idProjet = $result->id;
-                    //On ajoute le programme en BDD
-                    $this->programmes->add($programme);
+                    $result = $this->programmes->add($programme);
+
+                    //On récupére id programme enregistré pour créer ses marchés
+                    creer_marches($result);
+
                     //On crée le dossier du programme
                     shell_exec('cd "/home/srh/serveur/' . $projet->etat . '/' . $projet->url . '";'
                             . 'mkdir ' . $programme->nom . ';');
@@ -114,10 +142,7 @@ class Projet extends CI_Controller {
             redirect($_SERVER['HTTP_REFERER']);
         }
         $projet = $this->projets->constructeur($id)[0];
-        $source = "/home/srh/serveur/$projet->etat/$projet->url/*";
-        $destination = "/home/srh/serveur/Projets terminés";
-        shell_exec("cp -R '$source'/* '$destination'");
-        shell_exec("rm -rf '$source'");
+        shell_exec('mv /home/srh/serveur/'.str_replace(' ','\ ',$projet->etat).'/'.$projet->url.' /home/srh/serveur/Projets\ terminés/');
         $projet->etat = "Projets terminés";
         $this->projets->modify($projet, $projet->id);
         redirect($_SERVER['HTTP_REFERER']);
@@ -128,10 +153,7 @@ class Projet extends CI_Controller {
             redirect($_SERVER['HTTP_REFERER']);
         }
         $projet = $this->projets->constructeur($id)[0];
-        $source = "/home/srh/serveur/$projet->etat/$projet->url";
-        $destination = "/home/srh/serveur/Projets abandonnés";
-        shell_exec("cp -R '$source'/* '$destination'");
-        shell_exec("rm -rf '$source'");
+        shell_exec('mv /home/srh/serveur/'.str_replace(' ','\ ',$projet->etat).'/'.$projet->url.' /home/srh/serveur/Projets\ abandonnés/');
         $projet->etat = "Projets abandonnés";
         $this->projets->modify($projet, $projet->id);
         redirect($_SERVER['HTTP_REFERER']);
@@ -142,10 +164,7 @@ class Projet extends CI_Controller {
             redirect($_SERVER['HTTP_REFERER']);
         }
         $projet = $this->projets->constructeur($id)[0];
-        $source = "/home/srh/serveur/$projet->etat/$projet->url";
-        $destination = "/home/srh/serveur/Projets à l étude";
-        shell_exec("cp -R '$source'/* '$destination'");
-        shell_exec("rm -rf '$source'");
+        shell_exec('mv /home/srh/serveur/'.str_replace(' ','\ ',$projet->etat).'/'.$projet->url.' /home/srh/serveur/Projets\ à\ l\ étude/');
         $projet->etat = "Projets à l étude";
         $this->projets->modify($projet, $projet->id);
         redirect($_SERVER['HTTP_REFERER']);
@@ -156,10 +175,7 @@ class Projet extends CI_Controller {
             redirect($_SERVER['HTTP_REFERER']);
         }
         $projet = $this->projets->constructeur($id)[0];
-        $source = "/home/srh/serveur/$projet->etat/$projet->url";
-        $destination = "/home/srh/serveur/Projets en cours";
-        shell_exec("cp -R ''$source'/* '$destination'");
-        shell_exec("rm -rf '$source'");
+        shell_exec('mv /home/srh/serveur/'.str_replace(' ','\ ',$projet->etat).'/'.$projet->url.' /home/srh/serveur/Projets\ en\ cours/');
         $projet->etat = "Projets en cours";
         $this->projets->modify($projet, $projet->id);
         redirect($_SERVER['HTTP_REFERER']);
@@ -217,7 +233,10 @@ class Projet extends CI_Controller {
                             $programme->nom = slugify($this->input->post("champs$i"));
                             $programme->idProjet = $data['old_projet']->id;
                             //On ajoute le programme en BDD
-                            $this->programmes->add($programme);
+                            $result = $this->programmes->add($programme);
+                            
+                            //On récupére id programme enregistré pour créer ses marchés
+                            creer_marches($result);
                             //On crée le dossier du programme
                             shell_exec('cd "/home/srh/serveur/' . $data['old_projet']->etat . '/' . $projet->url . '";'
                                     . 'mkdir ' . $programme->nom . ';');
@@ -227,7 +246,7 @@ class Projet extends CI_Controller {
                     }
                 }
                 
-                //redirect(base_url()."projet/modifier/".$projet->url);
+                redirect(base_url()."projet/");
             }
         }
         $data['projet'] = $this->projets->getFromUrl($nom)[0];

@@ -64,7 +64,7 @@ $autoload['libraries'] = array('database','session','form_validation','rechargem
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url','file','assets','date','email','breadcrumb','ajax');
+$autoload['helper'] = array('url','file','assets','date','email','breadcrumb','ajax','marches');
 
 
 /*
@@ -109,7 +109,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('contacts','programmes','utilisateurs','societes','comptes_bancaires','mouvements','entreprises','configurations','poste_entreprise', 'projets');
+$autoload['model'] = array('contacts','programmes','utilisateurs','societes','comptes_bancaires','mouvements','marches','entreprises','configurations','poste_entreprise', 'projets');
 
 
 /* End of file autoload.php */

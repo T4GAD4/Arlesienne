@@ -3,9 +3,9 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Programmes extends CI_Model {
+class Marches extends CI_Model {
 
-    private $table = 'programme';
+    private $table = 'marches';
     
     public function add($data = ''){
         
@@ -18,20 +18,32 @@ class Programmes extends CI_Model {
         return $this->db->insert_id();
     }
     
-    public function getFromProjet($id = 0){
+    public function getFromProgramme($id = 0){
         
         if($id == 0){
             return false;
         }
         
-        $projet = $this->db->select('*')
+        $marches = $this->db->select('*')
                              ->from($this->table)
-                             ->where('idProjet',$id)
+                             ->where('idProgramme',$id)
                              ->order_by('nom ASC')
                              ->get()
                              ->result();
         
-        return $projet;
+        return $marches;
     }
     
+    public function getCategorie(){
+        
+        
+        $categories = $this->db->select('categorie')
+                             ->from($this->table)
+                             ->group_by('categorie')
+                             ->order_by('categorie DESC')
+                             ->get()
+                             ->result();
+        
+        return $categories;
+    }
 }
