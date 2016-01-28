@@ -75,7 +75,6 @@ class Utilisateur extends CI_Controller {
             $utilisateur->pseudo = $this->input->post('pseudo');
             $utilisateur->actif = $this->input->post('actif');
             $utilisateur->compte = $this->input->post('compte');
-            $utilisateur->interface = '[{"col":4,"row":1,"size_x":1,"size_y":1,"url":"http://arlesienne.saint-roch-habitat.fr:8080/arlesienne/V3-aurelien/contact","image":"https://www.udemy.com/files/images/article/2013-08-26_09-42-56__Contacts_iOS7_App_Icon_Rounded.png","target":"_self"},{"col":3,"row":1,"size_x":1,"size_y":1,"url":"http://arlesienne.saint-roch-habitat.fr:8080/arlesienne/V3-aurelien/message","image":"http://arlesienne.saint-roch-habitat.fr:8080/arlesienne/V3-aurelien/assets/images/accueil/messages.png","target":"_self"},{"col":1,"row":1,"size_x":1,"size_y":1,"url":"http://arlesienne.saint-roch-habitat.fr:8080/arlesienne/V3-aurelien/projet","image":"http://erambert.me/assets/img/works/vlc-icon-ios7.png","target":"_self"},{"col":6,"row":1,"size_x":1,"size_y":1,"url":"http://arlesienne.saint-roch-habitat.fr:8080/arlesienne/V3-aurelien/utilisateur/personnaliser","image":"https://cdn2.iconfinder.com/data/icons/apple-ios7-icons/118/settings_ios7_ios_7.png","target":"_self"},{"col":5,"row":1,"size_x":1,"size_y":1,"url":"http://arlesienne.saint-roch-habitat.fr:8080/arlesienne/V3-aurelien/utilisateur/modifyourself/","image":"http://arlesienne.saint-roch-habitat.fr:8080/arlesienne/V3-aurelien/assets/images/accueil/utilisateur.png","target":"_self"},{"col":2,"row":1,"size_x":1,"size_y":1,"url":"http://arlesienne.saint-roch-habitat.fr:8080/arlesienne/V3-aurelien/societe","image":"http://arlesienne.saint-roch-habitat.fr:8080/arlesienne/V3-aurelien/assets/images/accueil/societe.png","target":"_self"}]';
             $result = $this->utilisateurs->modify($utilisateur,$id);
             if($result == true){
                 //Requete reussie! :)
@@ -174,6 +173,7 @@ class Utilisateur extends CI_Controller {
            $utilisateur->password = hash('sha256',$this->input->post('password'));
            $utilisateur->actif = $this->input->post('actif');
            $utilisateur->compte = $this->input->post('compte');
+           $utilisateur->interface = '[{"col":3,"row":1,"size_x":1,"size_y":1,"url":"http://arlesienne.saint-roch-habitat.fr/arlesiennev3/contact","image":"http://arlesienne.saint-roch-habitat.fr/arlesiennev3/assets/images/menu/contacts.png","target":"_self"},{"col":5,"row":1,"size_x":1,"size_y":1,"url":"http://arlesienne.saint-roch-habitat.fr/arlesiennev3/message","image":"http://arlesienne.saint-roch-habitat.fr/arlesiennev3/assets/images/menu/message.png","target":"_self"},{"col":1,"row":1,"size_x":1,"size_y":1,"url":"http://arlesienne.saint-roch-habitat.fr/arlesiennev3/projet","image":"http://arlesienne.saint-roch-habitat.fr/arlesiennev3/assets/images/menu/projets.png","target":"_self"},{"col":3,"row":2,"size_x":1,"size_y":1,"url":"http://arlesienne.saint-roch-habitat.fr/arlesiennev3/utilisateur/personnaliser","image":"http://arlesienne.saint-roch-habitat.fr/arlesiennev3/assets/images/menu/reglages.png","target":"_self"},{"col":4,"row":1,"size_x":1,"size_y":1,"url":"http://arlesienne.saint-roch-habitat.fr/arlesiennev3/societe","image":"http://arlesienne.saint-roch-habitat.fr/arlesiennev3/assets/images/menu/societe.png","target":"_self"},{"col":2,"row":1,"size_x":1,"size_y":1,"url":"http://arlesienne.saint-roch-habitat.fr/arlesiennev3/facturation","image":"http://arlesienne.saint-roch-habitat.fr/arlesiennev3/assets/images/menu/facture.png","target":"_self"}]';
            $result = $this->utilisateurs->add($utilisateur);
            if($result == true){
                //Requete reussie! :)
@@ -205,3 +205,4 @@ class Utilisateur extends CI_Controller {
 
 /* End of file welcome.php */
 /* Location: ./application/controllers/welcome.php */
+

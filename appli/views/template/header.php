@@ -24,7 +24,13 @@
         
 
         <script type="text/javascript" src="<?php echo js_url('vendors/jquery-1.11.2.min'); ?>"></script>
+        <script type="text/javascript" src="<?php echo js_url('vendors/cheet'); ?>"></script>
+        <script type="text/javascript" src="<?php echo js_url('konami'); ?>"></script>
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         
     </head>
     <body>
+        
+        <div class="konami hidden" onclick="konami()">
+            
+        </div>

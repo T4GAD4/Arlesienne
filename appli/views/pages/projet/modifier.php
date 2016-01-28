@@ -85,7 +85,7 @@
                 </div>
             </div>
             <!-- Text input-->
-            <div class="control-group">
+            <!--<div class="control-group">
                 <label class="control-label col-sm-2 col-centered">Ajouter un programme</label>
                 <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">                     
                     <i class=" col-xs-12 fa fa-plus-circle fa-size addchamps"></i>
@@ -111,7 +111,7 @@
                 
             </div>
             <input type="hidden" name="number_champs" id="number_champs" value="<?php echo $nb_programmes; ?>"/>
-            <input type="hidden" name="old_number_champs" id="number_champs" value="<?php echo $nb_programmes; ?>"/>
+            <input type="hidden" name="old_number_champs" id="number_champs" value="<?php echo $nb_programmes; ?>"/>-->
             <div class="col-xs-12">
                 <input type="button" class="btn btn-warning pull-left" onclick="history.go(-1)" value="Retour"/>
                 <input type="submit" class="btn btn-info pull-right" id="form_contact" value="Modifier"/>

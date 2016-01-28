@@ -3,7 +3,13 @@
     <div class="row parametres">
         <input type="button" class="btn btn-warning pull-left" onclick="history.go(-1)" value="Retour"/>
     </div>
-    <input id="search" type="text" class="input-md form-control" placeholder="Rechercher..."/>
+    <div class="row noPadding">
+        <div class="module__tools">
+            <div class="custom-search">
+                <input class="custom-search-input" type="search" id="search" placeholder="Rechercher...">
+            </div>
+        </div>
+    </div>
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#nonlus" aria-controls="nonlus" role="tab" data-toggle="tab">Messages non lus</a></li>
         <li role="presentation"><a href="#lus" aria-controls="profile" role="tab" data-toggle="tab">Messages lus</a></li>

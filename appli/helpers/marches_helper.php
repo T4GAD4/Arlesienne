@@ -16,7 +16,7 @@ if (!function_exists('creer_marches')) {
             foreach($json as $categorie => $marches){
                 foreach($marches as $marche){
                     $obj = new stdClass();
-                    $obj->idProgramme = $id;
+                    $obj->idProjet = $id;
                     $obj->categorie = $categorie;
                     $obj->nom = $marche;
                     $CI->marches->add($obj);
@@ -28,7 +28,18 @@ if (!function_exists('creer_marches')) {
 
 if (!function_exists('calc_tva')) {
 
-    function calc_tva($montant,$tva) {
-        return number_format(intval($montant)+((intval($montant)*intval($tva))/100),2,"."," ");
+    function calc_tva($montant,$tva,$format) {
+        if($format == true){
+            return format_number(intval($montant)+((intval($montant)*intval($tva))/100));
+        }else{
+            return intval($montant)+((intval($montant)*intval($tva))/100);
+        }
+    }
+}
+
+if (!function_exists('format_number')) {
+
+    function format_number($montant) {
+        return number_format($montant,2,"."," ");
     }
 }

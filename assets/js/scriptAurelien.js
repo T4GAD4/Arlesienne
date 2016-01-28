@@ -1,5 +1,23 @@
 $(document).ready(function () {
     
+    $('#societeliste').change(charge_compte);
+    
+    //Bootstrap switch
+    $("[name=bootstrapswitch-devise]").on('switchChange.bootstrapSwitch', function (event, state) {
+        if(state == false){
+            $('#devise').val("false");
+        }else{
+            $('#devise').val("true");
+        }
+    });
+    $("[name=bootstrapswitch-rg]").on('switchChange.bootstrapSwitch', function (event, state) {
+        if(state == false){
+            $('#rg').val("false");
+        }else{
+            $('#rg').val("true");
+        }
+    });
+    
     //Function pour l'ajout de champs
     $('.addchamps').click(function(){
         $valeur = $('.champ').length + 1;
@@ -303,6 +321,23 @@ function remove_widget(element){
         $.post("/AJAX/explorer/ouvrir",data);
     }
     
+        
+    function reloadTTC(){
+        var tva = parseInt($('input[name=tva]')[0].value);
+        var montant = parseInt($('input[name=montant]')[0].value);
+        var ttc = (montant*(1+(tva/100)));
+        $('#ttc_total').html(ttc);
+    }
     
+function charge_compte() {
+    var idSociete = $('#societeliste').val();
+    $.post("/AJAX/projet/getCompte", {id: idSociete}).success(function (data) {
+        $('select[name=compte]').empty();
+        var comptes = JSON.parse(data).result;
+        $.each(comptes, function (key, value) {
+            $('select[name=compte]').append('<option value="' + comptes[key].id + '">' + comptes[key].banque + ' | ' + comptes[key].numero + '</option>')
+        });
+    });
+}
 
     

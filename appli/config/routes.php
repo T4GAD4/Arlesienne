@@ -39,11 +39,7 @@
 */
 
 $route['default_controller'] = "accueil";
-$route['Ventes'] = "accueil/ventes";
-$route['Comptabilite'] = "accueil/comptabilite";
-$route['Etats'] = "accueil/etats";
-$route['Parametres'] = "accueil/parametres";
-$route['Projets'] = "accueil/projets";
+$route['fiche-contact/(:any)'] = "fiche_contact/$1";
 $route['404_override'] = '';
 
 

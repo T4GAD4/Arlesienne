@@ -30,10 +30,14 @@
                         <?php
                         foreach ($select_etat as $etat) {
                             ?>
-                            <option value="<?php echo $etat; ?>" <?php if(set_value('etat') == $etat){echo 'selected';} ?>><?php echo $etat; ?></option>
-                            <?php
-                        }
-                        ?>
+                            <option value="<?php echo $etat; ?>" <?php
+                            if (set_value('etat') == $etat) {
+                                echo 'selected';
+                            }
+                            ?>><?php echo $etat; ?></option>
+                                    <?php
+                                }
+                                ?>
                     </select>
                 </div>
             </div>
@@ -41,14 +45,18 @@
             <div class="control-group">
                 <label class="control-label col-sm-2 col-centered" for="societe">Société *</label>
                 <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered ">
-                    <select id="societe" name="societe" class="form-control">
+                    <select id="societeliste" name="societe" class="form-control">
                         <?php
                         foreach ($societes as $societe) {
                             ?>
-                            <option value="<?php echo $societe->id; ?>" <?php if(set_value('societe') == $societe->id){echo 'selected';} ?>><?php echo $societe->nom; ?></option>
-                            <?php
-                        }
-                        ?>
+                            <option value="<?php echo $societe->id; ?>" <?php
+                            if (set_value('societe') == $societe->id) {
+                                echo 'selected';
+                            }
+                            ?>><?php echo $societe->nom; ?></option>
+                                    <?php
+                                }
+                                ?>
                     </select>
                 </div>
             </div>
@@ -93,46 +101,18 @@
                     <?php echo form_error('commentaire'); ?>
                 </div>
             </div>
-            <!-- Text input-->
-            <div class="control-group">
-                <label class="control-label col-sm-2 col-centered">Ajouter un programme</label>
-                <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">                     
-                    <i class=" col-xs-12 fa fa-plus-circle fa-size addchamps"></i>
-                </div>
-            </div>
-            <div id="boxchamps">
-                
-                <?php
-                    if($nb_programmes > 0){
-                        for($i = 1; $i<= $nb_programmes;$i++){
-                ?>
-                
-                <div id="champs<?php echo $i; ?>" class="control-group champ">
-                    <label class="control-label col-sm-2 col-centered">Programme <?php echo $i; ?></label>
-                    <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
-                        <input type="text" class="col-sm-10 col-md-10 col-xs-10 form-control" name="champs<?php echo $i; ?>" value="<?php echo $programme["$i"]; ?>"/>
-                    </div>
-                </div>
-                <?php
-                        }
-                    }
-                ?>
-                
-            </div>
-            <div class="control-group">
-                <label class="control-label col-sm-2 col-centered"></label>
-                <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">    
-                    <i class=" col-xs-12 fa fa-minus-circle fa-size removechamps <?php if($nb_programmes == 0){ echo 'hidden';} ?>"></i>
-                </div>
-            </div>
-            <input type="hidden" name="number_champs" id="number_champs" value="<?php echo $nb_programmes; ?>"/>
-            <div class="col-xs-12">
-                <input type="button" class="btn btn-warning pull-left" onclick="history.go(-1)" value="Annuler"/>
-                <input type="submit" class="btn btn-success pull-right" id="form_contact" value="Créer"/>
-            </div>                    
-    </fieldset>
-    <?php echo form_close(); ?>
-    <span id="page" class="hidden">Creer</span>
+        </div>
+</div>
+</div>
+</div>
+
+<div class="col-xs-12" style="margin-top:20px;">
+    <input type="button" class="btn btn-warning pull-left" onclick="history.go(-1)" value="Annuler"/>
+    <input type="submit" class="btn btn-success pull-right" id="form_contact" value="Créer"/>
+</div>                    
+</fieldset>
+<?php echo form_close(); ?>
+<span id="page" class="hidden">Creer</span>
 </div>
 </div>
 <script type="text/javascript" src="<?php echo js_url('pages/projet'); ?>"></script>

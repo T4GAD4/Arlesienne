@@ -18,6 +18,22 @@ class Programmes extends CI_Model {
         return $this->db->insert_id();
     }
     
+    public function constructeur($id = 0){
+        
+        if($id == 0){
+            return false;
+        }
+        
+        $projet = $this->db->select('*')
+                             ->from($this->table)
+                             ->where('idProgramme',$id)
+                             ->limit(1)
+                             ->get()
+                             ->result();
+        
+        return $projet;
+    }
+    
     public function getFromProjet($id = 0){
         
         if($id == 0){
@@ -30,7 +46,6 @@ class Programmes extends CI_Model {
                              ->order_by('nom ASC')
                              ->get()
                              ->result();
-        
         return $projet;
     }
     

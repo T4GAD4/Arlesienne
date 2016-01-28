@@ -3,7 +3,13 @@
     <div class="row parametres">
         <input type="button" class="btn btn-warning pull-left" onclick="history.go(-1)" value="Retour"/>
     </div>
-    <input id="search" type="text" class="input-md form-control" placeholder="Rechercher..."/>
+    <div class="row noPadding">
+        <div class="module__tools">
+            <div class="custom-search">
+                <input class="custom-search-input" type="search" id="search" placeholder="Rechercher...">
+            </div>
+        </div>
+    </div>
 
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#contacts" aria-controls="contacts" role="tab" data-toggle="tab">Contacts</a></li>
@@ -25,7 +31,7 @@
                         <div class="panel-heading" role="tab" id="headingOne">
                             <h4 class="panel-title">
                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $x; ?>" aria-expanded="false" aria-controls="collapseOne">
-                                    <?php echo $contact->nom . ' ' . $contact->prenom; ?>
+                                    <?php echo $contact->nom . ' ' . $contact->prenom; ?><a class="a-fiche-contact" href="<?= base_url('fiche-contact/vue/'.$contact->id); ?>"><i class="fa fa-file-text"></i></a>
                                 </a>
                             </h4>
                         </div>

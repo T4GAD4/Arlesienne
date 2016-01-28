@@ -10,7 +10,6 @@ class Rechargement extends CI_Form_validation {
         $CI->load->model("utilisateurs");
         $CI->load->model("messages");
         
-        
         if($CI->session->userdata('user') != false){
             //Rechargement des données de l'utilisateur automatiquement
             $id = $CI->session->userdata('user')->id;

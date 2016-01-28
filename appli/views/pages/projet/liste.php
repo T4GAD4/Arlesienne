@@ -4,7 +4,13 @@
         <input type="button" class="btn btn-warning pull-left" onclick="history.go(-1)" value="Retour"/>
         <a href="<?php echo base_url().'projet/ajouter'; ?>" class="btn btn-success pull-right">Créer un nouveau projet</a>      
     </div>
-    <input id="search" type="text" class="input-md form-control" placeholder="Rechercher..."/>
+    <div class="row noPadding">
+        <div class="module__tools">
+            <div class="custom-search">
+                <input class="custom-search-input" type="search" id="search" placeholder="Rechercher...">
+            </div>
+        </div>
+    </div>
     <ul class="nav nav-tabs" role="tablist">
         <?php
         $x = "active";
@@ -42,9 +48,9 @@
                                     <div class="row projet-details">
                                         <div class="col-md-6 detail-left">
                                             <p>Budget global : <?php echo number_format($projet->budget,2,'.',' '); ?> €</p>
-                                            <p>Marchés signés : </p>
-                                            <p>Factures reçues : </p>
-                                            <p>Factures payés : </p>
+                                            <p>Marchés signés : <?php echo $projet->nb_marche_signes; ?></p>
+                                            <p>Factures reçues : <?php echo number_format($projet->total_recu,2,'.',' '); ?> €</p>
+                                            <p>Factures payés : <?php echo number_format($projet->total_paye,2,'.',' '); ?> €</p>
                                         </div>
                                         <div class="col-md-6 detail-right">
                                             <p>Lots totaux : </p>
@@ -65,7 +71,8 @@
                                             <a href="<?php if($etat != "Projets à l étude"){echo base_url("projet/etude/$projet->id");} ?>" class="btn small text-left <?php if($etat == "Projets à l étude"){ echo "active"; } ?>">Projet à l'étude</a>
                                         </div>
                                         <div class="col-md-2 text-right">
-                                            <a href="<?php echo base_url("projet/modifier/$projet->url"); ?>" class="btn text-right">Modifier</a>
+                                            <a href="<?php echo base_url("projet/modifier/$projet->url"); ?>" class="btn">Modifier</a>
+                                            <a href="<?php echo base_url("previsionnel/liste/$projet->url"); ?>" class="btn">Prévisionnels</a>
                                         </div>
                                     </div>
                                 </div>
