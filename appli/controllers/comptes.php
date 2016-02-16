@@ -127,7 +127,7 @@ class Comptes extends CI_Controller {
             $compte->numero = $this->input->post('numero');
             $compte->montant = $this->input->post('montant');
             $compte->decouvert = $this->input->post('decouvert');  
-            $result = $this->comptes_bancaires->modify($compte,$id);
+            $result = $this->comptes_bancaires->update($compte,$id);
             if($result == true){
                 //Requete reussie! :)
                 redirect('comptes/details/'.$data['compte']->id);

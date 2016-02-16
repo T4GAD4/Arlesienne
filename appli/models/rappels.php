@@ -3,48 +3,56 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Previsionnels extends CI_Model {
+class Rappels extends CI_Model {
 
-    private $table = 'previsionnel';
+    private $table = 'rappel_contact';
     
-    public function getFromProjet($id = 0){
-        if($id == 0){
-            return false;
-        }
+    public function constructeur($id){
         
-        $previs = $this->db->select('*')
+        $actions = $this->db->select('*')
                              ->from($this->table)
-                             ->where('idProjet',$id)
+                             ->where('idContact',$id)
                              ->get()
                              ->result();
         
-        return $previs;
+        return $actions;
     }
     
-    public function constructeur($id = 0){
+    public function getAll(){
+        
+        $actions = $this->db->select('*')
+                             ->from($this->table)
+                             ->get()
+                             ->result();
+        
+        return $actions;
+    }
+    
+    public function getId($id = 0){
         
         if($id == 0){
             return false;
         }
         
-        $previ = $this->db->select('*')
+        $action = $this->db->select('*')
                              ->from($this->table)
                              ->where('id',$id)
                              ->limit(1)
                              ->get()
                              ->result();
         
-        return $previ;
+        return $action;
     }
     
-    public function creer($data = ''){
+     public function creer($data = ''){
         
         if($data == ''){
             return false;
         }
         
         $this->db->insert($this->table, $data);
-        return $this->db->insert_id();
+        $result= $this->db->insert_id();
+        return $result;
     }
     
     public function update($data = '', $id = 0){
@@ -52,10 +60,20 @@ class Previsionnels extends CI_Model {
         if($data == '' || $id == 0){
             return false;
         }
-        
-        $result = new stdClass();
         $result =    $this->db->where('id', $id);
                      $this->db->update($this->table, $data); 
         return $result;
     }
+    
+    public function delete($data = ''){
+        
+        if($data == ''){
+            return false;
+        }
+        
+        $result = $this->db->delete($this->table, array('id' => $data)); 
+        
+        return $result;
+    }
+    
 }

@@ -220,7 +220,7 @@ class Projet extends CI_Controller {
         $projet = $this->projets->constructeur($id)[0];
         shell_exec('mv /home/srh/serveur/'.str_replace(' ','\ ',$projet->etat).'/'.$projet->url.' /home/srh/serveur/Projets\ terminés/');
         $projet->etat = "Projets terminés";
-        $this->projets->modify($projet, $projet->id);
+        $this->projets->update($projet, $projet->id);
         redirect($_SERVER['HTTP_REFERER']);
     }
 
@@ -231,7 +231,7 @@ class Projet extends CI_Controller {
         $projet = $this->projets->constructeur($id)[0];
         shell_exec('mv /home/srh/serveur/'.str_replace(' ','\ ',$projet->etat).'/'.$projet->url.' /home/srh/serveur/Projets\ abandonnés/');
         $projet->etat = "Projets abandonnés";
-        $this->projets->modify($projet, $projet->id);
+        $this->projets->update($projet, $projet->id);
         redirect($_SERVER['HTTP_REFERER']);
     }
 
@@ -242,7 +242,7 @@ class Projet extends CI_Controller {
         $projet = $this->projets->constructeur($id)[0];
         shell_exec('mv /home/srh/serveur/'.str_replace(' ','\ ',$projet->etat).'/'.$projet->url.' /home/srh/serveur/Projets\ à\ l\ étude/');
         $projet->etat = "Projets à l étude";
-        $this->projets->modify($projet, $projet->id);
+        $this->projets->update($projet, $projet->id);
         redirect($_SERVER['HTTP_REFERER']);
     }
 
@@ -253,7 +253,7 @@ class Projet extends CI_Controller {
         $projet = $this->projets->constructeur($id)[0];
         shell_exec('mv /home/srh/serveur/'.str_replace(' ','\ ',$projet->etat).'/'.$projet->url.' /home/srh/serveur/Projets\ en\ cours/');
         $projet->etat = "Projets en cours";
-        $this->projets->modify($projet, $projet->id);
+        $this->projets->update($projet, $projet->id);
         redirect($_SERVER['HTTP_REFERER']);
     }
 
@@ -294,7 +294,7 @@ class Projet extends CI_Controller {
             $projet->commentaire = $this->input->post('commentaire');
             $projet->url = slugify($projet->nom);
             
-            $result = $this->projets->modify($projet, $data['old_projet']->id);
+            $result = $this->projets->update($projet, $data['old_projet']->id);
 
             if ($result == true) {
                 //On va voir si on a changé de nom de projet

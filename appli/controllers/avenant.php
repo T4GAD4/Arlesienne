@@ -114,7 +114,7 @@ class Avenant extends CI_Controller {
             $avenant->montantHT = $this->input->post('montantHT');
             $avenant->tva = $this->input->post('tva');
 
-            $this->avenants->modify($avenant, $id);
+            $this->avenants->update($avenant, $id);
 
             redirect(base_url() . 'marche/detail/' . $data['avenant']->idMarche);
         }

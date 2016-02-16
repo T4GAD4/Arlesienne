@@ -60,7 +60,7 @@ class Projets extends CI_Model {
         return $this->db->insert_id();
     }
     
-    public function modify($data = '', $id = 0){
+    public function update($data = '', $id = 0){
         
         if($data == '' || $id == 0){
             return false;

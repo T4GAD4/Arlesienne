@@ -77,7 +77,7 @@ class Societe extends CI_Controller {
             $societe->cp = $this->input->post('cp');
             $societe->ville = $this->input->post('ville');
             
-            $result = $this->societes->modify($societe,$id);
+            $result = $this->societes->update($societe,$id);
             if($result == true){
                 //Requete reussie! :)
                 redirect('societe/details/'.$data['societe']->id);

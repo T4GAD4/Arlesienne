@@ -5,7 +5,7 @@ if (!defined('BASEPATH'))
 
 class Actions extends CI_Model {
 
-    private $table = 'actionsContacts';
+    private $table = 'action_contacts';
     
     public function constructeur($id){
         
