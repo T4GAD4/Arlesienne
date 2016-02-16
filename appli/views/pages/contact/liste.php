@@ -31,7 +31,7 @@
                         <div class="panel-heading" role="tab" id="headingOne">
                             <h4 class="panel-title">
                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $x; ?>" aria-expanded="false" aria-controls="collapseOne">
-                                    <?php echo $contact->nom . ' ' . $contact->prenom; ?><a class="a-fiche-contact" href="<?= base_url('fiche-contact/vue/'.$contact->id); ?>"><i class="fa fa-file-text"></i></a>
+                                    <?php echo $contact->nom . ' ' . $contact->prenom; ?><a class="a-fiche-contact" data-toggle="tooltip" title="" data-original-title="Fiche de renseignement contact" href="<?= base_url('fiche-contact/vue/'.$contact->id); ?>"><i class="fa fa-file-text"></i></a>
                                 </a>
                             </h4>
                         </div>

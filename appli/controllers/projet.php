@@ -22,7 +22,8 @@ class Projet extends CI_Controller {
             $projet->nb_marche_signes = 0;
             $projet->total_recu = 0;
             $projet->total_paye = 0;
-            $factures = Array();
+            $projet->lots_totaux = $this->lots->countAllFromProjet($projet->id)[0]->nombre;
+            $factures = $this->factures->getFromProjet($projet->id);
             foreach($marches as $marche){
                 if($marche->devise == 'true'){
                     $projet->nb_marche_signes ++;
@@ -66,6 +67,57 @@ class Projet extends CI_Controller {
             $marche->programmes = $this->marches->getProgrammes($marche->id);
         }
         */
+        $data['projet']->avenants = 0;
+        $data['projet']->marchesRemplis = 0;
+        $data['projet']->marchesAZero = 0;
+        $data['projet']->devise = 0;
+        $data['projet']->nonDevise = 0;
+        
+        $entreprises = Array();
+        foreach($data['marches'] as $marche){
+            //Nb avenants au projet
+            $data['projet']->avenants = $data['projet']->avenants + intval($this->avenants->countAllFromMarche($marche->id)[0]->nombre);
+            //Nb marches remplis / à zero
+            if($marche->montantHT != "0"){$data['projet']->marchesRemplis = $data['projet']->marchesRemplis + 1;}
+            else{$data['projet']->marchesAZero = $data['projet']->marchesAZero + 1;}
+            //Nb marches devisé/non-devisé
+            if($marche->devise != "false"){$data['projet']->devise = $data['projet']->devise + 1;}
+            else{$data['projet']->nonDevise = $data['projet']->nonDevise + 1;} 
+            
+            //On va chercher Toutes les entreprises travaillant sur le projet
+            //il faut donc remonter dans les avenants
+            $avenants = $this->avenants->getFromMarches($marche->id);
+            //On va enregistrer dans un tableau les entreprises liés aux avenants
+            foreach($avenants as $avenant){
+                array_push($entreprises,$avenant->idEntreprise);
+                $data['totalAvenantsHT'] = $data['totalAvenantsHT'] + floatval($avenant->montantHT);
+                $data['totalAvenantsTTC'] = $data['totalAvenantsTTC'] + calc_tva($avenant->montantHT,$avenant->TVA);
+            }
+            //On va stocker le total des marchés dans un variable.
+            $data['totalMarchesHT'] = $data['totalMarchesHT'] + floatval($marche->montantHT);
+            $data['totalMarchesTTC'] = $data['totalMarchesTTC'] + calc_tva($marche->montantHT,$marche->TVA);
+        }
+        //Il faut ensuite récupérer les factures
+        $factures = $this->factures->getFromProjet($data['projet']->id);
+        foreach($factures as $facture){
+            array_push($entreprises,$facture->idEntreprise);
+            $data['totalFacturesHT'] = $data['totalFacturesHT'] + $facture->montantHT;
+            $data['totalFacturesTTC'] = $data['totalFacturesTTC'] + calc_tva($facture->montantHT, $facture->tva);
+            $data['nbFactures'] = sizeof($factures);
+            $data['reglements'] = $data['reglements'] + $this->reglements->countFromFacture($facture->id)[0]->montant;
+        }
+        //On va supprimer le doublons
+        $ent = array_unique($entreprises);
+        
+        //Et pour chaque entreprise, on va aller chercher toutes ses infos!
+        $entreprises = Array();
+        foreach($ent as $entreprise){
+            array_push($entreprises,$this->entreprises->constructeur($entreprise)[0]);
+        }
+        //On envoie les entreprises à la vue!
+        $data['entreprises'] = $entreprises;
+        $data['principaux'] = $this->lots->countByType($data['projet']->id,"principal")[0]->nombre;
+        $data['secondaires'] = $this->lots->countByType($data['projet']->id,"secondaire")[0]->nombre;
         $data['categories'] = $this->marches->getCategorie($data['projet']->id);
         $data['menu'] = $this->load->view('template/menu', $data, true);
         $this->load->view('template/header');
@@ -78,6 +130,7 @@ class Projet extends CI_Controller {
 
         $data = array();
         $data['nb_programmes'] = 0;
+        $data['secteurs'] = $this->secteurs->getAllSecteurs();
 
         $this->form_validation->set_rules('nom', '"Nom"', 'trim|required|encode_php_tags|xss_clean|is_unique[projet.nom]');
         $this->form_validation->set_rules('budget', '"Budget"', 'trim|required|encode_php_tags|numeric|xss_clean');
@@ -100,6 +153,7 @@ class Projet extends CI_Controller {
 
         if ($this->form_validation->run()) {
             $projet = new stdClass();
+            $projet->secteur = json_encode($this->input->post('secteur'));
             $projet->idCompte = $this->input->post('compte');
             $projet->idSociete = $this->input->post('societe');
             $projet->nom = $this->input->post('nom');
@@ -210,6 +264,7 @@ class Projet extends CI_Controller {
 
         $data = array();
         $data['old_projet'] = $this->projets->getFromUrl($nom);
+        $data['secteurs'] = $this->secteurs->getAllSecteurs();
         if(!empty($data['old_projet'])){
             $data['old_projet'] = $data['old_projet'][0];
         }else{
@@ -228,6 +283,7 @@ class Projet extends CI_Controller {
 
         if ($this->form_validation->run()) {
             $projet = new stdClass();
+            $projet->secteur = json_encode($this->input->post('secteur'));
             $projet->idCompte = $this->input->post('compte');
             $projet->idSociete = $this->input->post('societe');
             $projet->nom = $this->input->post('nom');
@@ -237,6 +293,7 @@ class Projet extends CI_Controller {
             $projet->ville = $this->input->post('ville');
             $projet->commentaire = $this->input->post('commentaire');
             $projet->url = slugify($projet->nom);
+            
             $result = $this->projets->modify($projet, $data['old_projet']->id);
 
             if ($result == true) {

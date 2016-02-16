@@ -1,4 +1,4 @@
-<div>
+<div class="container">
 
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
@@ -16,7 +16,7 @@
   <div class="tab-content">
       <div role="tabpanel" class="tab-pane fade active in" id="tous">
           <ul class="list-group">
-              <?php foreach ($emails as $email) { ?>
+              <?php foreach ($tout as $email) { ?>
               
             
             <li class="list-group-item">
@@ -29,7 +29,16 @@
     <?php
     $x = 0;
     foreach ($expediteurs as $key => $value) {
-        echo '<div role="tabpanel" class="tab-pane fade" id="'.$x.'">'.explode('@',$value->expediteur)[0].'</div>';
+        echo '<div role="tabpanel" class="tab-pane fade" id="'.$x.'">';
+        foreach ($tout as $email) {  if($email->expediteur == $value->expediteur){?>
+              
+            
+            <li class="list-group-item">
+                <span class="badge"><?= "Le ".conv_date($email->date)." à ".$email->heure;?></span>
+                <a href='<?= base_url("mail/details/".$email->id); ?>'><?= $email->sujet?></a>
+            </li>
+        <?php }}
+        echo '</div>';
         $x++;
     }
     ?>

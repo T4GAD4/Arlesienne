@@ -43,9 +43,9 @@ class Mail extends CI_Controller {
                 $this->upload->initialize($config);
                 
                 if($this->upload->do_upload("piece")){
-                    
+                    $data['email'] = true;
                 }else{
-                    var_dump($this->upload->display_errors());
+                    $data['email'] = false;
                 }
                 array_push($data_files, $this->upload->data()['full_path']);
                 $this->email->attach($this->upload->data()['full_path']);
@@ -67,6 +67,7 @@ class Mail extends CI_Controller {
             $email->heure = date("H:i");
 
             $this->emailing->insert($email);
+            
         }
         //charger les pages
         $this->load->view('template/header');
@@ -92,7 +93,13 @@ class Mail extends CI_Controller {
     public function index() {
         
         $data = array();
-        $data['emails'] = $this->emailing->getAll();
+        
+        $data['tout'] = $this->emailing->getAll();
+        $data['contacts'] = $this->emailing->get("contact");
+        $data['commercial'] = $this->emailing->get("commercial");
+        $data['informatique'] = $this->emailing->get("informatique");
+        $data['technique'] = $this->emailing->get("technique");
+        $data['communication'] = $this->emailing->get("communication");
         
         $data['expediteurs'] = $this->emailing->getExpediteur();
        

@@ -1,210 +1,161 @@
 <div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <a href='<?= base_url('fiche-contact/imprimer/'.$contact->id); ?>' target="_blank" class="btn btn-info pull-right"><i class="fa fa-print"></i>&nbsp;&nbsp;Imprimer la fiche</a>
+        </div>
+    </div>
     <br/>
-    <form action='<?php echo site_url("contact/modifier/$contact->id"); ?>' id='formulaire' method="post" accept-charset="utf-8">
-    <fieldset>
-        <legend>
-            Modifier <?php echo $contact->nom . ' ' . $contact->prenom; ?> : 
-        </legend>
-        <div class="row-centered" style="margin:0;">
-            <div class="control-group">
-                <label class="control-label col-sm-2 col-centered" for="civilite">Civilité</label>
-                <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered ">
-                    <select id="civilite" name="civilite" class="form-control">
-                        <?php
-                        foreach ($select_contacts as $select) {
-                            ?>
-                            <option value='<?php echo $select; ?>'><?php echo $select; ?></option>
-                            <?php
-                        }
-                        ?>
-                    </select>
-                </div>
-            </div>
-            <!-- Text input-->
-            <div class="control-group">
-                <label class="control-label col-sm-2 col-centered" for="nom">Nom</label>
-                <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
-                    <input id="nom" name="nom" type="text" placeholder="" class="form-control" value="<?php echo $contact->nom ?>" required>
-                    <?php echo form_error('nom'); ?>
-                </div>
-            </div>
-            <!-- Text input-->
-            <div class="control-group">
-                <label class="control-label col-sm-2 col-centered" for="prenom">Prénom</label>
-                <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
-                    <input id="prenom" name="prenom" type="text" placeholder="" value="<?php echo $contact->prenom ?>" class="form-control">
-                    <?php echo form_error('prenom'); ?>
-                </div>
-            </div>
-            <!-- Text input-->
-            <div class="control-group">
-                <label class="control-label col-sm-2 col-centered" for="adresse">Adresse</label>
-                <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
-                    <input id="adresse" name="adresse" type="text" placeholder="" value="<?php echo $contact->adresse; ?>" class="form-control">
-                    <?php echo form_error('adresse'); ?>
-                </div>
-            </div>
-            <!-- Text input-->
-            <div class="control-group">
-                <label class="control-label col-sm-2 col-centered" for="codepostal">Code postal</label>
-                <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
-                    <input id="codepostal" name="codepostal" type="text" placeholder="" value="<?php echo $contact->cp; ?>" class="form-control">
-                    <?php echo form_error('codepostal'); ?>
-                </div>
-            </div>
-            <!-- Text input-->
-            <div class="control-group">
-                <label class="control-label col-sm-2 col-centered" for="ville">Ville</label>
-                <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
-                    <input id="ville" name="ville" type="text" placeholder="" value="<?php echo $contact->ville; ?>" class="form-control">
-                    <?php echo form_error('ville'); ?>
-                </div>
-            </div>
-            <!-- Text input-->
-            <div class="control-group">
-                <label class="control-label col-sm-2 col-centered" for="fixe">Fixe</label>
-                <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
-                    <input id="fixe" name="fixe" type="text" placeholder="" value="<?php echo $contact->fixe; ?>" class="form-control">
-                    <?php echo form_error('fixe'); ?>
-                </div>
-            </div>
-            <!-- Text input-->
-            <div class="control-group">
-                <label class="control-label col-sm-2 col-centered" for="portable">Portable</label>
-                <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
-                    <input id="portable" name="portable" type="text" placeholder="" value="<?php echo $contact->portable; ?>" class="form-control">
-                    <?php echo form_error('portable'); ?>
-                </div>
-            </div>
-            <!-- Text input-->
-            <div class="control-group">
-                <label class="control-label col-sm-2 col-centered" for="email">Email</label>
-                <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
-                    <input id="email" name="email" type="text" placeholder="" value="<?php echo $contact->email; ?>" class="form-control">
-                    <?php echo form_error('email'); ?>
-                </div>
-            </div>
-            <!-- Select des listes de diffusions-->
-            <div class="control-group">
-                <label class="control-label col-sm-2 col-centered" for="liste">Liste de diffusions</label>
-                <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
-                    <select data-placeholder="Choisissez une liste de diffusion ou plusieurs..." id="select-diffusion" class="chosen-select form-control" style="width:100%;" name="liste_diffusion" multiple tabindex="4">
-                        <?php foreach ($liste_diffusions as $liste_diffusion) { ?>
-                            <option value="<?php echo $liste_diffusion; ?>">
-                                <?php echo $liste_diffusion; ?>
-                            </option>
-                        <?php } ?>
-                    </select>
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label col-sm-2 col-centered" for="autoentrepreneur"></label>
-                <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered checkbox">
-                    <input id="type" name='autoentrepreneur' type="checkbox" data-label-text="Autoentrepreneur" data-off-text="Non" data-on-text="Oui">
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label col-sm-2 col-centered col-centered" for="entreprise">Entreprise</label>
-                <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
-                    <select data-placeholder="Choisissez une entreprise ou plusieurs..." id="select-entreprise" class="chosen-select form-control col-xs-12" name="entreprise" multiple tabindex="4">
-                        <?php foreach ($entreprises as $entreprise) { ?>
-                            <option value="<?php echo $entreprise->id; ?>">
-                                <?php echo $entreprise->nom; ?>
-                            </option>
-                        <?php } ?>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-12 noPadding ent-list">
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="col-md-12 text-center">
-                    <label><button type="button" class="btn btn-success champs">Ajouter un champs personnalisé</button></label>
-                </div>
-            </div>
-            <div id='champs_persos'>
-                <?php foreach($contact_champs as $key => $value){?>
-                
-                <div class="form-group paddingTop champ_perso">
-                    <input class="controls col-md-2 control-label col-centred labelEditable" placeholder="Votre nom de champs..." value ="<?php echo $key; ?>" style="opacity:0.85;text-align:right;"/>
-                    <div class="controls col-md-6 col-centered">
-                        <input class="inputEditable form-control input-md" type="text" value="<?php echo $value; ?>" placeholder="Votre champ...">
+    <form action='<?php echo site_url("fiche-contact/vue/$contact->id"); ?>' method="post" accept-charset="utf-8">
+        <fieldset>
+            <legend>
+                Fiche de renseignement <?= $contact->prenom . ' ' . $contact->nom; ?>
+            </legend>
+        </fieldset>
+        <div class='col-md-12'>
+            <div class="row" style="margin:0;">
+                <div class="control-group">
+                    <label class="control-label col-sm-3 col-centered" for="">Recherche : </label>
+                    <div class="controls col-xs-12 col-sm-8 col-md-8 col-centered" style='text-align:center;'>
+                        <h4 style='color:whitesmoke;'><input name='recherche[achat]' <?php if($fiche->achat == 1){echo "checked";} ?> type="checkbox" value='1'/> Achat&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name='recherche[location]' type="checkbox" value='1' <?php if($fiche->location == 1){echo "checked";} ?>/> Location</h4>
                     </div>
-                    <i class="glyphicon glyphicon-remove-circle red remove-champs" style="position:relative;top:-3px;left:10px;"></i>
                 </div>
-                
-                <?php } ?>
             </div>
-            <input id="data" name='data' type="hidden">
-            <input id="entreprises" name='entreprises' type="hidden">
-
-            <div class="col-xs-12">
-                <input type="button" class="btn btn-warning pull-left" onclick="history.go(-1)" value="Annuler"/>
-                <input type="submit" class="btn btn-warning pull-right" id="form_contact" value="Modifier"/>
+            <?php $fiche->secteur = json_decode($fiche->secteur); ?>
+            <div class="row" style="margin:0;">
+                <div class="control-group">
+                    <label class="control-label col-sm-3 col-centered" for="">Secteur : <a href="#" data-toggle="modal" data-target="#ModalSecteur"><i class="fa fa-plus"></i></a></label>
+                    <div class="controls col-xs-12 col-sm-8 col-md-8 col-centered">
+                        <select multiple name='secteur[]' id="secteur_chosen" class='chosen-select'>
+                            <option value=""></option>
+                            <?php foreach($secteurs as $ky => $value){ ?>
+                                <option value="<?= $value; ?>" <?php if(in_array($value, (Array)$fiche->secteur)){echo "selected";} ?>><?= $value; ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin:0;">
+                <div class="control-group">
+                    <label class="control-label col-sm-3 col-centered" for="">Opération initiale : </label>
+                    <div class="controls col-xs-12 col-sm-8 col-md-8 col-centered">
+                        <select name='operation' class='chosen-select'>
+                            <option value="0">Selectionnez un projet</option>
+                            <?php foreach ($projets as $projet) { ?>
+                                <option value="<?= $projet->id; ?>" <?php if($projet->id == $fiche->idProjet){echo "selected";} ?>><?= $projet->nom; ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin:0;">
+                <div class="control-group">
+                    <label class="control-label col-sm-3 col-centered" for="">Type de bien : </label>
+                    <div class="controls col-xs-12 col-sm-8 col-md-8 col-centered" style='text-align:center;'>
+                        <h4 style='color:whitesmoke;'><input name='typebien[maison]' type="checkbox" <?php if($fiche->maison == 1){echo "checked";} ?> value='maison'/> Maison&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name='typebien[appartement]' type="checkbox" <?php if($fiche->appartement == 1){echo "checked";} ?> value='appartement'/> Appartement&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name='typebien[loft]' <?php if($fiche->loft == 1){echo "checked";} ?> type="checkbox" value='loft'/> Loft&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name='typebien[commerce]' type="checkbox"  <?php if($fiche->commerce == 1){echo "checked";} ?> value='commerce'/> Commerce&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name='typebien[bureau]' type="checkbox" <?php if($fiche->bureau == 1){echo "checked";} ?> value='bureau'/> Bureau</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin:0;">
+                <div class="control-group">
+                    <label class="control-label col-sm-3 col-centered" for="">Typologie : </label>
+                    <div class="controls col-xs-12 col-sm-8 col-md-8 col-centered" style='text-align:center;'>
+                        <h4 style='color:whitesmoke;'><input name='typologie[t2]' type="checkbox"  <?php if($fiche->t2 == 1){echo "checked";} ?> value='t2'/> T2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name='typologie[t3]' <?php if($fiche->t3 == 1){echo "checked";} ?> type="checkbox" value='t3'/> T3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name='typologie[t4]' <?php if($fiche->t4 == 1){echo "checked";} ?> type="checkbox" value='t4'/> T4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name='typologie[t5]' <?php if($fiche->t5 == 1){echo "checked";} ?> type="checkbox" value='t5'/> T5</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin:0;">
+                <div class="control-group">
+                    <label class="control-label col-sm-3 col-centered" for="">Surface : </label>
+                    <div class="controls col-xs-12 col-sm-8 col-md-8 col-centered" style='text-align:center;'>
+                        <h4 style='color:whitesmoke;'><input name='surface[amenagee]' <?php if($fiche->amenagee == 1){echo "checked";} ?> type="checkbox" value='amenagee'/> Aménagée&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name='surface[brute]' <?php if($fiche->brute == 1){echo "checked";} ?> type="checkbox" value='brute'/> Brute</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin:0;">
+                <div class="control-group">
+                    <label class="control-label col-sm-3 col-centered" for="">Autres : </label>
+                    <div class="controls col-xs-12 col-sm-8 col-md-8 col-centered" style='text-align:center;'>
+                        <h4 style='color:whitesmoke;'><input name='autres[jardin]' <?php if($fiche->jardin == 1){echo "checked";} ?> type="checkbox" value='jardin'/> Jardin ?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name='autres[parking]' <?php if($fiche->parking == 1){echo "checked";} ?> type="checkbox" value='parking'/> Parking ?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name='autres[garage]' <?php if($fiche->garage == 1){echo "checked";} ?> type="checkbox" value='garage'/> Garage ?</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin:0;">
+                <div class="control-group">
+                    <label class="control-label col-sm-3 col-centered" for="">Superficie : </label>
+                    <div class="controls col-xs-12 col-sm-8 col-md-8 col-centered">
+                        <input id="superficie" name="superficie" type="text" placeholder="" class="form-control" value="<?= $fiche->superficie ; ?>" >
+                        <?php echo form_error('superficie'); ?>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin:0;">
+                <div class="control-group">
+                    <label class="control-label col-sm-3 col-centered" for="">Type d'achat : </label>
+                    <div class="controls col-xs-12 col-sm-8 col-md-8 col-centered" style='text-align:center;'>
+                        <h4 style='color:whitesmoke;'><input name='typeachat[investissement_locatif]' <?php if($fiche->investissement_locatif == 1){echo "checked";} ?> type="checkbox" value='investissement_locatif'/> Investissement locatif&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name='typeachat[residence_principale]' <?php if($fiche->residence_principale == 1){echo "checked";} ?> type="checkbox" value='residence_principale'/> Résidence principale&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name='typeachat[residence_secondaire]' <?php if($fiche->residence_secondaire == 1){echo "checked";} ?> type="checkbox" value='residence_secondaire'/> Résidence secondaire</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin:0;">
+                <div class="control-group">
+                    <label class="control-label col-sm-3 col-centered" for="">Budget : </label>
+                    <div class="controls col-xs-12 col-sm-8 col-md-8 col-centered">
+                        <input id="budget" name="budget" type="text" placeholder="" class="form-control" value="<?= $fiche->budget ; ?>" >
+                        <?php echo form_error('budget'); ?>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin:0;">
+                <div class="control-group">
+                    <label class="control-label col-sm-3 col-centered" for="">Observations : </label>
+                    <div class="controls col-xs-12 col-sm-8 col-md-8 col-centered">
+                        <input id="observation" name="observation" type="text" placeholder="" class="form-control" value="<?= $fiche->observation ; ?>" >
+                        <?php echo form_error('observation'); ?>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <input type="button" class="btn btn-warning pull-left" onclick="history.go(-1)" value="Annuler"/>
+                    <input type="submit" class="btn btn-warning pull-right" value="Modifier"/>
+                </div>
             </div>
         </div>
-    </fieldset>
-    <?php echo form_close(); ?>
+    </form>
+</div>
+
+
+
+<!-- Modal Secteur -->
+<div class="modal fade" id="ModalSecteur" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Ajouter un secteur</h4>
+            </div>
+            <div class="modal-body">
+                <div class="controls col-md-12 col-centered">
+                    <input id="secteur" type="text" placeholder="Écrire le secteur ici!" class="form-control">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="Creer_secteur">Créer le secteur</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
 
-    $(document).ready(function () {
-
-/*On va definir les listes selectionnés par le contact*/
-
-        var liste = [];
-<?php
-foreach ($contact_liste as $key => $value) {
-?>
-        liste[<?php echo $key; ?>] = "<?php echo $value; ?>";
-<?php
-}
-?>
-        
-        $('#select-diffusion option').each(function () {
-            if ($.inArray($(this).val(), liste)) {
-                $(this).attr('selected', true);
-            }
+    $(function(){
+        $('#Creer_secteur').on('click', function(e){
+            e.preventDefault();
+            var secteur = $('#secteur').val();
+            $('select[name="secteur[]"]').append('<option value="'+secteur+'">'+secteur+'</option>');
+            $('.chosen-select[name="secteur[]"]').trigger("chosen:updated");
+            $('#ModalSecteur').modal('hide');
         });
-        
-        
-        /*On va definir les listes selectionnés par le contact*/
+    });
 
-        var entreprise = [];
-<?php
-foreach ($postes as $poste) {
-    ?>
-            entreprise.push("<?php echo $poste->entreprise->nom; ?>");
-    <?php
-}
-?>
-        $('#select-entreprise option').each(function () {
-            if ($.inArray($(this).text().trim(), entreprise) >= 0) {
-                $(this).attr('selected', true);
-            }
-        });
-        
-        
-        $('[name=civilite] option').each(function () {
-            if ($(this).val() == "<?php echo $contact->civilite; ?>") {
-                $(this).attr('selected', true);
-            }
-        });
-        
-
-<?php if ($contact->autoentreprise == "true") { ?>
-            $('[name=autoentrepreneur]').bootstrapSwitch('state', true);
-            $('[name=autoentrepreneur]').bootstrapSwitch('disabled', true);
-<?php } else { ?>
-            $('[name=autoentrepreneur]').bootstrapSwitch('state', false);
-            $('[name=autoentrepreneur]').bootstrapSwitch('disabled', true);
-<?php } ?>
-    
-    $postes = '<?php echo json_encode($postes); ?>';
-    
-});
 </script>
-<script type="text/javascript" src="<?php echo js_url('contact'); ?>"></script>

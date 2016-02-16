@@ -5,7 +5,17 @@
         <?php echo form_open_multipart(base_url('mail/envoyer')); ?>
 
         <fieldset>
-
+            <?php if(isset($email) && $email == true){ ?>
+                <div class="alert alert-success alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Félicitations !</strong> Votre email à bien été envoyé! :D
+</div>
+            <?php }else{ ?>
+<div class="alert alert-warning alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Attention !</strong> Votre email n'a pas pu être envoyé, peut-être n'avez vous pas mis de pièces jointe! :/
+</div>
+            <?php } ?>
             <!-- Form Name -->
             <legend>Envoi d'un mail</legend>
 

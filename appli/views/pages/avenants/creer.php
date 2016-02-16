@@ -1,9 +1,9 @@
 <div class="detail-marche container">
     <br/>
-    <?php echo form_open('facturation/creer/'); ?>
+    <?php echo form_open('avenant/creer/'.$id_marche); ?>
     <fieldset>
         <legend>
-            Créer une facture
+            Créer un avenant
         </legend>
         <div class="form-facture row-centered" style="margin:0;">
             <h3>Entreprise : </h3>
@@ -36,13 +36,6 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label col-sm-2 col-centered" for="budget">Date échéance *</label>
-                <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
-                    <input id="budget" name="date_echeance" placeholder="DD-MM-YYYY" type="text" value="<?php echo set_value('date_echeance'); ?>" class="form-control">
-                        <?php echo form_error('date_echeance'); ?>
-                </div>
-            </div>
-            <div class="control-group">
                 <label class="control-label col-sm-2 col-centered" for="budget">Numero *</label>
                 <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
                     <input id="budget" name="numero" type="text" value="<?php echo set_value('numero'); ?>" class="form-control">
@@ -65,22 +58,6 @@
                         <?php echo form_error('tva'); ?>
                 </div>
             </div>
-            <h3>Options : </h3>
-            <!-- Number input-->
-            <div class="control-group">
-                <label class="control-label col-sm-2 col-centered" for="rg"></label>
-                <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered checkbox">
-                    <input id="type" name='bootstrapswitch-rg' type="checkbox" data-label-text="RG de 5%" data-off-text="Non" data-on-text="Oui">
-                </div>
-            </div>
-            <input id="rg" name='rg' value="" type="hidden">
-            <div class="control-group">
-                <label class="control-label col-sm-2 col-centered" for="budget">Avoir</label>
-                <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
-                    <input id="budget" name="avoir" type="number" value="<?php echo set_value('avoir'); ?>" class="form-control">
-                        <?php echo form_error('avoir'); ?>
-                </div>
-            </div>
             
             <div class="col-xs-12">
                 <input type="button" class="btn btn-warning pull-left" onclick="history.go(-1)" value="Retour"/>
@@ -89,17 +66,5 @@
     </fieldset>
     <?php echo form_close(); ?>
 </div>
-        
-<script>
-    $(function(){
-        <?php if(set_value('rg') == "true"){?>
-            $('[name=bootstrapswitch-rg]').bootstrapSwitch('state', true);
-            $('#rg').val("true");
-        <?php }else{ ?>
-            $('[name=bootstrapswitch-rg]').bootstrapSwitch('state', false);
-            $('#rg').val("false");
-        <?php } ?>
-    });    
-</script>
 
 

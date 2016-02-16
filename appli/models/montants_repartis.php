@@ -40,8 +40,47 @@ class Montants_repartis extends CI_Model {
         return $montants;
     }
     
+    public function delete($data = '') {
+
+        if ($data == '') {
+            return false;
+        }
+
+        $result = $this->db->delete($this->table, array('id' => $data));
+
+        return $result;
+    }
     
+    public function getFromFacture($id = 0) {
+
+        if ($id == 0) {
+            return false;
+        }
+
+        $regle = $this->db->select('*')
+                ->from($this->table)
+                ->where('idFacture', $id)
+                ->get()
+                ->result();
+
+        return $regle;
+    }
     
+    public function getFromFactureAndMarche($id = 0, $idMarche = 0) {
+
+        if ($id == 0 && $idMarche == 0) {
+            return false;
+        }
+
+        $regle = $this->db->select('*')
+                ->from($this->table)
+                ->where('idFacture', $id)
+                ->where('idMarche', $idMarche)
+                ->get()
+                ->result();
+
+        return $regle;
+    }
     
     public function add($data = ''){
         
@@ -65,6 +104,21 @@ class Montants_repartis extends CI_Model {
         $result =    $this->db->where('id', $id);
                             $this->db->update($this->table, $data); 
         return $result;
+    }
+    
+    public function countFromFacture($id = 0) {
+
+        if ($id == 0) {
+            return false;
+        }
+
+        $regle = $this->db->select('sum(montant) as montant')
+                ->from($this->table)
+                ->where('idFacture', $id)
+                ->get()
+                ->result();
+
+        return $regle;
     }
     
 }

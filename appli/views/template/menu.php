@@ -36,14 +36,14 @@
                             <li class="favoris"><a onclick="favoris('<?php echo control_url() ;?>')"/><span class='not-color'><i class="glyphicon glyphicon-star-empty"></i> Ajouter aux favoris</span></a></li>
                         </ul>
                     </li>
-                    <li><a data-toggle="modal" data-target="#modal_message"><span><i class="glyphicon glyphicon-envelope"></i></span>Nouveau message</a></li>
+                    <li><a data-toggle="modal" data-target="#modal_message"><span><i class="glyphicon glyphicon-envelope"></i></span>Contacter un collègue</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
 
     </nav>
-    <!--        Fil d'ariane
+    <!--        Fil d'ariane-->
     <div class="breadcrumb">
         <?php echo set_breadcrumb(); ?>
-    </div>-->
+    </div>
 </div>

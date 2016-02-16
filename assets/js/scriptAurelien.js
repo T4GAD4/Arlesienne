@@ -1,5 +1,9 @@
 $(document).ready(function () {
     
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+    
     $('#societeliste').change(charge_compte);
     
     //Bootstrap switch
@@ -49,7 +53,7 @@ $(document).ready(function () {
     });
     
     //Chosen
-    $(".chosen-select").chosen();
+    $(".chosen-select").chosen({'width': "100%"});
     
     //Fonction de mise en etat lu pour message clique
     $('.non_lus').on('click',function(){

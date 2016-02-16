@@ -14,6 +14,20 @@
                     <?php echo form_error('nom'); ?>
                 </div>
             </div>
+            <?php $projet->secteur = json_decode($projet->secteur); ?>
+            <div class="row" style="margin:0;">
+                <div class="control-group">
+                    <label class="control-label col-sm-2 col-centered" for="">Secteur : <a href="#" data-toggle="modal" data-target="#ModalSecteur"><i class="fa fa-plus"></i></a></label>
+                    <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
+                        <select multiple name='secteur[]' id="secteur_chosen" class='chosen-select'>
+                            <option value=""></option>
+                            <?php foreach($secteurs as $key => $value){ ?>
+                                <option value="<?= $value; ?>" <?php if(in_array($value, (Array)$projet->secteur)){echo "selected";} ?>><?= $value; ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
+            </div>
             <!-- Number input-->
             <div class="control-group">
                 <label class="control-label col-sm-2 col-centered" for="budget">Budget *</label>
@@ -120,5 +134,37 @@
     <?php echo form_close(); ?>
     <span id="page" class="hidden">Modifier</span>
 </div>
+
+<!-- Modal Secteur -->
+<div class="modal fade" id="ModalSecteur" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Ajouter un secteur</h4>
+            </div>
+            <div class="modal-body">
+                <div class="controls col-md-12 col-centered">
+                    <input id="secteur" type="text" placeholder="Écrire le secteur ici!" class="form-control">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="Creer_secteur">Créer le secteur</button>
+            </div>
+        </div>
+    </div>
 </div>
-<script type="text/javascript" src="<?php echo js_url('pages/projet'); ?>"></script>
+
+<script>
+
+    $(function(){
+        $('#Creer_secteur').on('click', function(e){
+            e.preventDefault();
+            var secteur = $('#secteur').val();
+            $('select[name="secteur[]"]').append('<option value="'+secteur+'">'+secteur+'</option>');
+            $('.chosen-select[name="secteur[]"]').trigger("chosen:updated");
+            $('#ModalSecteur').modal('hide');
+        });
+    });
+
+</script>

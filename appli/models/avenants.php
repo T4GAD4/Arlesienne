@@ -3,9 +3,9 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Factures extends CI_Model {
+class Avenants extends CI_Model {
 
-    private $table = 'factures';
+    private $table = 'avenants';
     
     public function constructeur($id = 0){
         
@@ -13,13 +13,27 @@ class Factures extends CI_Model {
             return false;
         }
         
-        $facture = $this->db->select('*')
+        $compte = $this->db->select('*')
                                   ->from($this->table)
                                   ->where('id',$id)
                                   ->limit(1)
                                   ->get()
                                   ->result();
-        return $facture;
+        return $compte;
+    }
+    
+    public function getFromMarches($id = 0){
+        
+        if($id == 0){
+            return false;
+        }
+        
+        $avenant = $this->db->select('*')
+                                  ->from($this->table)
+                                  ->where('idMarche',$id)
+                                  ->get()
+                                  ->result();
+        return $avenant;
     }
     
     public function creer($data = ''){
@@ -55,24 +69,18 @@ class Factures extends CI_Model {
         return $result;
     }
     
-    public function getAll(){
+    public function countAllFromMarche($id = 0){
         
-        $factures = $this->db->select('*')
+        if($id == 0){
+            return false;
+        }
+        
+        $avenants = $this->db->select('count(*) as nombre')
                                   ->from($this->table)
-                                  ->order_by('id','DESC')
+                                  ->where('idMarche',$id)
                                   ->get()
                                   ->result();
-        return $factures;
+        return $avenants;
     }
     
-    public function getFromProjet($id){
-        
-        $factures = $this->db->select('*')
-                                  ->from($this->table)
-                                  ->where('idProjet',$id)
-                                  ->get()
-                                  ->result();
-        return $factures;
-    }
-        
 }

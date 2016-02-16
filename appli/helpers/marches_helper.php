@@ -40,6 +40,6 @@ if (!function_exists('calc_tva')) {
 if (!function_exists('format_number')) {
 
     function format_number($montant) {
-        return number_format($montant,2,"."," ");
+        return "<b>".number_format($montant,2,"."," ")."</b>";
     }
 }

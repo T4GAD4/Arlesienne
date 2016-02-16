@@ -22,12 +22,27 @@ class Emailing extends CI_Model {
         
         $result = $this->db->select('*')
                  ->from($this->table)
-                 ->group_by("expediteur")
+                 ->order_by('id','DESC')
                  ->get()
                  ->result();
         
         return $result;
     }
+    
+     public function get($email = ""){
+        
+         $email .= "@saint-roch-habitat.fr";
+         
+        $result = $this->db->select('*')
+                 ->from($this->table)
+                 ->where('expediteur',$email)
+                 ->order_by('id','DESC')
+                 ->get()
+                 ->result();
+        
+        return $result;
+    }
+    
     public function getExpediteur(){
         
         $result = $this->db->select('expediteur')

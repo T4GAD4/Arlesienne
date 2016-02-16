@@ -19,6 +19,20 @@
                     <?php echo form_error('entreprise'); ?>
                 </div>
             </div>
+            <h3>Projet : </h3>
+            <!-- TypeAhead input-->
+            <div class="control-group">
+                <label class="control-label col-sm-2 col-centered" for="budget">Projet *</label>
+                <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
+                    <select data-placeholder="Choisissez un projet" name="projet" id="select-entreprise" class="chosen-select" style="width:100%;" tabindex="4">
+                        <option value='0'>Aucun projet</option>
+                        <?php foreach ($projets as $projet) { ?>
+                            <option value="<?php echo $projet->id; ?>" <?php if(set_value('projet') == $projet->id){echo "selected";} ?>><?php echo $projet->nom . ' ' . $projet->ville; ?></option>
+                        <?php } ?>
+                    </select>
+                    <?php echo form_error('projet'); ?>
+                </div>
+            </div>
             <h3>Général : </h3>
             <!-- Number input-->
             <div class="control-group">
@@ -32,14 +46,14 @@
                 <label class="control-label col-sm-2 col-centered" for="budget">Date *</label>
                 <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
                     <input id="budget" name="date" placeholder="DD-MM-YYYY" type="text" value="<?php echo set_value('date'); ?>" class="form-control">
-                    <?php echo form_error('date'); ?>
+                    <?php echo form_error('date')." Le format est DD-MM-YYYY"; ?>
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label col-sm-2 col-centered" for="budget">Date échéance *</label>
                 <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
                     <input id="budget" name="date_echeance" placeholder="DD-MM-YYYY" type="text" value="<?php echo set_value('date_echeance'); ?>" class="form-control">
-                    <?php echo form_error('date_echeance'); ?>
+                    <?php echo form_error('date_echeance')." Le format est DD-MM-YYYY"; ?>
                 </div>
             </div>
             <div class="control-group">

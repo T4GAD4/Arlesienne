@@ -51,6 +51,27 @@ class MY_Form_validation extends CI_Form_validation {
  
     }
  
+    function numero_devis($value, $params) {
+ 
+        $CI =& get_instance();
+        $CI->load->database();
+ 
+        
+        $table = "avenants";
+        list($id, $numero) = explode(".", $params);
+        
+        $CI->form_validation->set_message('numero_devis','Le numero de devis : '.$numero.' existe déjà pour cette société.');
+        
+        $query = $CI->db->select('id')->from($table)
+            ->where('idEntreprise', $id)->where('numero',$numero)->get();
+        if ($query->row()) {
+            return false;
+        } else {
+            return true;
+        }
+ 
+    }
+ 
     function numero_facture_update($value, $params) {
  
         $CI =& get_instance();
@@ -70,4 +91,68 @@ class MY_Form_validation extends CI_Form_validation {
         }
  
     }
+ 
+    function numero_devis_update($value, $params) {
+ 
+        $CI =& get_instance();
+        $CI->load->database();
+ 
+        
+        $table = "avenants";
+        list($idEntreprise, $numero,$idAvenant) = explode(".", $params);
+        
+        $CI->form_validation->set_message('numero_devis_update','Le numero de devis : '.$numero.' existe déjà pour cette société.');
+        
+        $query = $CI->db->select('id')->from($table)
+            ->where('idEntreprise', $idEntreprise)->where('numero',$numero)->where('id != '.$idAvenant)->get();
+        
+        if ($query->row()) {
+            return false;
+        } else {
+            return true;
+        }
+ 
+    }
+    
+    function numero_lot($value, $params) {
+ 
+        $CI =& get_instance();
+        $CI->load->database();
+ 
+        
+        $table = "lots";
+        list($id, $numero) = explode(".", $params);
+        
+        $CI->form_validation->set_message('numero_lot','Le numero de lot : '.$numero.' existe déjà pour ce projet.');
+        
+        $query = $CI->db->select('id')->from($table)
+            ->where('idProjet', $id)->where('numero_lot',$numero)->get();
+        if ($query->row()) {
+            return false;
+        } else {
+            return true;
+        }
+ 
+    }
+    
+    function numero_lot_update($value, $params) {
+ 
+        $CI =& get_instance();
+        $CI->load->database();
+ 
+        
+        $table = "lots";
+        list($idProjet, $numero,$idLot) = explode(".", $params);
+        
+        $query = $CI->db->select('id')->from($table)
+            ->where('idProjet', $idProjet)->where('numero_lot',$numero)->where('id != '.$idLot)->get();
+        
+        if ($query->row()) {
+            return false;
+        } else {
+            return true;
+        }
+ 
+    }
+    
 }

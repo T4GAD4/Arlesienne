@@ -37,7 +37,30 @@ class Marche extends CI_Controller {
         $data = array();
         $data['nb_messages'] = $this->nb_messages;
         $data['user'] = $this->session->userdata('user');
-        var_dump($id);
+        $data['marche'] = $this->marches->constructeur($id)[0];
+        $data['menu'] = $this->load->view('template/menu', $data, true);
+        $data['avenants'] = $this->avenants->getFromMarches($id);
+        $data['repartitions'] = $this->montants_repartis->getFromMarches($id);
+        $data['factures'] = Array();
+        
+        foreach($data['repartitions'] as $repartition){
+            $facture = $this->factures->constructeur($repartition->idFacture)[0];
+            array_push($data['factures'], $facture);
+        }
+        
+        foreach($data['factures'] as $facture){
+            $facture->entreprise = $this->entreprises->constructeur($facture->idEntreprise)[0];
+            $facture->regle = $this->reglements->countFromFacture($facture->id)[0]->montant;
+        }
+        
+        foreach($data['avenants'] as $avenant){
+            $avenant->entreprise = $this->entreprises->constructeur($avenant->idEntreprise)[0];
+        }
+                
+        $this->load->view('template/header');
+        $this->load->view('template/sidebar', $data);
+        $this->load->view('pages/marche/detail');
+        $this->load->view('template/footer');
     }
 
     public function modifier($id = 0) {
@@ -79,12 +102,12 @@ class Marche extends CI_Controller {
             }
             */
             
-            redirect(base_url("projet/detail/".slugify($data['projet']->ville." ".$data['projet']->nom)));
+            redirect(base_url("projet/detail/".$data['projet']->url));
         }
         
         $this->load->view('template/header');
         $this->load->view('template/sidebar', $data);
-        $this->load->view('pages/marche/modifier', $data);
+        $this->load->view('pages/marche/modifier');
         $this->load->view('template/footer');
         
         

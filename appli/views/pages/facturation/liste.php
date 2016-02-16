@@ -67,16 +67,23 @@
                                     </div>
                                     <br/>
                                     <div class="col-md-12 facture-payement">
+                                        <span class="pull-left">
+                                            <?php echo 'Montant réparti : '. format_number(floatval($facture->reparti)).' €'; ?>
+                                        </span>
                                         <span class="pull-right">
                                             <?php echo 'Reste à régler : '.format_number(floatval(calc_tva($facture->montantHT, $facture->tva,false))-floatval($facture->regle->montant)-floatval($facture->avoir)).' €'; ?>
                                         </span>
                                         <br/>
+                                        <?php if(floatval($facture->reparti) != floatval(calc_tva($facture->montantHT, $facture->tva,false))-floatval($facture->avoir)){ ?>
                                         <span class="pull-left">
                                             <a href="<?php echo base_url("facturation/repartir/$facture->id"); ?>" class="btn small text-left">Répartir</a>
                                         </span>
+                                        <?php } ?>
+                                        <?php if((floatval(calc_tva($facture->montantHT, $facture->tva,false))-floatval($facture->regle->montant)-floatval($facture->avoir)) > 0){ ?>
                                         <span class="pull-right">   
                                             <a href="<?php echo base_url("facturation/regler/$facture->id"); ?>" class="btn small text-left">Réglements</a>
                                         </span>
+                                        <?php } ?>
                                     </div>
                                 </div>
                             </div>

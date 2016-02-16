@@ -1053,6 +1053,7 @@ h3{
 
 .panel-group .panel-heading+.panel-collapse>.panel-body {
     border-top:none;
+    background:white !important;
 }
 
 .a-fiche-contact{
@@ -1061,4 +1062,80 @@ h3{
 
 .a-fiche-contact i{
     color:darkcyan;
+}
+
+.fa-plus{
+    width:30px;
+    color:darkcyan;
+    text-decoration:none;
+}
+
+.fa-plus:hover{
+    width:30px;
+    color:darkcyan;
+    text-decoration:none;
+}
+
+.fa-plus:active{
+    width:30px;
+    color:darkcyan;
+    text-decoration:none;
+}
+
+.fa-plus:visited{
+    width:30px;
+    color:darkcyan;
+    text-decoration:none;
+}
+
+.chosen-drop{
+    margin-top:30px !important;
+}
+
+#surfaces{
+    width:100%;
+    color:whitesmoke;
+    text-align:center;
+}
+
+#surfaces tr{
+    padding-bottom:5px;
+}
+
+#surfaces tr td{
+    padding-right:10px;
+}
+
+#accordion-lots .panel .panel-collapse .panel-body{
+    background-color:#fff;
+}
+
+s{
+    color:red;
+}
+
+.borderRight{
+    border-right: solid 1px lightgray;
+}
+
+.table{
+    background-color:white;
+}
+
+.detail-projet-menu a img{
+    padding:10px;
+}
+
+.detail-projet-menu{
+    position:fixed;
+    right:10px;
+    top:250px;
+}
+
+.detailsProjets{
+    background-color:whitesmoke;
+}
+
+.detailsProjets h3{
+    color:darkgrey !important;
 }
