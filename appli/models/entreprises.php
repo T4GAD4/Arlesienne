@@ -7,6 +7,21 @@ class Entreprises extends CI_Model {
 
     private $table = 'entreprises';
     
+    public function constructeur($id = 0){
+        
+        if($id == 0){
+            return false;
+        }
+        
+        $entreprise = $this->db->select('*')
+                                  ->from($this->table)
+                                  ->where('id',$id)
+                                  ->limit(1)
+                                  ->get()
+                                  ->result();
+        return $entreprise;
+    }
+    
     public function getAll(){
         
         $contacts = $this->db->select('*')

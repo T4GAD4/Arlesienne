@@ -14,6 +14,19 @@
                     <?php echo form_error('nom'); ?>
                 </div>
             </div>
+            <div class="row" style="margin:0;">
+                <div class="control-group">
+                    <label class="control-label col-sm-2 col-centered" for="">Secteur : <a href="#" data-toggle="modal" data-target="#ModalSecteur"><i class="fa fa-plus"></i></a></label>
+                    <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
+                        <select multiple name='secteur[]' id="secteur_chosen" class='chosen-select'>
+                            <option value=""></option>
+                            <?php foreach($secteurs as $key => $value){ ?>
+                                <option value="<?= $value; ?>"><?= $value; ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
+            </div>
             <!-- Number input-->
             <div class="control-group">
                 <label class="control-label col-sm-2 col-centered" for="budget">Budget *</label>
@@ -30,10 +43,14 @@
                         <?php
                         foreach ($select_etat as $etat) {
                             ?>
-                            <option value="<?php echo $etat; ?>" <?php if(set_value('etat') == $etat){echo 'selected';} ?>><?php echo $etat; ?></option>
-                            <?php
-                        }
-                        ?>
+                            <option value="<?php echo $etat; ?>" <?php
+                            if (set_value('etat') == $etat) {
+                                echo 'selected';
+                            }
+                            ?>><?php echo $etat; ?></option>
+                                    <?php
+                                }
+                                ?>
                     </select>
                 </div>
             </div>
@@ -41,14 +58,19 @@
             <div class="control-group">
                 <label class="control-label col-sm-2 col-centered" for="societe">Société *</label>
                 <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered ">
-                    <select id="societe" name="societe" class="form-control">
+                    <select id="societeliste" name="societe" class="form-control">
+                        <option>Selectionner un projet</option>
                         <?php
                         foreach ($societes as $societe) {
                             ?>
-                            <option value="<?php echo $societe->id; ?>" <?php if(set_value('societe') == $societe->id){echo 'selected';} ?>><?php echo $societe->nom; ?></option>
-                            <?php
-                        }
-                        ?>
+                            <option value="<?php echo $societe->id; ?>" <?php
+                            if (set_value('societe') == $societe->id) {
+                                echo 'selected';
+                            }
+                            ?>><?php echo $societe->nom; ?></option>
+                                    <?php
+                                }
+                                ?>
                     </select>
                 </div>
             </div>
@@ -93,46 +115,50 @@
                     <?php echo form_error('commentaire'); ?>
                 </div>
             </div>
-            <!-- Text input-->
-            <div class="control-group">
-                <label class="control-label col-sm-2 col-centered">Ajouter un programme</label>
-                <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">                     
-                    <i class=" col-xs-12 fa fa-plus-circle fa-size addchamps"></i>
-                </div>
-            </div>
-            <div id="boxchamps">
-                
-                <?php
-                    if($nb_programmes > 0){
-                        for($i = 1; $i<= $nb_programmes;$i++){
-                ?>
-                
-                <div id="champs<?php echo $i; ?>" class="control-group champ">
-                    <label class="control-label col-sm-2 col-centered">Programme <?php echo $i; ?></label>
-                    <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
-                        <input type="text" class="col-sm-10 col-md-10 col-xs-10 form-control" name="champs<?php echo $i; ?>" value="<?php echo $programme["$i"]; ?>"/>
-                    </div>
-                </div>
-                <?php
-                        }
-                    }
-                ?>
-                
-            </div>
-            <div class="control-group">
-                <label class="control-label col-sm-2 col-centered"></label>
-                <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">    
-                    <i class=" col-xs-12 fa fa-minus-circle fa-size removechamps <?php if($nb_programmes == 0){ echo 'hidden';} ?>"></i>
-                </div>
-            </div>
-            <input type="hidden" name="number_champs" id="number_champs" value="<?php echo $nb_programmes; ?>"/>
-            <div class="col-xs-12">
-                <input type="button" class="btn btn-warning pull-left" onclick="history.go(-1)" value="Annuler"/>
-                <input type="submit" class="btn btn-success pull-right" id="form_contact" value="Créer"/>
-            </div>                    
-    </fieldset>
-    <?php echo form_close(); ?>
-    <span id="page" class="hidden">Creer</span>
+        </div>
 </div>
 </div>
-<script type="text/javascript" src="<?php echo js_url('pages/projet'); ?>"></script>
+</div>
+
+<div class="col-xs-12" style="margin-top:20px;">
+    <input type="button" class="btn btn-warning pull-left" onclick="history.go(-1)" value="Annuler"/>
+    <input type="submit" class="btn btn-success pull-right" id="form_contact" value="Créer"/>
+</div>                    
+</fieldset>
+<?php echo form_close(); ?>
+<span id="page" class="hidden">Creer</span>
+</div>
+
+<!-- Modal Secteur -->
+<div class="modal fade" id="ModalSecteur" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Ajouter un secteur</h4>
+            </div>
+            <div class="modal-body">
+                <div class="controls col-md-12 col-centered">
+                    <input id="secteur" type="text" placeholder="Écrire le secteur ici!" class="form-control">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="Creer_secteur">Créer le secteur</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(function(){
+        $('#Creer_secteur').on('click', function(e){
+            e.preventDefault();
+            var secteur = $('#secteur').val();
+            $('select[name="secteur[]"]').append('<option value="'+secteur+'">'+secteur+'</option>');
+            $('.chosen-select[name="secteur[]"]').trigger("chosen:updated");
+            $('#ModalSecteur').modal('hide');
+        });
+    });
+
+</script>

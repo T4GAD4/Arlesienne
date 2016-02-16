@@ -7,6 +7,21 @@ class Societes extends CI_Model {
 
     private $table = 'societes';
     
+    public function constructeur($id = 0){
+        
+        if($id == 0){
+            return false;
+        }
+        
+        $societe = $this->db->select('*')
+                                  ->from($this->table)
+                                  ->where('id',$id)
+                                  ->limit(1)
+                                  ->get()
+                                  ->result();
+        return $societe;
+    }
+    
     public function getAll(){
         
         $societes = $this->db->select('*')

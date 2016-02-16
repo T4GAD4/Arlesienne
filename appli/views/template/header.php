@@ -19,12 +19,20 @@
         <link href="<?php echo css_url('bootstrap-colorpicker.min'); ?>" rel="stylesheet" type="text/css"/>
         <link href="<?php echo css_url('chosen.min'); ?>" rel="stylesheet" type="text/css"/>
         <link href="<?php echo css_url('notify'); ?>" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" type="text/css" href="<?php echo css_url('printer'); ?>" media="print" />
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
         
         
 
         <script type="text/javascript" src="<?php echo js_url('vendors/jquery-1.11.2.min'); ?>"></script>
+        <script type="text/javascript" src="<?php echo js_url('vendors/cheet'); ?>"></script>
+        <script type="text/javascript" src="<?php echo js_url('vendors/angular'); ?>"></script>
+        <script type="text/javascript" src="<?php echo js_url('konami'); ?>"></script>
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         
     </head>
     <body>
+        
+        <div class="konami hidden" onclick="konami()">
+            
+        </div>

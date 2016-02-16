@@ -17,6 +17,31 @@ class Projet extends CI_Controller {
         $data['nb_messages'] = $this->nb_messages;
         $data['user'] = $this->session->userdata('user');
         $data['projets'] = $this->projets->getAll();
+        foreach($data['projets'] as $projet){
+            $marches = $this->marches->getFromProjet($projet->id);
+            $projet->nb_marche_signes = 0;
+            $projet->total_recu = 0;
+            $projet->total_paye = 0;
+            $projet->lots_totaux = $this->lots->countAllFromProjet($projet->id)[0]->nombre;
+            $factures = $this->factures->getFromProjet($projet->id);
+            foreach($marches as $marche){
+                if($marche->devise == 'true'){
+                    $projet->nb_marche_signes ++;
+                }
+                $montants_repartis = $this->montants_repartis->getFromMarches($marche->id);
+                foreach($montants_repartis as $montant_reparti){
+                    array_push($factures, $this->factures->constructeur($montant_reparti->idFacture));
+                }
+            }
+            foreach($factures as $facture){
+                $projet->total_recu = $projet->total_recu + floatval(calc_tva($facture->montantHT, $facture->tva,false))-floatval($facture->avoir);
+                $reglements = $this->reglements->getFromFacture($facture->id);
+                foreach($reglements as $reglement){
+                    $projet->total_paye = $projet->total_paye + floatval($reglement->montant);
+                }                
+            }
+            
+        }
         $data['menu'] = $this->load->view('template/menu', $data, true);
         $data['etats'] = explode(';', $this->configurations->getValeur('select_etat')[0]->valeur);
         $this->load->view('template/header');
@@ -33,11 +58,67 @@ class Projet extends CI_Controller {
         $data['nb_messages'] = $this->nb_messages;
         $data['user'] = $this->session->userdata('user');
         $data['projet'] = $this->projets->getFromUrl($nom)[0]; 
+        /* Commentaire programme
         $data['programmes'] = $this->programmes->getFromProjet($data['projet']->id);
-        $data['marches_cat'] = $this->marches->getCategorie();
-        foreach($data['programmes'] as $programme){
-            $programme->marches = $this->marches->getFromProgramme($programme->idProgramme);       
+        */
+        $data['marches'] = $this->marches->getFromProjet($data['projet']->id);
+        /* Commentaire programme
+        foreach($data['marches'] as $marche){
+            $marche->programmes = $this->marches->getProgrammes($marche->id);
         }
+        */
+        $data['projet']->avenants = 0;
+        $data['projet']->marchesRemplis = 0;
+        $data['projet']->marchesAZero = 0;
+        $data['projet']->devise = 0;
+        $data['projet']->nonDevise = 0;
+        
+        $entreprises = Array();
+        foreach($data['marches'] as $marche){
+            //Nb avenants au projet
+            $data['projet']->avenants = $data['projet']->avenants + intval($this->avenants->countAllFromMarche($marche->id)[0]->nombre);
+            //Nb marches remplis / à zero
+            if($marche->montantHT != "0"){$data['projet']->marchesRemplis = $data['projet']->marchesRemplis + 1;}
+            else{$data['projet']->marchesAZero = $data['projet']->marchesAZero + 1;}
+            //Nb marches devisé/non-devisé
+            if($marche->devise != "false"){$data['projet']->devise = $data['projet']->devise + 1;}
+            else{$data['projet']->nonDevise = $data['projet']->nonDevise + 1;} 
+            
+            //On va chercher Toutes les entreprises travaillant sur le projet
+            //il faut donc remonter dans les avenants
+            $avenants = $this->avenants->getFromMarches($marche->id);
+            //On va enregistrer dans un tableau les entreprises liés aux avenants
+            foreach($avenants as $avenant){
+                array_push($entreprises,$avenant->idEntreprise);
+                $data['totalAvenantsHT'] = $data['totalAvenantsHT'] + floatval($avenant->montantHT);
+                $data['totalAvenantsTTC'] = $data['totalAvenantsTTC'] + calc_tva($avenant->montantHT,$avenant->TVA);
+            }
+            //On va stocker le total des marchés dans un variable.
+            $data['totalMarchesHT'] = $data['totalMarchesHT'] + floatval($marche->montantHT);
+            $data['totalMarchesTTC'] = $data['totalMarchesTTC'] + calc_tva($marche->montantHT,$marche->TVA);
+        }
+        //Il faut ensuite récupérer les factures
+        $factures = $this->factures->getFromProjet($data['projet']->id);
+        foreach($factures as $facture){
+            array_push($entreprises,$facture->idEntreprise);
+            $data['totalFacturesHT'] = $data['totalFacturesHT'] + $facture->montantHT;
+            $data['totalFacturesTTC'] = $data['totalFacturesTTC'] + calc_tva($facture->montantHT, $facture->tva);
+            $data['nbFactures'] = sizeof($factures);
+            $data['reglements'] = $data['reglements'] + $this->reglements->countFromFacture($facture->id)[0]->montant;
+        }
+        //On va supprimer le doublons
+        $ent = array_unique($entreprises);
+        
+        //Et pour chaque entreprise, on va aller chercher toutes ses infos!
+        $entreprises = Array();
+        foreach($ent as $entreprise){
+            array_push($entreprises,$this->entreprises->constructeur($entreprise)[0]);
+        }
+        //On envoie les entreprises à la vue!
+        $data['entreprises'] = $entreprises;
+        $data['principaux'] = $this->lots->countByType($data['projet']->id,"principal")[0]->nombre;
+        $data['secondaires'] = $this->lots->countByType($data['projet']->id,"secondaire")[0]->nombre;
+        $data['categories'] = $this->marches->getCategorie($data['projet']->id);
         $data['menu'] = $this->load->view('template/menu', $data, true);
         $this->load->view('template/header');
         $this->load->view('template/sidebar', $data);
@@ -49,6 +130,7 @@ class Projet extends CI_Controller {
 
         $data = array();
         $data['nb_programmes'] = 0;
+        $data['secteurs'] = $this->secteurs->getAllSecteurs();
 
         $this->form_validation->set_rules('nom', '"Nom"', 'trim|required|encode_php_tags|xss_clean|is_unique[projet.nom]');
         $this->form_validation->set_rules('budget', '"Budget"', 'trim|required|encode_php_tags|numeric|xss_clean');
@@ -71,6 +153,7 @@ class Projet extends CI_Controller {
 
         if ($this->form_validation->run()) {
             $projet = new stdClass();
+            $projet->secteur = json_encode($this->input->post('secteur'));
             $projet->idCompte = $this->input->post('compte');
             $projet->idSociete = $this->input->post('societe');
             $projet->nom = $this->input->post('nom');
@@ -80,53 +163,46 @@ class Projet extends CI_Controller {
             $projet->cp = $this->input->post('codepostal');
             $projet->ville = $this->input->post('ville');
             $projet->commentaire = $this->input->post('commentaire');
-            $projet->url = slugify($projet->nom);
-            $result = $this->projets->add($projet);
-
-            if ($result == true) {
+            $projet->url = ucfirst(slugify("$projet->ville $projet->nom"));
+            $idProjet = $this->projets->add($projet);
+            
+               
+            if ($idProjet == true) {
                 //On créé le dossier du projet
                 shell_exec('cd "/home/srh/serveur/' . $projet->etat . '";'
                         . 'mkdir ' . $projet->url . ';');
+                
                 //On va créer les dossiers de chaque programme
+                /* Commentaire programme
                 $nb_programmes = intval($this->input->post('number_champs'));
                 if ($nb_programmes != 0) {
                     for ($i = 1; $i <= $nb_programmes; $i++) {
                         if($this->input->post("champs$i") != ""){
                             $programme = new stdClass();
                             $programme->nom = slugify($this->input->post("champs$i"));
-                            $programme->idProjet = $result->id;
+                            $programme->idProjet = $idProjet;
                             //On ajoute le programme en BDD
                             $resultat = $this->programmes->add($programme);
-                            
-                            //On récupére id programme enregistré pour créer ses marchés
-                            creer_marches($resultat);
-                            //On crée le dossier du programme
-                            shell_exec('cd "/home/srh/serveur/' . $projet->etat . '/' . $projet->url . '";'
-                                    . 'mkdir ' . $programme->nom . ';');
-                            //On ajoute l'arborescence dans le dossier
-                            shell_exec('cp -r /home/srh/serveur/arborescence/* "/home/srh/serveur/' . $projet->etat . '/' . $projet->url . '/' . $programme->nom . '"');
                         }
                     }
-                } else {
+                } 
+                else {
                     $programme = new stdClass();
                     $programme->nom = slugify("Général");
-                    $programme->idProjet = $result->id;
+                    $programme->idProjet = $idProjet;
                     $result = $this->programmes->add($programme);
-
-                    //On récupére id programme enregistré pour créer ses marchés
-                    creer_marches($result);
-
-                    //On crée le dossier du programme
-                    shell_exec('cd "/home/srh/serveur/' . $projet->etat . '/' . $projet->url . '";'
-                            . 'mkdir ' . $programme->nom . ';');
-                    //On ajoute l'arborescence dans le dossier
-                    shell_exec('cp -r /home/srh/serveur/arborescence/* "/home/srh/serveur/' . $projet->etat . '/' . $projet->url . '/' . $programme->nom . '"');
                 }
+                */
+                //On récupére id programme enregistré pour créer ses marchés
+                creer_marches($idProjet);
+                
+                shell_exec('cp -r /home/srh/serveur/ARBORESCENCE/* "/home/srh/serveur/' . $projet->etat . '/' . $projet->url . '/"');        
+                
                 redirect(base_url().'projet');
             }
         }
-        $data['compte'] = $this->comptes_bancaires->getCompte();
         $data['societes'] = $this->societes->getAll();
+        $data['comptes'] = $this->comptes_bancaires->getFromSociete($data['societes'][0]->id);
         $data['nb_messages'] = $this->nb_messages;
         $data['user'] = $this->session->userdata('user');
         $data['select_etat'] = explode(';', $this->configurations->getValeur('select_etat')[0]->valeur);
@@ -188,6 +264,7 @@ class Projet extends CI_Controller {
 
         $data = array();
         $data['old_projet'] = $this->projets->getFromUrl($nom);
+        $data['secteurs'] = $this->secteurs->getAllSecteurs();
         if(!empty($data['old_projet'])){
             $data['old_projet'] = $data['old_projet'][0];
         }else{
@@ -206,6 +283,7 @@ class Projet extends CI_Controller {
 
         if ($this->form_validation->run()) {
             $projet = new stdClass();
+            $projet->secteur = json_encode($this->input->post('secteur'));
             $projet->idCompte = $this->input->post('compte');
             $projet->idSociete = $this->input->post('societe');
             $projet->nom = $this->input->post('nom');
@@ -215,6 +293,7 @@ class Projet extends CI_Controller {
             $projet->ville = $this->input->post('ville');
             $projet->commentaire = $this->input->post('commentaire');
             $projet->url = slugify($projet->nom);
+            
             $result = $this->projets->modify($projet, $data['old_projet']->id);
 
             if ($result == true) {
@@ -222,7 +301,7 @@ class Projet extends CI_Controller {
                 if($data['old_projet']->url != $projet->url){
                     shell_exec('mv "/home/srh/serveur/'.$data['old_projet']->etat.'/'.$data['old_projet']->url.'" "/home/srh/serveur/'.$data['old_projet']->etat.'/'.$projet->url.'"');
                 }
-                
+                /* Commentaire programme
                 //On vérifie si on a ajouté des programmes
                 $nouveaux = intval($this->input->post('number_champs')) - intval($this->input->post('old_number_champs'));
                 if ($nouveaux > 0) {
@@ -234,17 +313,9 @@ class Projet extends CI_Controller {
                             $programme->idProjet = $data['old_projet']->id;
                             //On ajoute le programme en BDD
                             $result = $this->programmes->add($programme);
-                            
-                            //On récupére id programme enregistré pour créer ses marchés
-                            creer_marches($result);
-                            //On crée le dossier du programme
-                            shell_exec('cd "/home/srh/serveur/' . $data['old_projet']->etat . '/' . $projet->url . '";'
-                                    . 'mkdir ' . $programme->nom . ';');
-                            //On ajoute l'arborescence dans le dossier
-                            shell_exec('cp -r /home/srh/serveur/arborescence/* "/home/srh/serveur/' . $data['old_projet']->etat . '/' . $projet->url . '/' . $programme->nom . '"');
                         }
                     }
-                }
+                }*/
                 
                 redirect(base_url()."projet/");
             }

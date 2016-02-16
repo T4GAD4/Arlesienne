@@ -2,11 +2,17 @@
     <br/>
     <div class="row parametres">
         <input type="button" class="btn btn-warning pull-left" onclick="history.go(-1)" value="Retour"/>
-    <?php if ($user->compte == "developpeur") { ?>
-            <a href="utilisateur/ajouter" class="btn btn-info">Créer un nouvel utilisateur</a>      
+    <?php if ($user->compte == "developpeur" || $user->compte == "associé") { ?>
+            <a href="<?php echo base_url('utilisateur/ajouter'); ?>" class="btn btn-info">Créer un nouvel utilisateur</a>      
     <?php } ?>
     </div>
-    <input id="search" type="text" class="input-md form-control" placeholder="Rechercher..."/>
+    <div class="row noPadding">
+        <div class="module__tools">
+            <div class="custom-search">
+                <input class="custom-search-input" type="search" id="search" placeholder="Rechercher...">
+            </div>
+        </div>
+    </div>
     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
         <?php
         $x = 0;
@@ -27,7 +33,7 @@
                     <p>Email : <span><?php echo $utilisateur->mail ?></span></p>
                     <p>Pseudo : <span><?php echo $utilisateur->pseudo; ?></span></p>
                     <p>Etat : <span><b><?php echo $utilisateur->actif; ?></b></span></p>
-                    <?php if ($user->compte == "developpeur") { ?>
+                    <?php if ($user->compte == "developpeur" || $user->id == $utilisateur->id) { ?>
                         <a href="<?php echo site_url('utilisateur/modifier/'.$utilisateur->id); ?>" class="btn btn-info pull-right">Modifier</a> 
                     <?php } ?>
                 </div>

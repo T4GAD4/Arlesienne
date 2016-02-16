@@ -46,21 +46,10 @@ class Entreprise extends CI_Controller {
             $entreprise->ville = $this->input->post('ville');
             $entreprise->commentaire = $this->input->post('commentaire');
             $entreprise->data = $this->input->post('data');
-            
-            var_dump($entreprise);
             // On ajoute le contact
-            //$contact->id = $this->contacts->creer($contact);
+            $entreprise->id = $this->entreprises->creer($entreprise);
             
-            //Ensuite ajouter les postes dans l'entreprise
-//            $liaisons = json_decode($this->input->post('entreprises'));
-//            $poste_entreprises = new stdClass();
-//            foreach($liaisons as $liaison){
-//                $poste_entreprises->idContact = $contact->id;
-//                $poste_entreprises->idEntreprise = $liaison->id;
-//                $poste_entreprises->poste = $liaison->poste;
-//                $this->poste_entreprise->creer($poste_entreprises);
-//            }
-            
+            redirect(base_url('contact'));
         }
         $data = array();
         $data['nb_messages'] = $this->nb_messages;

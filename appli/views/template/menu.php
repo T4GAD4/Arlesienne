@@ -8,7 +8,7 @@
                     <span class="sr-only">Menu</span>
                     Menu
                 </button>
-                <a class="navbar-brand" href="#menu-toggle" id="menu-toggle">Arlesienne</a>
+                <a class="navbar-brand" href="#menu-toggle" id="menu-toggle"><span><img style="max-height:30px;margin-top:-5px;" src="<?php echo img_url('logo_arlesienne_moyen.png'); ?>" alt="Logo arlesienne"/>&nbsp;&nbsp;Arlesienne</span></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -36,7 +36,7 @@
                             <li class="favoris"><a onclick="favoris('<?php echo control_url() ;?>')"/><span class='not-color'><i class="glyphicon glyphicon-star-empty"></i> Ajouter aux favoris</span></a></li>
                         </ul>
                     </li>
-                    <li><a data-toggle="modal" data-target="#modal_message"><span><i class="glyphicon glyphicon-envelope"></i></span>Nouveau message</a></li>
+                    <li><a data-toggle="modal" data-target="#modal_message"><span><i class="glyphicon glyphicon-envelope"></i></span>Contacter un collègue</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
@@ -45,29 +45,5 @@
     <!--        Fil d'ariane-->
     <div class="breadcrumb">
         <?php echo set_breadcrumb(); ?>
-    </div>
-    <!--        Modal de la connexion!-->
-    <div class="modal fade bs-example-modal-sm modal_connexion" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" data-show="true" data-keyboard="false"  data-backdrop="static">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Connexion</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">Identifiant</label>
-                      <input type="text" class="form-control" name="identifiant" placeholder="Entrez votre identifiant">
-                    </div>
-                    <div class="form-group">
-                      <label for="exampleInputPassword1">Mot de passe</label>
-                      <input type="password" name="password" class="form-control" placeholder="Entrez votre mot de passe">
-                    </div>
-                    <span class="modal_error"></span>
-                </div>
-                <div class="modal-footer">
-                    <input type="submit" value="Se connecter" class="btn btn-primary submit_connexion"/>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
