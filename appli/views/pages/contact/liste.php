@@ -19,7 +19,6 @@
 
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane fade in active" id="contacts">
-
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                 <div class="row"><a href="contact/ajouter" class="btn btn-info pull-right">Créer un nouveau contact</a></div>
                 <?php
@@ -31,7 +30,7 @@
                         <div class="panel-heading" role="tab" id="headingOne">
                             <h4 class="panel-title">
                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $x; ?>" aria-expanded="false" aria-controls="collapseOne">
-                                    <?php echo $contact->nom . ' ' . $contact->prenom; ?><a class="a-fiche-contact" data-toggle="tooltip" title="" data-original-title="Fiche de renseignement contact" href="<?= base_url('fiche-contact/vue/'.$contact->id); ?>"><i class="fa fa-file-text"></i></a>
+                                    <?php echo $contact->nom . ' ' . $contact->prenom; ?><a href="<?php echo site_url('contact/modifier/' . $contact->id); ?>" style='margin-left:20px;color:' class="a-fiche-contact"><i class='fa fa-gears'></i></a><a class="a-fiche-contact" data-toggle="tooltip" title="" data-original-title="Fiche de renseignement contact" href="<?= base_url('fiche-contact/vue/'.$contact->id); ?>"><i class="fa fa-file-text"></i></a>
                                 </a>
                             </h4>
                         </div>
@@ -58,8 +57,7 @@
                                             }
                                         ?>
                                     </div> 
-                                </div>      
-                                <a href="<?php echo site_url('contact/modifier/' . $contact->id); ?>" class="btn btn-info pull-right">Modifier</a> 
+                                </div>  
                             </div>
                         </div>
                     </div>
@@ -76,12 +74,12 @@
                 $x = 0;
                 foreach ($entreprises as $entreprise) {
                     $x++;
-                    ?>
+                ?>
                     <div class="panel panel-default searchable" data-search="<?php echo $entreprise->nom?>">
                         <div class="panel-heading" role="tab" id="headingOne">
                             <h4 class="panel-title">
                                 <a data-toggle="collapse" data-parent="#accordion" href="#entreprise<?php echo $x; ?>" aria-expanded="false" aria-controls="collapseOne">
-                                    <?php echo $entreprise->nom; ?>
+                                    <?php echo $entreprise->nom; ?><a href="<?php echo site_url('entreprise/modifier/' . $entreprise->id); ?>" style='margin-left:20px;color:' class="a-fiche-contact"><i class='fa fa-gears'></i></a>
                                 </a>
                             </h4>
                         </div>
@@ -103,7 +101,6 @@
                                         ?>
                                     </div> 
                                 </div>                      
-                                <a href="<?php echo site_url('entreprise/modifier/' . $entreprise->id); ?>" class="btn btn-info pull-right">Modifier</a> 
                             </div>
                         </div>
                     </div>
@@ -113,5 +110,4 @@
             </div>
         </div>
     </div>
-
 </div>

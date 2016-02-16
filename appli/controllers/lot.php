@@ -61,6 +61,14 @@ class Lot extends CI_Controller {
             $this->form_validation->set_rules('type_surface[terrain]', '"Type de surface"', 'encode_php_tags|xss_clean');
             $this->form_validation->set_rules('pieces[]', '"Piéces"', 'encode_php_tags|xss_clean');
             $this->form_validation->set_rules('surfaces[]', '"Surfaces"', 'encode_php_tags|xss_clean');
+            if($this->input->post('tvaprixnetvendeur') != 0 || $this->input->post('tvaprixnetvendeur') != "" || $this->input->post('tvaprixnetvendeur') != "0"){
+                $this->form_validation->set_rules('typeTVA', '"Type TVA"', 'required|encode_php_tags|xss_clean');
+            }else{
+                $this->form_validation->set_rules('typeTVA', '"Type TVA"', 'encode_php_tags|xss_clean');
+            }
+            $this->form_validation->set_rules('tvaprixnetvendeur', '"Tva prix net vendeur"', 'encode_php_tags|xss_clean|numeric');
+            $this->form_validation->set_rules('prixnetvendeur', '"Prix net vendeur"', 'encode_php_tags|xss_clean|numeric');
+            $this->form_validation->set_rules('fraisagence', '"Frais d\'agence"', 'encode_php_tags|xss_clean|numeric');
 
             $surfaces = array_combine($this->input->post('pieces'), $this->input->post('surfaces'));
             $data['save_surfaces'] = $surfaces;
@@ -93,6 +101,10 @@ class Lot extends CI_Controller {
                 $lot->numero_copro = $this->input->post('numero_copro');
                 $lot->numero_pdl_edf = $this->input->post('numero_pdl_edf');
                 $lot->numero_postal = $this->input->post('numero_postal');
+                $lot->typeTVA = $this->input->post('typeTVA');
+                $lot->tvaprixnetvendeur = $this->input->post('tvaprixnetvendeur');
+                $lot->prixnetvendeur = $this->input->post('prixnetvendeur');
+                $lot->fraisagence = $this->input->post('fraisagence');
 
                 $id = $this->lots->insert($lot)->id;
 
@@ -147,6 +159,14 @@ class Lot extends CI_Controller {
             $this->form_validation->set_rules('pieces_existantes[]', '"Piéces existantes"', 'encode_php_tags|xss_clean');
             $this->form_validation->set_rules('surfaces_existantes[]', '"Surfaces existantes"', 'encode_php_tags|xss_clean');
             $this->form_validation->set_rules('id_existants[]', '"Id existants"', 'encode_php_tags|xss_clean');
+            if($this->input->post('tvaprixnetvendeur') != 0 || $this->input->post('tvaprixnetvendeur') != "" || $this->input->post('tvaprixnetvendeur') != "0"){
+                $this->form_validation->set_rules('typeTVA', '"Type TVA"', 'required|encode_php_tags|xss_clean');
+            }else{
+                $this->form_validation->set_rules('typeTVA', '"Type TVA"', 'encode_php_tags|xss_clean');
+            }
+            $this->form_validation->set_rules('tvaprixnetvendeur', '"Tva prix net vendeur"', 'encode_php_tags|xss_clean|numeric');
+            $this->form_validation->set_rules('prixnetvendeur', '"Prix net vendeur"', 'encode_php_tags|xss_clean|numeric');
+            $this->form_validation->set_rules('fraisagence', '"Frais d\'agence"', 'encode_php_tags|xss_clean|numeric');
 
             $surfaces = array_combine($this->input->post('pieces'), $this->input->post('surfaces'));
 
@@ -178,6 +198,10 @@ class Lot extends CI_Controller {
                 $lot->numero_copro = $this->input->post('numero_copro');
                 $lot->numero_pdl_edf = $this->input->post('numero_pdl_edf');
                 $lot->numero_postal = $this->input->post('numero_postal');
+                $lot->typeTVA = $this->input->post('typeTVA');
+                $lot->tvaprixnetvendeur = $this->input->post('tvaprixnetvendeur');
+                $lot->prixnetvendeur = $this->input->post('prixnetvendeur');
+                $lot->fraisagence = $this->input->post('fraisagence');
 
                 $this->lots->modify($lot, $id);
                 //Juste pour les pieces que l'on crée!
