@@ -109,7 +109,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('actions','avenants','lots','surfaces','fiches','secteurs','previsionnels','bug','montants_repartis','marche_programme','contacts','emailing','programmes','utilisateurs','reglements','societes','comptes_bancaires','mouvements','factures','marches','entreprises','configurations','poste_entreprise', 'projets');
+$autoload['model'] = array('rappels','actions','avenants','lots','surfaces','fiches','secteurs','previsionnels','bug','montants_repartis','marche_programme','contacts','emailing','programmes','utilisateurs','reglements','societes','comptes_bancaires','mouvements','factures','marches','entreprises','configurations','poste_entreprise', 'projets');
 
 
 /* End of file autoload.php */

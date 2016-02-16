@@ -30,7 +30,19 @@
                         <div class="panel-heading" role="tab" id="headingOne">
                             <h4 class="panel-title">
                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $x; ?>" aria-expanded="false" aria-controls="collapseOne">
-                                    <?php echo $contact->nom . ' ' . $contact->prenom; ?><a href="<?php echo site_url('contact/modifier/' . $contact->id); ?>" style='margin-left:20px;color:' class="a-fiche-contact"><i class='fa fa-gears'></i></a><a class="a-fiche-contact" data-toggle="tooltip" title="" data-original-title="Fiche de renseignement contact" href="<?= base_url('fiche-contact/vue/'.$contact->id); ?>"><i class="fa fa-file-text"></i></a>
+                                    <?php echo $contact->nom . ' ' . $contact->prenom; ?>
+                                    <a data-toggle="tooltip" title="" data-original-title="Actions" href="<?php echo site_url('actionsContacts/liste/' . $contact->id); ?>" style='margin-left:20px;color:' class="a-fiche-contact">
+                                        <i class='fa fa-list-ul'></i>
+                                    </a>
+                                    <a data-toggle="tooltip" title="" data-original-title="Rappels" href="<?php echo site_url('rappel/liste/' . $contact->id); ?>" style='margin-left:20px;color:' class="a-fiche-contact">
+                                        <i class='fa fa-clock-o'></i>
+                                    </a>
+                                    <a href="<?php echo site_url('contact/modifier/' . $contact->id); ?>" style='margin-left:20px;color:' class="a-fiche-contact">
+                                        <i class='fa fa-gears'></i>
+                                    </a>
+                                    <a class="a-fiche-contact" data-toggle="tooltip" title="" data-original-title="Fiche de renseignement contact" href="<?= base_url('fiche-contact/vue/'.$contact->id); ?>">
+                                        <i class="fa fa-file-text"></i>
+                                    </a>
                                 </a>
                             </h4>
                         </div>

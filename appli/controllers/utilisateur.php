@@ -75,7 +75,7 @@ class Utilisateur extends CI_Controller {
             $utilisateur->pseudo = $this->input->post('pseudo');
             $utilisateur->actif = $this->input->post('actif');
             $utilisateur->compte = $this->input->post('compte');
-            $result = $this->utilisateurs->modify($utilisateur,$id);
+            $result = $this->utilisateurs->update($utilisateur,$id);
             if($result == true){
                 //Requete reussie! :)
                 redirect('utilisateur/');
@@ -102,7 +102,7 @@ class Utilisateur extends CI_Controller {
         
     }
     
-    public function modifyourself($id = "") {
+    public function updateourself($id = "") {
         $data = array();$data['nb_messages'] = $this->nb_messages;
         $data['user'] = $this->session->userdata('user');
         if($id == "" || $id != $data['user']->id){
@@ -121,7 +121,7 @@ class Utilisateur extends CI_Controller {
             $utilisateur->prenom = $this->input->post('prenom');
             $utilisateur->mail = $this->input->post('mail');
             $utilisateur->pseudo = $this->input->post('pseudo');
-            $result = $this->utilisateurs->modify($utilisateur,$id);
+            $result = $this->utilisateurs->update($utilisateur,$id);
             if($result == true){
                 //Requete reussie! :)
                 redirect('utilisateur/');
@@ -132,7 +132,7 @@ class Utilisateur extends CI_Controller {
                 $this->load->view('template/header');
                 $this->load->view('template/sidebar', $data);
                 echo '<h3 style="color:red">Une erreur s\'est produite lors de la modification de l\'utilisateur, Contactez le pôle informatique!</h3>';
-                $this->load->view('pages/utilisateur/modify_yourself');
+                $this->load->view('pages/utilisateur/update_yourself');
                 $this->load->view('template/footer');
                 //$this->output->enable_profiler(TRUE);
                 return false;
@@ -143,7 +143,7 @@ class Utilisateur extends CI_Controller {
         $data['menu'] = $this->load->view('template/menu', $data, true);
         $this->load->view('template/header');
         $this->load->view('template/sidebar', $data);
-        $this->load->view('pages/utilisateur/modify_yourself');
+        $this->load->view('pages/utilisateur/update_yourself');
         $this->load->view('template/footer');
         
     }

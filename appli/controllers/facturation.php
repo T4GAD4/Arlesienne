@@ -141,7 +141,7 @@ class Facturation extends CI_Controller {
             $facture->rg = $this->input->post('rg');
             $facture->avoir = $this->input->post('avoir');
 
-            $this->factures->modify($facture, $id);
+            $this->factures->update($facture, $id);
 
             redirect(base_url() . 'facturation/details/' . $id);
         }
@@ -302,7 +302,7 @@ class Facturation extends CI_Controller {
             $reglement->idCompte = $this->input->post('compte');
             $reglement->montant = $this->input->post('montant');
 
-            $result = $this->reglements->modify($reglement, $id_reglement);
+            $result = $this->reglements->update($reglement, $id_reglement);
 
             if ($result) {
                 redirect(base_url() . 'facturation/regler/' . $id);

@@ -49,7 +49,7 @@ class Surfaces extends CI_Model {
     }
     
     
-    public function modify($data = '', $id = 0){
+    public function update($data = '', $id = 0){
         
         if($data == '' || $id == 0){
             return false;

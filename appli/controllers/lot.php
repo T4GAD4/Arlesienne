@@ -203,7 +203,7 @@ class Lot extends CI_Controller {
                 $lot->prixnetvendeur = $this->input->post('prixnetvendeur');
                 $lot->fraisagence = $this->input->post('fraisagence');
 
-                $this->lots->modify($lot, $id);
+                $this->lots->update($lot, $id);
                 //Juste pour les pieces que l'on crée!
                 foreach ($surfaces as $key => $value) {
                     $surface = new StdClass();
@@ -226,7 +226,7 @@ class Lot extends CI_Controller {
                     var_dump($surface_existante);
                     if($surface_existante->taille != $surface_existante->piece){
                         //Cela veut dire que les deux ne sont pas vides!
-                        $this->surfaces->modify($surface_existante,$this->input->post('id_existants')[$i]);
+                        $this->surfaces->update($surface_existante,$this->input->post('id_existants')[$i]);
                     }else{
                         //ils sont tout les deux vides, on supprime donc!
                         $this->surfaces->delete($this->input->post('id_existants')[$i]);

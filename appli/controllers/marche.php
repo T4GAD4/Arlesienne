@@ -89,7 +89,7 @@ class Marche extends CI_Controller {
             $marche->devise = $this->input->post('devise');
             $marche->caution = intval($this->input->post('caution'));
             
-            $result = $this->marches->modify($marche,$id);
+            $result = $this->marches->update($marche,$id);
             
             /* Commentaire programme
             $programmesAssociés = $this->input->post('liste');

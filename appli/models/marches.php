@@ -100,7 +100,7 @@ class Marches extends CI_Model {
         return $categories;
     }
     
-    public function modify($data = '', $id = 0){
+    public function update($data = '', $id = 0){
         
         if($data == '' || $id == 0){
             return false;
