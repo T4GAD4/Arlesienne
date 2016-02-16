@@ -89,6 +89,43 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-12">
+                <h2 class="hr">Prix initial</h2>
+            </div>
+            <div class="row" style="margin:0;">
+                <div class="control-group">
+                    <label class="control-label col-sm-3 col-centered" for="">Prix net vendeur : </label>
+                    <div class="controls col-xs-12 col-sm-8 col-md-8 col-centered">
+                        <input id="prixnetvendeur" name="prixnetvendeur" type="text" placeholder="" class="form-control" value="<?= set_value('prixnetvendeur'); ?>" >
+                        <?php echo form_error('prixnetvendeur'); ?>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group paddingTop">
+                <label class="control-label col-sm-3 col-centered" for="typeTVA">Type TVA :</label>  
+                <div class="controls col-xs-12 col-sm-8 col-md-8 col-centered" style='text-align:center;'>
+                    <h5 style='color:whitesmoke;'><input type="radio" value="montant" name="typeTVA"/>&nbsp;&nbsp;Montant&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="pourcentage" name="typeTVA"/>&nbsp;&nbsp;Pourcentage</h5>
+                <?php echo form_error('typeTVA'); ?>
+                    </div>
+            </div>
+            <div class="row" style="margin:0;">
+                <div class="control-group">
+                    <label class="control-label col-sm-3 col-centered" for="">TVA : </label>
+                    <div class="controls col-xs-12 col-sm-8 col-md-8 col-centered">
+                        <input id="tvaprixnetvendeur" name="tvaprixnetvendeur" type="text" placeholder="" class="form-control" value="<?= set_value('tvaprixnetvendeur'); ?>" >
+                        <?php echo form_error('tvaprixnetvendeur'); ?>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin:0;">
+                <div class="control-group">
+                    <label class="control-label col-sm-3 col-centered" for="">Frais d'agence TTC : </label>
+                    <div class="controls col-xs-12 col-sm-8 col-md-8 col-centered">
+                        <input id="fraisagence" name="fraisagence" type="text" placeholder="" class="form-control" value="<?= set_value('fraisagence'); ?>" >
+                        <?php echo form_error('fraisagence'); ?>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-xs-12">
                     <input type="button" class="btn btn-warning pull-left" onclick="history.go(-1)" value="Annuler"/>

@@ -18,7 +18,7 @@
         <div role="tabpanel" class="fade tab-pane active in" id="principal"> 
             <div class="panel-group" id="accordion-lots" role="tablist" aria-multiselectable="false">
                 <?php $x=0; foreach ($principaux as $lot) { ?>
-                    <div class="panel panel-default">
+                    <div class="panel panel-default" class="searchable" data-search="<?= $lot->reference.' '.$lot->numero_lot; ?>">
                         <div class="panel-heading" role="tab" id="headingThree">
                             <h4 class="panel-title">
                                 <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#principaux<?= $x; ?>" aria-expanded="false" aria-controls="collapse<?= $x; ?>">
@@ -65,7 +65,7 @@
         <div role="tabpanel" class="fade tab-pane" id="secondaire">
             <div class="panel-group" id="accordion-lots" role="tablist" aria-multiselectable="true">
                 <?php $x=0; foreach ($secondaires as $lot) { ?>
-                    <div class="panel panel-default">
+                    <div class="panel panel-default" class="searchable" data-search="<?= $lot->reference.' '.$lot->numero_lot; ?>">
                         <div class="panel-heading" role="tab" id="headingThree">
                             <h4 class="panel-title">
                                 <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#secondaires<?= $x; ?>" aria-expanded="false" aria-controls="collapse<?= $x; ?>">
