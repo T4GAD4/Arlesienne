@@ -5,7 +5,6 @@ class Entreprise extends CI_Controller {
     /**
      * 
      * Auteur : CAPI Aurélien
-     * Co-développeur : LEFEBVRE Anthony
      * 
      */
         
@@ -13,6 +12,14 @@ class Entreprise extends CI_Controller {
             $result = $this->entreprises->getAll();
             echo output($result);
         }
+        
+        public function creer()
+	{
+            $entreprise = $_REQUEST['data'];
+            $result = new stdClass();
+            $result->id = $this->entreprises->creer($entreprise);
+            echo output($result);
+	}
         
 }
 

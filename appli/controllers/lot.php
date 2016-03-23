@@ -15,6 +15,7 @@ class Lot extends CI_Controller {
         if ($url == "") {
             redirect($_SERVER['HTTP_REFERER']);
         }
+        $url = str_replace('%20',' ',$url);
         $data = array();
         $data['nb_messages'] = $this->nb_messages;
         $data['user'] = $this->session->userdata('user');
@@ -41,6 +42,7 @@ class Lot extends CI_Controller {
         if ($url == "") {
             redirect($_SERVER['HTTP_REFERER']);
         }
+        $url = str_replace('%20',' ',$url);
         $data = array();
         $data['nb_messages'] = $this->nb_messages;
         $data['user'] = $this->session->userdata('user');
@@ -48,7 +50,7 @@ class Lot extends CI_Controller {
 
         if ($this->input->post()) {
 
-            $this->form_validation->set_rules('numero_lot', '"Numero du lot"', 'trim|required|encode_php_tags|xss_clean|numero_lot[' . $data['projet']->id . '.' . $this->input->post('numero_lot') . ']');
+            $this->form_validation->set_rules('numero_lot', '"Numero du lot"', 'trim|required|encode_php_tags|xss_clean|numero_lot[' . $data['projet']->id . '$' . $this->input->post('numero_lot') . ']');
             $this->form_validation->set_rules('numero_copro', '"Numero de copro"', 'trim|encode_php_tags|xss_clean');
             $this->form_validation->set_rules('numero_postal', '"Numero postal"', 'trim|encode_php_tags|xss_clean');
             $this->form_validation->set_rules('numero_pdl_edf', '"Numero PDL EDF"', 'trim|encode_php_tags|xss_clean');
@@ -63,8 +65,10 @@ class Lot extends CI_Controller {
             $this->form_validation->set_rules('surfaces[]', '"Surfaces"', 'encode_php_tags|xss_clean');
             if($this->input->post('tvaprixnetvendeur') != 0 || $this->input->post('tvaprixnetvendeur') != "" || $this->input->post('tvaprixnetvendeur') != "0"){
                 $this->form_validation->set_rules('typeTVA', '"Type TVA"', 'required|encode_php_tags|xss_clean');
+                $this->form_validation->set_rules('typefraisagence', '"Type frais d\'agence"', 'required|encode_php_tags|xss_clean');
             }else{
                 $this->form_validation->set_rules('typeTVA', '"Type TVA"', 'encode_php_tags|xss_clean');
+                $this->form_validation->set_rules('typefraisagence', '"Type frais d\'agence"', 'encode_php_tags|xss_clean');
             }
             $this->form_validation->set_rules('tvaprixnetvendeur', '"Tva prix net vendeur"', 'encode_php_tags|xss_clean|numeric');
             $this->form_validation->set_rules('prixnetvendeur', '"Prix net vendeur"', 'encode_php_tags|xss_clean|numeric');
@@ -104,6 +108,7 @@ class Lot extends CI_Controller {
                 $lot->typeTVA = $this->input->post('typeTVA');
                 $lot->tvaprixnetvendeur = $this->input->post('tvaprixnetvendeur');
                 $lot->prixnetvendeur = $this->input->post('prixnetvendeur');
+                $lot->typefraisagence = $this->input->post('typefraisagence');
                 $lot->fraisagence = $this->input->post('fraisagence');
 
                 $id = $this->lots->insert($lot)->id;
@@ -120,6 +125,12 @@ class Lot extends CI_Controller {
                     }
                 }
                 $this->liste($data['projet']->url);
+            }else{
+                $data['menu'] = $this->load->view('template/menu', $data, true);
+                $this->load->view('template/header');
+                $this->load->view('template/sidebar', $data);
+                $this->load->view('pages/lots/creer');
+                $this->load->view('template/footer');
             }
         } else {
             $data['menu'] = $this->load->view('template/menu', $data, true);
@@ -143,7 +154,7 @@ class Lot extends CI_Controller {
 
         if ($this->input->post()) {
 
-            $this->form_validation->set_rules('numero_lot', '"Numero du lot"', 'trim|required|encode_php_tags|xss_clean|numero_lot_update[' . $data['projet']->id . '.' . $this->input->post('numero_lot') . '.' . $id . ']');
+            $this->form_validation->set_rules('numero_lot', '"Numero du lot"', 'trim|required|encode_php_tags|xss_clean|numero_lot_update[' . $data['projet']->id . '$' . $this->input->post('numero_lot') . '$' . $id . ']');
             $this->form_validation->set_rules('numero_copro', '"Numero de copro"', 'trim|encode_php_tags|xss_clean');
             $this->form_validation->set_rules('numero_postal', '"Numero postal"', 'trim|encode_php_tags|xss_clean');
             $this->form_validation->set_rules('numero_pdl_edf', '"Numero PDL EDF"', 'trim|encode_php_tags|xss_clean');
@@ -161,15 +172,17 @@ class Lot extends CI_Controller {
             $this->form_validation->set_rules('id_existants[]', '"Id existants"', 'encode_php_tags|xss_clean');
             if($this->input->post('tvaprixnetvendeur') != 0 || $this->input->post('tvaprixnetvendeur') != "" || $this->input->post('tvaprixnetvendeur') != "0"){
                 $this->form_validation->set_rules('typeTVA', '"Type TVA"', 'required|encode_php_tags|xss_clean');
+                $this->form_validation->set_rules('typefraisagence', '"Type frais d\'agence"', 'required|encode_php_tags|xss_clean');
             }else{
                 $this->form_validation->set_rules('typeTVA', '"Type TVA"', 'encode_php_tags|xss_clean');
+                $this->form_validation->set_rules('typefraisagence', '"Type frais d\'agence"', 'encode_php_tags|xss_clean');
             }
             $this->form_validation->set_rules('tvaprixnetvendeur', '"Tva prix net vendeur"', 'encode_php_tags|xss_clean|numeric');
             $this->form_validation->set_rules('prixnetvendeur', '"Prix net vendeur"', 'encode_php_tags|xss_clean|numeric');
             $this->form_validation->set_rules('fraisagence', '"Frais d\'agence"', 'encode_php_tags|xss_clean|numeric');
 
             $surfaces = array_combine($this->input->post('pieces'), $this->input->post('surfaces'));
-
+            $data['save_surfaces'] = $surfaces;
             if ($this->form_validation->run()) {
                 $plancher_brute = 0;
                 if (isset($this->input->post('type_surface')["plancher_brute"])) {
@@ -201,6 +214,7 @@ class Lot extends CI_Controller {
                 $lot->typeTVA = $this->input->post('typeTVA');
                 $lot->tvaprixnetvendeur = $this->input->post('tvaprixnetvendeur');
                 $lot->prixnetvendeur = $this->input->post('prixnetvendeur');
+                $lot->typefraisagence = $this->input->post('typefraisagence');
                 $lot->fraisagence = $this->input->post('fraisagence');
 
                 $this->lots->update($lot, $id);

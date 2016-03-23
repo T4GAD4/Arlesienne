@@ -33,7 +33,7 @@ class Reglements extends CI_Model {
                 ->where('idFacture', $id)
                 ->get()
                 ->result();
-
+        
         return $regle;
     }
 
@@ -46,6 +46,15 @@ class Reglements extends CI_Model {
         $regle = $this->db->select('*')
                 ->from($this->table)
                 ->where('idFacture', $id)
+                ->get()
+                ->result();
+
+        return $regle;
+    }
+
+    public function getAll() {
+        $regle = $this->db->select('*')
+                ->from($this->table)
                 ->get()
                 ->result();
 

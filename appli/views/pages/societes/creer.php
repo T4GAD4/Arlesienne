@@ -34,13 +34,13 @@
                 </div>
             </div>
 
-            <!-- Text input-->
+            <!-- Date input-->
             <div class="form-group paddingTop">
                 <label class="col-md-2 control-label col-md-offset-2" for="date_creation">Date de création :</label> 
-                <div class='col-md-6 input-group date' id='datetimepicker10'>
-                    <input type='text' name="date_creation" value="<?php echo set_value('date_creation'); ?>" class="input-md form-control" />
+                <div class='col-md-6 input-group date' id='datetimepicker'>
+                    <input type='text' name="date_creation" value="<?php echo set_value('date_creation', Date('Y-m-d')); ?>" class="input-md form-control" />
                     <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar">
+                        <span class="glyphicon glyphicon-calendar"> 
                         </span>
                     </span>
                     <?php echo form_error('date_creation'); ?>

@@ -1,105 +1,141 @@
 $(document).ready(function () {
-    
+
+    $('#exporter').on('click', function (e) {
+        var data = {};
+        data.table = "";
+        $('.table-export').each(function () {
+            data.table += $(this).html().replace(' class="table-striped table-hover table"', '');
+        });
+        var texte = '<html xmlns:x="urn:schemas-microsoft-com:office:excel">\n\
+<head>\n\
+    <!--[if gte mso 9]>\n\
+    <xml>\n\
+        <x:ExcelWorkbook>\n\
+            <x:ExcelWorksheets>\n\
+                <x:ExcelWorksheet>\n\
+                    <x:Name>Sheet 1</x:Name>\n\
+                    <x:WorksheetOptions>\n\
+                        <x:Print>\n\
+                            <x:ValidPrinterInfo/>\n\
+                        </x:Print>\n\
+                    </x:WorksheetOptions>\n\
+                </x:ExcelWorksheet>\n\
+            </x:ExcelWorksheets>\n\
+        </x:ExcelWorkbook>\n\
+    </xml>\n\
+    <![endif]-->\n\
+</head>\n\
+<body>';
+        texte += data.table + '</body></html>';
+
+        window.open('data:application/vnd.ms-excel,' + texte);
+        e.preventDefault();
+    });
+
+    $('#creerContact').on('hidden.bs.modal', function () {
+        $(this).find('form')[0].reset();
+    });
+
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
     });
-    
+
     $('#societeliste').change(charge_compte);
-    
+
     //Bootstrap switch
     $("[name=bootstrapswitch-devise]").on('switchChange.bootstrapSwitch', function (event, state) {
-        if(state == false){
+        if (state == false) {
             $('#devise').val("false");
-        }else{
+        } else {
             $('#devise').val("true");
         }
     });
     $("[name=bootstrapswitch-rg]").on('switchChange.bootstrapSwitch', function (event, state) {
-        if(state == false){
+        if (state == false) {
             $('#rg').val("false");
-        }else{
+        } else {
             $('#rg').val("true");
         }
     });
-    
+
     //Function pour l'ajout de champs
-    $('.addchamps').click(function(){
+    $('.addchamps').click(function () {
         $valeur = $('.champ').length + 1;
-        $('#boxchamps').append('<div id="champs'+$valeur+'" class="control-group champ"><label class="control-label col-sm-2 col-centered">Programme '+$valeur+'</label><div class="controls col-xs-12 col-sm-8 col-md-6 col-centered"><input type="text" class="col-sm-10 col-md-10 col-xs-10 form-control" name="champs'+$valeur+'"/></div></div>');    
+        $('#boxchamps').append('<div id="champs' + $valeur + '" class="control-group champ"><label class="control-label col-sm-2 col-centered">Programme ' + $valeur + '</label><div class="controls col-xs-12 col-sm-8 col-md-6 col-centered"><input type="text" class="col-sm-10 col-md-10 col-xs-10 form-control" name="champs' + $valeur + '"/></div></div>');
         $('#number_champs')[0].value = parseInt($valeur);
         $('.removechamps').removeClass('hidden');
     });
-    
+
     //Function pour l'ajout de champs
-    $('.removechamps').click(function(){
+    $('.removechamps').click(function () {
         $valeur = $('.champ').length;
-        $('#champs'+$valeur).remove();
-        if($valeur == 1){
+        $('#champs' + $valeur).remove();
+        if ($valeur == 1) {
             $('.removechamps').addClass('hidden');
         }
         $valeur--;
         $('#number_champs')[0].value = parseInt($valeur);
     });
-    
+
     //Fonction changement eye open/close
-    $('.eye').on('click',function(){
-        if($(this).attr('class').indexOf("open") != -1){
+    $('.eye').on('click', function () {
+        if ($(this).attr('class').indexOf("open") != -1) {
             $(this).removeClass('glyphicon-eye-open');
             $(this).addClass('glyphicon-eye-close');
-        }else{
+        } else {
             $(this).removeClass('glyphicon-eye-close');
             $(this).addClass('glyphicon-eye-open');
         }
     });
-    
+
     //Chosen
     $(".chosen-select").chosen({'width': "100%"});
-    
+
     //Fonction de mise en etat lu pour message clique
-    $('.non_lus').on('click',function(){
-        var object = {"id":$(this).data('id')};
-          $.post("/AJAX/message/set_lu",object)
-        .success(function (data) {
-        });
+    $('.non_lus').on('click', function () {
+        var object = {"id": $(this).data('id')};
+        $.post("/AJAX/message/set_lu", object)
+                .success(function (data) {
+                });
     });
 
     //Fonction de suppression des favoris utilisateurs
-    $('.glyphicon-remove').on('click',function(){
+    $('.glyphicon-remove').on('click', function () {
         var object = {"remove": $(this).data('value')};
-          $.post("/AJAX/utilisateur/remove_favoris",object)
-        .success(function (data) {
-        });
+        $.post("/AJAX/utilisateur/remove_favoris", object)
+                .success(function (data) {
+                });
     });
-    
+
     var users = [];
     var utilisateurs = "";
     //Recherche des utilisateurs pour envoie des message
-      $.post("/AJAX/utilisateur/getAll")
-        .success(function (data) {
-            data = JSON.parse(data);
-            utilisateurs = data.result;
-            $.each(data.result, function($key,$value){
-                users.push(data.result[$key].prenom+' '+data.result[$key].nom);
-                utilisateurs[$key].np = data.result[$key].prenom+' '+data.result[$key].nom
+    $.post("/AJAX/utilisateur/getAll")
+            .success(function (data) {
+                data = JSON.parse(data);
+                utilisateurs = data.result;
+                $.each(data.result, function ($key, $value) {
+                    users.push(data.result[$key].prenom + ' ' + data.result[$key].nom);
+                    utilisateurs[$key].np = data.result[$key].prenom + ' ' + data.result[$key].nom
+                });
             });
-        });
-        
+
     //Fonction d'envoi de message
-    $('.message_send').on('click',function(e){
+    $('.message_send').on('click', function (e) {
         e.preventDefault();
         var message = $('[name=message]').val();
-        $.each(utilisateurs,function(key,value){
-            if($('[name=destinataire]').val() == utilisateurs[key].np){
+        $.each(utilisateurs, function (key, value) {
+            if ($('[name=destinataire]').val() == utilisateurs[key].np) {
                 id = utilisateurs[key].id
             }
         });
         var object = {"destinataire": id, "message": message};
-          $.post("/AJAX/utilisateur/send_message", object)
-                  .success(function(){
-                      $('#modal_message').removeClass('in');
-                  });
-          });
-    
+        $.post("/AJAX/utilisateur/send_message", object)
+                .success(function () {
+                    $('#modal_message').removeClass('in');
+                });
+    });
+
     $('.typeahead').typeahead({
         hint: true,
         highlight: true,
@@ -109,7 +145,7 @@ $(document).ready(function () {
         name: 'user',
         source: substringMatcher(users)
     });
-    
+
     //appel à la fonction qui va lancer la recherche
     $('#search').keyup(function () {
         search();
@@ -128,10 +164,19 @@ $(document).ready(function () {
 
     //Datetime-picker
     $(function () {
-        $('#datetimepicker10').datetimepicker({
+        $('#datetimepicker').datetimepicker({
             viewMode: 'years',
             format: 'YYYY-MM-DD'
         });
+        $('#datetimepicker1').datetimepicker({
+            viewMode: 'years',
+            format: 'YYYY-MM-DD'
+        });
+        $('#datetimepicker3').datetimepicker({
+            viewMode: 'years',
+            format: 'YYYY-MM-DD'
+        });
+
     });
 
     //Switcher
@@ -229,7 +274,7 @@ function search() {
 //Sauvegarde des favoris
 function favoris($url) {
     var object = {"url": $url};
-      $.post("/AJAX/utilisateur/favoris", object)
+    $.post("/AJAX/utilisateur/favoris", object)
             .success(function (data) {
                 //data = JSON.parse(data);
                 if (data.result === false) {
@@ -259,80 +304,81 @@ function save_gridster() {
         serialisation[$key].image = $(".gridster li")[$key].dataset['image'];
         serialisation[$key].target = $(".gridster li")[$key].dataset['target'];
     });
-    console.log(serialisation);
     var object = {"interface": JSON.stringify(serialisation)};
-      $.post("/AJAX/utilisateur/save_interface", object)
-    .success(function (data) {
-        console.log(data);
-    });
+    $.post("/AJAX/utilisateur/save_interface", object)
+            .success(function (data) {
+                alert('Sauvegardé! :)');
+                document.location.href = "/";
+            });
 }
 //Ajouter un element sur le bureau
 
-$('.submit_widget').on('click',function(e){
-        e.preventDefault();
-        if($('[name=target]')[0].checked){
-            $value = "_blank";
-        }else{
-            $value = "_self";
-        }
-        ajouter_widget($('[name=url]').val(),$('[name=image]').val(),$value);
-    });
-    
-function ajouter_widget($url,$image,$target) {
+$('.submit_widget').on('click', function (e) {
+    e.preventDefault();
+    if ($('[name=target]')[0].checked) {
+        $value = "_blank";
+    } else {
+        $value = "_self";
+    }
+    ajouter_widget($('[name=url]').val(), $('[name=image]').val(), $value);
+});
+
+function ajouter_widget($url, $image, $target) {
     var gridster = $(".gridster ul").gridster().data('gridster');
-    gridster.add_widget('<li data-url="'+$url+'" data-image="'+$image+'" data-target="'+$target+'" style="background:url(\''+$image+'\') 100% 100% no-repeat;background-size:contain;background-position: center center;"><i class="glyphicon glyphicon-trash remove" onclick="remove_widget(this)"></i></li>', 1, 1);
+    gridster.add_widget('<li data-url="' + $url + '" data-image="' + $image + '" data-target="' + $target + '" style="background:url(\'' + $image + '\') 100% 100% no-repeat;background-size:contain;background-position: center center;"><i class="glyphicon glyphicon-trash remove" onclick="remove_widget(this)"></i></li>', 1, 1);
     $('#modal_widget').removeClass('in');
 }
 
-function removeelement(el){
+function removeelement(el) {
     var parent = el.parentNode.parentNode;
     parent.remove();
-    }
+}
 
-function remove_widget(element){
+function remove_widget(element) {
     var parent = element.parentNode;
     var gridster = $(".gridster ul").gridster().data('gridster');
     gridster.remove_widget(parent);
-};
+}
+;
 
 //Typeahead
-    var substringMatcher = function (strs) {
-        return function findMatches(q, cb) {
-            var matches, substringRegex;
+var substringMatcher = function (strs) {
+    return function findMatches(q, cb) {
+        var matches, substringRegex;
 
-            // an object that will be populated with substring matches
-            matches = [];
+        // an object that will be populated with substring matches
+        matches = [];
 
-            // regex used to determine if a string contains the substring `q`
-            substrRegex = new RegExp(q, 'i');
+        // regex used to determine if a string contains the substring `q`
+        substrRegex = new RegExp(q, 'i');
 
-            // iterate through the pool of strings and for any string that
-            // contains the substring `q`, add it to the `matches` object
-            $.each(strs, function (i, str) {
-                if (substrRegex.test(str)) {
-                    matches.push(str);
-                }
-            });
+        // iterate through the pool of strings and for any string that
+        // contains the substring `q`, add it to the `matches` object
+        $.each(strs, function (i, str) {
+            if (substrRegex.test(str)) {
+                matches.push(str);
+            }
+        });
 
-            cb(matches);
-        };
+        cb(matches);
     };
-    
-    function explorer($url){
-        console.log($url);
-        var data = [];
-        data.url = $url;
-        $.post("/AJAX/explorer/ouvrir",data);
-    }
-    
-        
-    function reloadTTC(){
-        var tva = parseInt($('input[name=tva]')[0].value);
-        var montant = parseInt($('input[name=montant]')[0].value);
-        var ttc = (montant*(1+(tva/100)));
-        $('#ttc_total').html(ttc);
-    }
-    
+};
+
+function explorer($url) {
+    console.log($url);
+    var data = [];
+    data.url = $url;
+    $.post("/AJAX/explorer/ouvrir", data);
+}
+
+
+function reloadTTC() {
+    var tva = parseInt($('input[name=tva]')[0].value);
+    var montant = parseInt($('input[name=montant]')[0].value);
+    var ttc = (montant * (1 + (tva / 100)));
+    $('#ttc_total').html(ttc);
+}
+
 function charge_compte() {
     var idSociete = $('#societeliste').val();
     $.post("/AJAX/projet/getCompte", {id: idSociete}).success(function (data) {
@@ -342,6 +388,14 @@ function charge_compte() {
             $('select[name=compte]').append('<option value="' + comptes[key].id + '">' + comptes[key].banque + ' | ' + comptes[key].numero + '</option>')
         });
     });
+}
+
+//Permet de valider le changement d'état du projet
+function validate(url) {
+    var result = prompt('Voulez vous vraiment changer ce projet d\'état? (écrire oui ou non)');
+    if (result == "oui") {
+        document.location.href = url;
+    }
 }
 
     

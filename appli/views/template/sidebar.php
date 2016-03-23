@@ -2,18 +2,17 @@
     <!-- Sidebar -->
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
-            <li class="sidebar-brand">
-                <a href="<?php echo site_url(); ?>">
-                    Accueil
-                </a>
+            <li>
+                <a href="<?php echo site_url(); ?>"><i class="fa fa-home" style="padding-left : 0;padding-right : 10px;"></i> Accueil</a>
             </li>
             <li>
                 <a data-toggle="collapse" data-target="#Projets" aria-expanded="false"><i class="fa fa-connectdevelop" style="padding-left : 0;padding-right : 10px;"></i> Projets</a>
                 <div class="collapse" id="Projets">
                     <a href="<?php echo site_url('projet'); ?>" class="padleft">Liste</a>
-                    <a href="<?php echo site_url('projet/ajouter'); ?>" class="padleft">Créer</a>
+                    <a href="<?php echo site_url('projet/ajouter'); ?>" class="padleft">Créer</a> 
                 </div>
             </li>
+            <?php if($user->compte == "associé"){ ?>
             <li>
                 <a data-toggle="collapse" data-target="#societe" aria-expanded="false"><i class="fa fa-building-o" style="padding-left : 0;padding-right : 10px;"></i> Sociétés</a>
                 <div class="collapse" id="societe">
@@ -21,6 +20,7 @@
                     <a href="<?php echo site_url('societe/ajouter'); ?>" class="padleft">Créer</a>
                 </div>
             </li>
+            <?php } ?>
             <li>
                 <a data-toggle="collapse" data-target="#facture" aria-expanded="false"><i class="fa fa-file-pdf-o" style="padding-left : 0;padding-right : 10px;"></i> Facturation</a>
                 <div class="collapse" id="facture">
@@ -50,6 +50,9 @@
                 <a href="<?php echo site_url('utilisateur/'); ?>"><i class="fa fa-users" style="padding-left : 0;padding-right : 10px;"></i> Utilisateurs</a>
             </li>
             <li>
+                <a href="<?php echo site_url('etats/'); ?>"><i class="fa fa-sticky-note" style="padding-left : 0;padding-right : 10px;"></i> Etats</a>
+            </li>
+            <li>
                 <a data-toggle="collapse" data-target="#email" aria-expanded="false"><i class="fa fa-paper-plane" style="padding-left : 0;padding-right : 10px;"></i>Email</a>
                 <div class="collapse" id="email">
                     <a href="<?php echo site_url('mail/'); ?>" class="padleft">Emails envoyés</a>
@@ -59,6 +62,11 @@
             <li>
                 <a href="<?php echo site_url('bugs/dashboard/add'); ?>"><i class="fa fa-bug" style="padding-left : 0;padding-right : 10px;"></i> Bug?</a>
             </li>
+            <?php if($user->compte == "developpeur"){ ?>
+            <li>
+                <a href="<?php echo site_url('migration/'); ?>"><i class="fa fa-bug" style="padding-left : 0;padding-right : 10px;"></i> Migration</a>
+            </li>
+            <?php } ?>
         </ul>
     </div>
     <!-- /#sidebar-wrapper -->

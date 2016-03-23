@@ -72,10 +72,10 @@
             </div>
             
             <!-- Switcher input-->
-            <div class="form-group paddingTop">
+            <div class="form-group paddingTop center">
                 <label class="col-md-3 control-label col-md-offset-1" for="actif">Compte actif :</label>  
                 <div class="col-md-6">
-                    <div class="col-sm-6 col-lg-4">
+                    <div class="col-sm-6 col-lg-4 center">
                         <p>
                             <input id="type" name='actif_sw' type="checkbox" data-label-text="Actif" data-off-text="Non" data-on-text="Oui">
                         </p>
@@ -90,7 +90,7 @@
                     <?php echo form_error('actif'); ?>
                 </div>
             </div>
-            
+            <br/><br/>
             <!-- Select input-->
             <div class="form-group paddingTop">
                 <label class="col-md-3 control-label col-md-offset-1" for="compte">Type du compte :</label>  
@@ -108,7 +108,7 @@
             <div class="form-group paddingTop">
               <div class="col-md-offset-2 col-md-8">
                   <input type="button" class="btn btn-warning pull-left" onclick="history.go(-1)" value="Annuler"/>
-                <input type="submit" class="btn btn-warning pull-right" value="Modifier"/>
+                <input type="submit" class="btn btn-success pull-right" value="Créer"/>
               </div>
             </div>
 

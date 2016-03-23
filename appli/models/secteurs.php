@@ -21,8 +21,10 @@ class Secteurs extends CI_Model {
         if (!empty($secteurs1) || $secteurs1 == NULL) {            
             foreach ($secteurs1 as $secteur) {
                 $secteur->secteur = json_decode($secteur->secteur);
-                foreach ($secteur->secteur as $value) {
-                    array_push($secteurs, $value);
+                if( $secteur->secteur != false){
+                    foreach ($secteur->secteur as $value) {
+                        array_push($secteurs, $value);
+                    }
                 }
             }
         }
@@ -36,8 +38,10 @@ class Secteurs extends CI_Model {
         if (!empty($secteurs2) || $secteurs2 == NULL) {
             foreach ($secteurs2 as $secteur) {
                 $secteur->secteur = json_decode($secteur->secteur);
-                foreach ($secteur->secteur as $value) {
-                    array_push($secteurs, $value);
+                if($secteur->secteur != false){
+                    foreach ($secteur->secteur as $value) {
+                        array_push($secteurs, $value);
+                    }
                 }
             }
         }

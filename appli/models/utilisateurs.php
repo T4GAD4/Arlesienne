@@ -113,4 +113,15 @@ class Utilisateurs extends CI_Model {
         return $result;
     }
     
+    public function delete($data = '') {
+
+        if ($data == '') {
+            return false;
+        }
+
+        $result = $this->db->delete($this->table, array('id' => $data));
+
+        return $result;
+    }
+    
 }

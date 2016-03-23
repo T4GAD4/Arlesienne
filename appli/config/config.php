@@ -17,7 +17,7 @@
 
 $config['server_url'] = "/home/srh/";
 
-$config['base_url']	= 'http://arlesienne.saint-roch-habitat.fr/arlesiennev3/';
+$config['base_url']	= 'http://arlesienne.saint-roch-habitat.fr/';
 
 /*
 |--------------------------------------------------------------------------
@@ -183,7 +183,7 @@ $config['directory_trigger']	= 'd'; // experimental not currently in use
 | your log files will fill up very fast.
 |
 */
-$config['log_threshold'] = 0;
+$config['log_threshold'] = 4;
 
 /*
 |--------------------------------------------------------------------------

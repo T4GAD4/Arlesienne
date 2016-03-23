@@ -81,6 +81,7 @@
               <div class="col-md-offset-2 col-md-8">
                   <input type="button" class="btn btn-warning pull-left" onclick="history.go(-1)" value="Annuler"/>
                 <input type="submit" class="btn btn-warning pull-right" value="Modifier"/>
+                <a href="<?= base_url('utilisateur/supprimer/'.$utilisateur->id); ?>" class="btn btn-danger pull-right">Supprimer l'utilisateur</a>
               </div>
             </div>
 

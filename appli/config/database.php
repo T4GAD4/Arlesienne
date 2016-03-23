@@ -68,7 +68,7 @@ $db['default']['stricton'] = FALSE;
 
 
 
-$db['arlesienne'] = array( 	
+$db['arlesienne2'] = array( 	
 	'dsn'	=> '',
 	'hostname' => 'localhost',
 	'username' => 'root',

@@ -28,18 +28,20 @@
                     <?php echo form_error('objet'); ?>
                 </div>
             </div>
-            <div class="control-group">
-                <label class="control-label col-sm-2 col-centered" for="budget">Date *</label>
-                <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
-                    <input id="budget" name="date" placeholder="DD-MM-YYYY" type="text" value="<?php echo $facture->dateFacture ?>" class="form-control">
-                        <?php echo form_error('date'); ?>
+            <!-- Date input-->
+            <div class="form-group paddingTop">
+                <label class="col-md-2 control-label col-md-offset-2" for="date">Date :</label> 
+                <div class='col-md-6 input-group date'>
+                    <input type='text' name="date" id='datetimepicker' value="<?php echo $facture->dateFacture; ?>" class="input-md form-control" />
+                    <?php echo form_error('date'); ?>
                 </div>
             </div>
-            <div class="control-group">
-                <label class="control-label col-sm-2 col-centered" for="budget">Date échéance *</label>
-                <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
-                    <input id="budget" name="date_echeance" placeholder="DD-MM-YYYY" type="text" value="<?php echo $facture->dateEcheance ?>" class="form-control">
-                        <?php echo form_error('date_echeance'); ?>
+            <!-- Date input-->
+            <div class="form-group paddingTop">
+                <label class="col-md-2 control-label col-md-offset-2" for="date_echeance">Date échéance :</label> 
+                <div class='col-md-6 input-group date' >
+                    <input type='text' name="date_echeance" id='datetimepicker1' value="<?php echo $facture->dateEcheance ?>" class="input-md form-control" />
+                    <?php echo form_error('date_echeance'); ?>
                 </div>
             </div>
             <div class="control-group">
@@ -49,12 +51,13 @@
                         <?php echo form_error('numero'); ?>
                 </div>
             </div>
+            <p style="color:red;"><b>!ATTENTION! Les virgules ne sont pas acceptées pour les décimales. UNIQUEMENT UN POINT</b></p>
             <h3>Montant : </h3>
             <!-- Number input-->
             <div class="control-group">
                 <label class="control-label col-sm-2 col-centered" for="budget">Montant HT *</label>
                 <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
-                    <input id="budget" name="montantHT" type="number" value="<?php echo $facture->montantHT ?>" class="form-control">
+                    <input id="budget" name="montantHT" type="text" value="<?php echo $facture->montantHT ?>" class="form-control">
                         <?php echo form_error('montantHT'); ?>
                 </div>
             </div>
@@ -63,6 +66,12 @@
                 <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
                     <input id="budget" name="tva" type="number" value="<?php echo $facture->tva ?>" class="form-control">
                         <?php echo form_error('tva'); ?>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label col-sm-2 col-centered" for="budget">Montant TTC</label>
+                <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
+                    <input id="ttc" type="text" class="form-control">
                 </div>
             </div>
             <h3>Options : </h3>
@@ -77,7 +86,7 @@
             <div class="control-group">
                 <label class="control-label col-sm-2 col-centered" for="budget">Avoir</label>
                 <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
-                    <input id="budget" name="avoir" type="number" value="<?php echo $facture->avoir ?>" class="form-control">
+                    <input id="budget" name="avoir" type="text" value="<?php echo $facture->avoir ?>" class="form-control">
                         <?php echo form_error('avoir'); ?>
                 </div>
             </div>
@@ -99,6 +108,28 @@
             $('[name=bootstrapswitch-rg]').bootstrapSwitch('state', false);
             $('#rg').val("false");
         <?php } ?>
+            
+            
+        $('#ttc').on('blur', function(){
+            var ttc = $(this).val();
+            var tva = $('[name=tva]').val();
+            if(ttc != ''){
+                var ht = ttc / (1 + (tva/100));
+                ht = ht.toFixed(2);
+                $('[name=montantHT]').val(ht);
+            }
+        });
+        
+        $('[name=tva]').on('blur', function(){
+            var tva = $(this).val();
+            var ttc = $('#ttc').val();
+            if(ttc != ''){
+                var ht = ttc / (1 + (tva/100));
+                ht = ht.toFixed(2);
+                $('[name=montantHT]').val(ht);
+            }
+        });
+            
     });    
 </script>
 

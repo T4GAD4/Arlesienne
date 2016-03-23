@@ -7,11 +7,16 @@
                 Modification de l'action : 
             </legend>
             <div class="row-centered" style="margin:0;">
-                <div class="control-group">
-                    <label class="control-label col-sm-2 col-centered" for="budget">Date *</label>
-                    <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
-                        <input id="date" name="date" placeholder="DD-MM-YYYY" type="text" value="<?php echo set_value('date', DateTime::createFromFormat("Y-m-d", $action->date)->format("d-m-Y")); ?>" class="form-control">
-                        <?php echo form_error('date')." Le format est DD-MM-YYYY"; ?>
+                <!-- Date input-->
+                <div class="form-group paddingTop">
+                    <label class="col-md-2 control-label col-md-offset-2" for="date">Date :</label> 
+                    <div class='col-md-6 input-group date' id='datetimepicker'>
+                        <input type='text' name="date" value="<?php echo set_value('date', $action->date); ?>" class="input-md form-control" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar">
+                            </span>
+                        </span>
+                        <?php echo form_error('date'); ?>
                     </div>
                 </div>
                 <div class="row" style="margin:0;">

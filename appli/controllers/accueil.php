@@ -12,6 +12,9 @@ class Accueil extends CI_Controller {
 	{
             $data = array();
             $data['user'] = $this->session->userdata('user');
+            if($this->session->flashdata('HTTP_REFERER')){
+                redirect($this->session->flashdata('HTTP_REFERER'));
+            }
             $data['nb_messages'] = $this->nb_messages;
             $data['menu'] = $this->load->view('template/menu',$data,true);            
             $this->load->view('template/header');

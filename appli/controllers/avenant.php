@@ -40,20 +40,22 @@ class Avenant extends CI_Controller {
         
         $this->form_validation->set_rules('entreprise', '"Entreprise"', 'trim|required|encode_php_tags|xss_clean');
         $this->form_validation->set_rules('objet', '"Objet"', 'trim|required|encode_php_tags|xss_clean');
-        $this->form_validation->set_rules('date', '"Date"', 'regex_match[/[0-9]{2}-[0-12]{2}-[0-9]{4}/]|trim|required|encode_php_tags|xss_clean');
-        $this->form_validation->set_rules('numero', '"Numero"', 'trim|required|encode_php_tags|xss_clean|numero_devis[' . $this->input->post('entreprise') . '.' . $this->input->post('numero') . ']');
-        $this->form_validation->set_rules('montantHT', '"Montant HT"', 'trim|numeric|required|encode_php_tags|xss_clean');
+        $this->form_validation->set_rules('date', '"Date"', 'regex_match[/^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/]|trim|required|encode_php_tags|xss_clean');
+        $this->form_validation->set_rules('numero', '"Numero"', 'trim|required|encode_php_tags|xss_clean|numero_devis[' . $this->input->post('entreprise') . '$' . $this->input->post('numero') . ']');
+        $this->form_validation->set_rules('montantHT', '"Montant HT"', 'trim|required|encode_php_tags|xss_clean');
         $this->form_validation->set_rules('tva', '"TVA"', 'trim|required|encode_php_tags|xss_clean');
         
         if ($this->form_validation->run()) {
-
-            $date = DateTime::createFromFormat("d-m-Y", $this->input->post('date'));
-
+            if($this->input->post('entreprise') == "NULL"){
+                $entreprise = NULL;
+            }else{
+                $entreprise = $this->input->post('entreprise');
+            }
             $avenant = new stdClass();
             $avenant->idMarche = $id;
-            $avenant->idEntreprise = $this->input->post('entreprise');
+            $avenant->idEntreprise = $entreprise;
             $avenant->objet = $this->input->post('objet');
-            $avenant->date = $date->format("Y-m-d");
+            $avenant->date = $this->input->post('date');
             $avenant->montantHT = $this->input->post('montantHT');
             $avenant->tva = $this->input->post('tva');
             $avenant->numero = $this->input->post('numero');
@@ -97,20 +99,22 @@ class Avenant extends CI_Controller {
         
         $this->form_validation->set_rules('entreprise', '"Entreprise"', 'trim|required|encode_php_tags|xss_clean');
         $this->form_validation->set_rules('objet', '"Objet"', 'trim|required|encode_php_tags|xss_clean');
-        $this->form_validation->set_rules('date', '"Date"', 'regex_match[/[0-9]{2}-[0-12]{2}-[0-9]{4}/]|trim|required|encode_php_tags|xss_clean');
-        $this->form_validation->set_rules('numero', '"Numero"', 'trim|required|encode_php_tags|xss_clean|numero_devis_update[' . $this->input->post('entreprise') . '.' . $this->input->post('numero') . '.' . $id . ']');
-        $this->form_validation->set_rules('montantHT', '"Montant HT"', 'trim|numeric|required|encode_php_tags|xss_clean');
+        $this->form_validation->set_rules('date', '"Date"', 'regex_match[/^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/]|trim|required|encode_php_tags|xss_clean');
+        $this->form_validation->set_rules('numero', '"Numero"', 'trim|required|encode_php_tags|xss_clean|numero_devis_update[' . $this->input->post('entreprise') . '$' . $this->input->post('numero') . '$' . $id . ']');
+        $this->form_validation->set_rules('montantHT', '"Montant HT"', 'trim|required|encode_php_tags|xss_clean');
         $this->form_validation->set_rules('tva', '"TVA"', 'trim|required|encode_php_tags|xss_clean');
         
         if ($this->form_validation->run()) {
-
-            $date = DateTime::createFromFormat("d-m-Y", $this->input->post('date'));
-
+            if($this->input->post('entreprise') == "NULL"){
+                $entreprise = NULL;
+            }else{
+                $entreprise = $this->input->post('entreprise');
+            }
             $avenant = new stdClass();
-            $avenant->idEntreprise = $this->input->post('entreprise');
+            $avenant->idEntreprise = $entreprise;
             $avenant->objet = $this->input->post('objet');
             $avenant->numero = $this->input->post('numero');
-            $avenant->date = $date->format("Y-m-d");
+            $avenant->date = $this->input->post('date');
             $avenant->montantHT = $this->input->post('montantHT');
             $avenant->tva = $this->input->post('tva');
 

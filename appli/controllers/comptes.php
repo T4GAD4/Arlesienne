@@ -116,7 +116,7 @@ class Comptes extends CI_Controller {
         $data['compte'] = $this->comptes_bancaires->getCompte($id)[0];
         $this->form_validation->set_rules('type', '"Type de compte"', 'trim|required|encode_php_tags|xss_clean');
         $this->form_validation->set_rules('banque', '"Banque"', 'trim|required|encode_php_tags|xss_clean');
-        $this->form_validation->set_rules('numero', '"Numéro du compte"', 'trim|required|update_unique[comptes_bancaires.numero.id.'.$data['compte']->id.']|numeric|encode_php_tags|xss_clean');
+        $this->form_validation->set_rules('numero', '"Numéro du compte"', 'trim|required|update_unique[comptes_bancaires$numero$id$'.$data['compte']->id.']|numeric|encode_php_tags|xss_clean');
         $this->form_validation->set_rules('montant', '"Montant actuel du compte"', 'trim|required|encode_php_tags|xss_clean');
         $this->form_validation->set_rules('decouvert', '"Découvert autorisé"', 'trim|required|encode_php_tags|xss_clean');
         

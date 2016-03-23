@@ -17,6 +17,17 @@ class Projets extends CI_Model {
         return $projets;
     }
     
+    public function getEnCours(){
+        
+        $projets = $this->db->select('*')
+                             ->from($this->table)
+                             ->where('etat','Projets en cours')
+                             ->get()
+                             ->result();
+        
+        return $projets;
+    }
+    
     public function constructeur($id = 0){
         
         if($id == 0){

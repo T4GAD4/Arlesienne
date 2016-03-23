@@ -14,6 +14,7 @@
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#contacts" aria-controls="contacts" role="tab" data-toggle="tab">Contacts</a></li>
         <li role="presentation"><a href="#entreprises" aria-controls="entreprise" role="tab" data-toggle="tab">Entreprises</a></li>
+        <li role="presentation"><a href="#clients" aria-controls="client" role="tab" data-toggle="tab">Clients</a></li>
     </ul>
 
 
@@ -31,7 +32,7 @@
                             <h4 class="panel-title">
                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $x; ?>" aria-expanded="false" aria-controls="collapseOne">
                                     <?php echo $contact->nom . ' ' . $contact->prenom; ?>
-                                    <a data-toggle="tooltip" title="" data-original-title="Actions" href="<?php echo site_url('actionsContacts/liste/' . $contact->id); ?>" style='margin-left:20px;color:' class="a-fiche-contact">
+                                    <a data-toggle="tooltip" title="" data-original-title="Suivi" href="<?php echo site_url('actionsContacts/liste/' . $contact->id); ?>" style='margin-left:20px;color:' class="a-fiche-contact">
                                         <i class='fa fa-list-ul'></i>
                                     </a>
                                     <a data-toggle="tooltip" title="" data-original-title="Rappels" href="<?php echo site_url('rappel/liste/' . $contact->id); ?>" style='margin-left:20px;color:' class="a-fiche-contact">
@@ -120,6 +121,67 @@
                 }
                 ?>
             </div>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="clients">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <?php
+                $x = 0;
+                foreach ($contacts as $contact) {
+                    if(in_array($contact->id,$clients)){
+                    $x++;
+                    ?>
+                    <div class="panel panel-default searchable" data-search="<?php echo $contact->nom . ' ' . $contact->prenom; ?>">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $x; ?>" aria-expanded="false" aria-controls="collapseOne">
+                                    <?php echo $contact->nom . ' ' . $contact->prenom; ?>
+                                    <a data-toggle="tooltip" title="" data-original-title="Suivi" href="<?php echo site_url('actionsContacts/liste/' . $contact->id); ?>" style='margin-left:20px;color:' class="a-fiche-contact">
+                                        <i class='fa fa-list-ul'></i>
+                                    </a>
+                                    <a data-toggle="tooltip" title="" data-original-title="Rappels" href="<?php echo site_url('rappel/liste/' . $contact->id); ?>" style='margin-left:20px;color:' class="a-fiche-contact">
+                                        <i class='fa fa-clock-o'></i>
+                                    </a>
+                                    <a href="<?php echo site_url('contact/modifier/' . $contact->id); ?>" style='margin-left:20px;color:' class="a-fiche-contact">
+                                        <i class='fa fa-gears'></i>
+                                    </a>
+                                    <a class="a-fiche-contact" data-toggle="tooltip" title="" data-original-title="Fiche de renseignement client" href="<?= base_url('fiche-contact/vue/'.$contact->id); ?>">
+                                        <i class="fa fa-file-text"></i>
+                                    </a>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapse<?php echo $x; ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <div class="row marginLeft">
+                                    <div class="col-md-6">
+                                        <p><?php if($contact->adresse){echo "Adresse : $contact->adresse";} ?></p>
+                                        <p><?php if($contact->cp){echo "Code postal : $contact->cp";} ?></p>
+                                        <p><?php if($contact->ville){echo "Ville : $contact->ville";} ?></p>
+                                        <p><?php if($contact->fixe){echo "Fixe : $contact->fixe";} ?></p>
+                                        <p><?php if($contact->portable){echo "Portable : $contact->portable";} ?></p>
+                                        <p><?php if($contact->email){echo "Email : <a href='$contact->email'>$contact->email</a>";} ?></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <?php 
+                                            $data = json_decode($contact->data); 
+                                            foreach($data->champs_persos as $key => $value){
+                                                echo "<p>$key : $value</p>";
+                                            }
+                                            echo '<br/><h4>Entreprises : </h4>';
+                                            foreach($contact->entreprises as $entreprise){
+                                                echo $entreprise[0]->poste.' de '.$entreprise[0]->nom.'<br/>';
+                                            }
+                                        ?>
+                                    </div> 
+                                </div>  
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                }}
+                ?>
+            </div>
+
         </div>
     </div>
 </div>

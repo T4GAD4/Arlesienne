@@ -10,7 +10,7 @@
             <div class="control-group">
                 <label class="control-label col-sm-2 col-centered" for="budget">Montant HT *</label>
                 <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
-                    <input id="budget" onblur="reloadTTC()" name="montant" type="number" value="<?php echo intval($marche->montantHT); ?>" class="form-control">
+                    <input id="budget" onblur="reloadTTC()" name="montant" type="number" value="<?php echo floatval($marche->montantHT); ?>" class="form-control">
                     <?php echo form_error('montant'); ?>
                 </div>
             </div>
@@ -18,7 +18,7 @@
             <div class="control-group">
                 <label class="control-label col-sm-2 col-centered" for="budget">TVA *</label>
                 <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
-                    <input id="budget" onblur="reloadTTC()" name="tva" step="5" type="number" value="<?php echo intval($marche->TVA); ?>" class="form-control">
+                    <input id="budget" onblur="reloadTTC()" name="tva" step="5" type="number" value="<?php echo floatval($marche->TVA); ?>" class="form-control">
                     <?php echo form_error('tva'); ?>
                 </div>
             </div>
@@ -26,7 +26,7 @@
             <div class="control-group">
                 <label class="control-label col-sm-2 col-centered" for="budget">TTC</label>
                 <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
-                    <p style="color:white;"><span id="ttc_total">0</span>&nbsp;€</p>
+                    <p style="color:white;"><span id="ttc_total"><?= format_number(calc_tva(floatval($marche->montantHT),floatval($marche->TVA))); ?></span>&nbsp;€</p>
                 </div>
             </div>
             <div class="control-group">
@@ -40,7 +40,7 @@
             <div class="control-group">
                 <label class="control-label col-sm-2 col-centered" for="adresse">Caution *</label>
                 <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
-                    <input id="adresse" name="caution" type="text" placeholder="" value="<?php echo $marche->caution; ?>" class="form-control">
+                    <input id="adresse" name="caution" type="text" placeholder="" value="<?php echo floatval($marche->caution); ?>" class="form-control">
                     <?php echo form_error('caution'); ?>
                 </div>
             </div>   

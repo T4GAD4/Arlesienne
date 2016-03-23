@@ -57,8 +57,8 @@ class Societe extends CI_Controller {
             redirect($_SERVER['HTTP_REFERER']);
         }
         $data['societe'] = $this->societes->getSociete($id)[0];
-        $this->form_validation->set_rules('nom', '"Nom"', 'trim|required|max_length[500]|encode_php_tags|xss_clean|update_unique[societes.nom.id.'. $data['societe']->id.']');
-        $this->form_validation->set_rules('siret', '"Siret"', 'trim|max_length[20]|encode_php_tags|xss_clean|numeric|update_unique[societes.siret.id.'.$data['societe']->id.']');
+        $this->form_validation->set_rules('nom', '"Nom"', 'trim|required|max_length[500]|encode_php_tags|xss_clean|update_unique[societes$nom$id$'. $data['societe']->id.']');
+        $this->form_validation->set_rules('siret', '"Siret"', 'trim|max_length[20]|encode_php_tags|xss_clean|numeric|update_unique[societes$siret$id$'.$data['societe']->id.']');
         $this->form_validation->set_rules('gerant', '"Gérant"', 'trim|max_length[500]|encode_php_tags|xss_clean');
         $this->form_validation->set_rules('date_creation', '"Date de création"', 'trim|regex_match[/^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/]|encode_php_tags|xss_clean');
         $this->form_validation->set_rules('regime_imposition', '"Régime d\'imposition"', 'trim|max_length[500]|encode_php_tags|xss_clean');
