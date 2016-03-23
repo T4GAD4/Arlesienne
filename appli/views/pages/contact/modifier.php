@@ -85,12 +85,19 @@
                 </div>
             </div>
             <!-- Select des listes de diffusions-->
+            <?php 
+                $liste = json_decode($contact->data)->liste;
+                $select = Array();
+                foreach($liste as $key => $value){
+                    array_push($select, $value);
+                }
+            ?>
             <div class="control-group">
                 <label class="control-label col-sm-2 col-centered" for="liste">Liste de diffusions</label>
                 <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
                     <select data-placeholder="Choisissez une liste de diffusion ou plusieurs..." id="select-diffusion" class="chosen-select form-control" style="width:100%;" name="liste_diffusion" multiple tabindex="4">
                         <?php foreach ($liste_diffusions as $liste_diffusion) { ?>
-                            <option value="<?php echo $liste_diffusion; ?>">
+                        <option value="<?php echo $liste_diffusion; ?>" <?php if(in_array($liste_diffusion, $select)){echo "selected";} ?>>
                                 <?php echo $liste_diffusion; ?>
                             </option>
                         <?php } ?>
@@ -152,24 +159,7 @@
 <script>
 
     $(document).ready(function () {
-
-/*On va definir les listes selectionnés par le contact*/
-
-        var liste = [];
-<?php
-foreach ($contact_liste as $key => $value) {
-?>
-        liste[<?php echo $key; ?>] = "<?php echo $value; ?>";
-<?php
-}
-?>
-        
-        $('#select-diffusion option').each(function () {
-            if ($.inArray($(this).val(), liste)) {
-                $(this).attr('selected', true);
-            }
-        });
-        
+  
         
         /*On va definir les listes selectionnés par le contact*/
 
@@ -203,7 +193,7 @@ foreach ($postes as $poste) {
             $('[name=autoentrepreneur]').bootstrapSwitch('disabled', true);
 <?php } ?>
     
-    $postes = '<?php echo json_encode($postes); ?>';
+    $postes = '<?php echo str_replace("'","\'",json_encode($postes)); ?>';  
     
 });
 </script>

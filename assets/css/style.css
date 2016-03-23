@@ -1139,3 +1139,69 @@ s{
 .detailsProjets h3{
     color:darkgrey !important;
 }
+.detailsMarches{
+    background-color:whitesmoke;
+    padding:10px;
+}
+
+.detailsMarches h3{
+    color:darkgrey !important;
+}
+
+.bgWhite{
+    background-color:whitesmoke;
+    color:black !important;
+}
+
+.black{
+    color:black;
+}
+
+.white{
+    color:white;
+}
+
+.vente_panel{
+    margin-bottom:10px;
+}
+
+.vente_panel:nth-child(odd){
+    border-right: solid 10px black;
+}
+
+.modal-content{
+    color:white !important;
+    background: url('../images/texture.png');
+}
+
+.modal-body .form-group label{
+    color:white !important;
+}
+
+.modal-header{
+    display:none;
+}
+
+.modal-footer{
+    border:none !important;
+    background: transparent !important;
+}
+
+
+
+.marginBottom{
+    margin-bottom:20px;
+}
+
+.export{
+    background-color:whitesmoke;
+    padding:10px;
+}
+
+.export h3{
+    color:darkgrey !important;
+}
+
+.export table tr td{
+    vertical-align:middle;
+}

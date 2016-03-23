@@ -8,7 +8,6 @@ class Entreprise extends CI_Controller {
     /**
      * 
      * Auteur : CAPI Aurélien
-     * Co-développeur : LEFEBVRE Anthony
      * 
      */
     
@@ -30,8 +29,8 @@ class Entreprise extends CI_Controller {
         $this->form_validation->set_rules('adresse1', '"Adresse 1"', 'trim|max_length[500]|encode_php_tags|xss_clean');
         $this->form_validation->set_rules('adresse2', '"Adresse 2"', 'trim|max_length[500]|encode_php_tags|xss_clean');
         $this->form_validation->set_rules('adresse3', '"Adresse 3"', 'trim|max_length[500]|encode_php_tags|xss_clean');
-        $this->form_validation->set_rules('codepostal', '"Code postal"', 'trim|max_length[7]|numeric|encode_php_tags|xss_clean');
-        $this->form_validation->set_rules('ville', '"Ville"', 'trim|max_length[500]|encode_php_tags|xss_clean');
+        $this->form_validation->set_rules('codepostal', '"Code postal"', 'trim|required|max_length[7]|numeric|encode_php_tags|xss_clean');
+        $this->form_validation->set_rules('ville', '"Ville"', 'trim|required|max_length[500]|encode_php_tags|xss_clean');
         $this->form_validation->set_rules('siret', '"Siret"', 'trim|min_length[14]|max_length[14]|encode_php_tags|xss_clean|numeric');
         
         if($this->form_validation->run()){
@@ -48,6 +47,15 @@ class Entreprise extends CI_Controller {
             $entreprise->data = $this->input->post('data');
             // On ajoute le contact
             $entreprise->id = $this->entreprises->creer($entreprise);
+            
+            $liaisons = json_decode($this->input->post('entreprises'));
+            $poste_entreprises = new stdClass();
+            foreach($liaisons as $liaison){
+                $poste_entreprises->idContact = $entreprise->id;
+                $poste_entreprises->idEntreprise = $liaison->id;
+                $poste_entreprises->poste = $liaison->poste;
+                $this->poste_entreprise->creer($poste_entreprises);
+            }
             
             redirect(base_url('contact'));
         }

@@ -19,7 +19,7 @@ class MY_Form_validation extends CI_Form_validation {
         $CI->form_validation->set_message('unique',
             'The %s is already being used.');
  
-        list($table, $field, $field2, $val) = explode(".", $params);
+        list($table, $field, $field2, $val) = explode("$", $params);
         $query = $CI->db->select($field)->from($table)
             ->where($field, $value)->where($field2.'` !=', $val)->limit(1)->get();
         if ($query->row()) {
@@ -37,7 +37,7 @@ class MY_Form_validation extends CI_Form_validation {
  
         
         $table = "factures";
-        list($id, $numero) = explode(".", $params);
+        list($id, $numero) = explode("$", $params);
         
         $CI->form_validation->set_message('numero_facture','Le numero de facture : '.$numero.' existe déjà pour cette société.');
         
@@ -58,7 +58,7 @@ class MY_Form_validation extends CI_Form_validation {
  
         
         $table = "avenants";
-        list($id, $numero) = explode(".", $params);
+        list($id, $numero) = explode("$", $params);
         
         $CI->form_validation->set_message('numero_devis','Le numero de devis : '.$numero.' existe déjà pour cette société.');
         
@@ -79,7 +79,7 @@ class MY_Form_validation extends CI_Form_validation {
  
         
         $table = "factures";
-        list($idEntreprise, $numero,$idFacture) = explode(".", $params);
+        list($idEntreprise, $numero,$idFacture) = explode("$", $params);
         
         $query = $CI->db->select('id')->from($table)
             ->where('idEntreprise', $idEntreprise)->where('numFacture',$numero)->where('id != '.$idFacture)->get();
@@ -99,7 +99,7 @@ class MY_Form_validation extends CI_Form_validation {
  
         
         $table = "avenants";
-        list($idEntreprise, $numero,$idAvenant) = explode(".", $params);
+        list($idEntreprise, $numero,$idAvenant) = explode("$", $params);
         
         $CI->form_validation->set_message('numero_devis_update','Le numero de devis : '.$numero.' existe déjà pour cette société.');
         
@@ -121,7 +121,7 @@ class MY_Form_validation extends CI_Form_validation {
  
         
         $table = "lots";
-        list($id, $numero) = explode(".", $params);
+        list($id, $numero) = explode("$", $params);
         
         $CI->form_validation->set_message('numero_lot','Le numero de lot : '.$numero.' existe déjà pour ce projet.');
         
@@ -142,7 +142,7 @@ class MY_Form_validation extends CI_Form_validation {
  
         
         $table = "lots";
-        list($idProjet, $numero,$idLot) = explode(".", $params);
+        list($idProjet, $numero,$idLot) = explode("$", $params);
         
         $query = $CI->db->select('id')->from($table)
             ->where('idProjet', $idProjet)->where('numero_lot',$numero)->where('id != '.$idLot)->get();

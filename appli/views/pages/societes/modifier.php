@@ -37,7 +37,7 @@
             <!-- Text input-->
             <div class="form-group paddingTop">
                 <label class="col-md-2 control-label col-md-offset-2" for="date_creation">Date de création :</label> 
-                <div class='col-md-6 input-group date' id='datetimepicker10'>
+                <div class='col-md-6 input-group date' id='datetimepicker'>
                     <input type='text' name="date_creation" value="<?php echo $societe->date_creation; ?>" class="input-md form-control" />
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar">

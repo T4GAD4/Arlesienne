@@ -64,7 +64,7 @@ $autoload['libraries'] = array('database','session','email','form_validation','r
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url','file','assets','date','breadcrumb','ajax','marches');
+$autoload['helper'] = array('url','file','assets','date','breadcrumb','ajax','marches','ventes');
 
 
 /*
@@ -109,7 +109,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('rappels','actions','avenants','lots','surfaces','fiches','secteurs','previsionnels','bug','montants_repartis','marche_programme','contacts','emailing','programmes','utilisateurs','reglements','societes','comptes_bancaires','mouvements','factures','marches','entreprises','configurations','poste_entreprise', 'projets');
+$autoload['model'] = array('ventes_pret','ventes','prixventes','ventes_lot','ventes_client','rappels','actions','avenants','lots','surfaces','fiches','secteurs','previsionnels','bug','montants_repartis','marche_programme','contacts','emailing','programmes','utilisateurs','reglements','societes','comptes_bancaires','mouvements','factures','marches','entreprises','configurations','poste_entreprise', 'projets');
 
 
 /* End of file autoload.php */

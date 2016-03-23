@@ -13,10 +13,12 @@ class Projet extends CI_Controller {
     
     public function index($nom = "") {
         //On est sur la liste des projets
+        
+        $nom = str_replace('%20',' ',$nom);
         $data = array();
         $data['nb_messages'] = $this->nb_messages;
         $data['user'] = $this->session->userdata('user');
-        $data['projets'] = $this->projets->getAll();
+        $data['projets'] = $this->projets->getAll(); 
         foreach($data['projets'] as $projet){
             $marches = $this->marches->getFromProjet($projet->id);
             $projet->nb_marche_signes = 0;
@@ -30,15 +32,17 @@ class Projet extends CI_Controller {
                 }
                 $montants_repartis = $this->montants_repartis->getFromMarches($marche->id);
                 foreach($montants_repartis as $montant_reparti){
-                    array_push($factures, $this->factures->constructeur($montant_reparti->idFacture));
+                    array_push($factures, $this->factures->constructeur($montant_reparti->idFacture)[0]);
                 }
             }
             foreach($factures as $facture){
-                $projet->total_recu = $projet->total_recu + floatval(calc_tva($facture->montantHT, $facture->tva,false))-floatval($facture->avoir);
+                $projet->total_recu = $projet->total_recu + floatval(calc_tva($facture->montantHT, $facture->tva,false) - $facture->avoir);
                 $reglements = $this->reglements->getFromFacture($facture->id);
-                foreach($reglements as $reglement){
-                    $projet->total_paye = $projet->total_paye + floatval($reglement->montant);
-                }                
+                if(sizeof($reglements) > 0){
+                    foreach($reglements as $reglement){
+                        $projet->total_paye = $projet->total_paye + floatval($reglement->montant);
+                    }   
+                }
             }
             
         }
@@ -54,6 +58,7 @@ class Projet extends CI_Controller {
         if($nom == ""){
             redirect($_SERVER['HTTP_REFERER']);
         }
+        $nom = str_replace('%20',' ',$nom);
         $data = array();
         $data['nb_messages'] = $this->nb_messages;
         $data['user'] = $this->session->userdata('user');
@@ -72,7 +77,14 @@ class Projet extends CI_Controller {
         $data['projet']->marchesAZero = 0;
         $data['projet']->devise = 0;
         $data['projet']->nonDevise = 0;
-        
+        $data['totalMarchesHT'] = 0;
+        $data['totalMarchesTTC'] = 0;
+        $data['totalAvenantsHT'] = 0;
+        $data['totalAvenantsTTC'] = 0;
+        $data['totalFacturesHT'] = 0;
+        $data['totalFacturesTTC'] = 0;
+        $data['reglements'] = 0;
+                
         $entreprises = Array();
         foreach($data['marches'] as $marche){
             //Nb avenants au projet
@@ -91,11 +103,11 @@ class Projet extends CI_Controller {
             foreach($avenants as $avenant){
                 array_push($entreprises,$avenant->idEntreprise);
                 $data['totalAvenantsHT'] = $data['totalAvenantsHT'] + floatval($avenant->montantHT);
-                $data['totalAvenantsTTC'] = $data['totalAvenantsTTC'] + calc_tva($avenant->montantHT,$avenant->TVA);
+                $data['totalAvenantsTTC'] = $data['totalAvenantsTTC'] + calc_tva($avenant->montantHT,$avenant->TVA,false);
             }
             //On va stocker le total des marchés dans un variable.
             $data['totalMarchesHT'] = $data['totalMarchesHT'] + floatval($marche->montantHT);
-            $data['totalMarchesTTC'] = $data['totalMarchesTTC'] + calc_tva($marche->montantHT,$marche->TVA);
+            $data['totalMarchesTTC'] = $data['totalMarchesTTC'] + calc_tva($marche->montantHT,$marche->TVA,false);
         }
         //Il faut ensuite récupérer les factures
         $factures = $this->factures->getFromProjet($data['projet']->id);
@@ -218,7 +230,7 @@ class Projet extends CI_Controller {
             redirect($_SERVER['HTTP_REFERER']);
         }
         $projet = $this->projets->constructeur($id)[0];
-        shell_exec('mv /home/srh/serveur/'.str_replace(' ','\ ',$projet->etat).'/'.$projet->url.' /home/srh/serveur/Projets\ terminés/');
+        shell_exec('mv "/home/srh/serveur/'.$projet->etat.'/'.$projet->url.'" "/home/srh/serveur/Projets terminés/"');
         $projet->etat = "Projets terminés";
         $this->projets->update($projet, $projet->id);
         redirect($_SERVER['HTTP_REFERER']);
@@ -229,7 +241,7 @@ class Projet extends CI_Controller {
             redirect($_SERVER['HTTP_REFERER']);
         }
         $projet = $this->projets->constructeur($id)[0];
-        shell_exec('mv /home/srh/serveur/'.str_replace(' ','\ ',$projet->etat).'/'.$projet->url.' /home/srh/serveur/Projets\ abandonnés/');
+        shell_exec('mv "/home/srh/serveur/'.$projet->etat.'/'.$projet->url.'" "/home/srh/serveur/Projets abandonnés/"');
         $projet->etat = "Projets abandonnés";
         $this->projets->update($projet, $projet->id);
         redirect($_SERVER['HTTP_REFERER']);
@@ -240,7 +252,7 @@ class Projet extends CI_Controller {
             redirect($_SERVER['HTTP_REFERER']);
         }
         $projet = $this->projets->constructeur($id)[0];
-        shell_exec('mv /home/srh/serveur/'.str_replace(' ','\ ',$projet->etat).'/'.$projet->url.' /home/srh/serveur/Projets\ à\ l\ étude/');
+        shell_exec('mv "/home/srh/serveur/'.$projet->etat.'/'.$projet->url.'" "/home/srh/serveur/Projets à l étude/"');
         $projet->etat = "Projets à l étude";
         $this->projets->update($projet, $projet->id);
         redirect($_SERVER['HTTP_REFERER']);
@@ -251,7 +263,7 @@ class Projet extends CI_Controller {
             redirect($_SERVER['HTTP_REFERER']);
         }
         $projet = $this->projets->constructeur($id)[0];
-        shell_exec('mv /home/srh/serveur/'.str_replace(' ','\ ',$projet->etat).'/'.$projet->url.' /home/srh/serveur/Projets\ en\ cours/');
+        shell_exec('mv "/home/srh/serveur/'.$projet->etat.'/'.$projet->url.'" "/home/srh/serveur/Projets en cours/"');
         $projet->etat = "Projets en cours";
         $this->projets->update($projet, $projet->id);
         redirect($_SERVER['HTTP_REFERER']);
@@ -261,7 +273,7 @@ class Projet extends CI_Controller {
         if ($nom == "") {
             redirect($_SERVER['HTTP_REFERER']);
         }
-
+        $nom = str_replace('%20',' ',$nom);
         $data = array();
         $data['old_projet'] = $this->projets->getFromUrl($nom);
         $data['secteurs'] = $this->secteurs->getAllSecteurs();
@@ -271,7 +283,7 @@ class Projet extends CI_Controller {
             redirect(base_url("projet"));
         }
 
-        $this->form_validation->set_rules('nom', '"Nom"', 'trim|required|encode_php_tags|xss_clean|update_unique[projet.nom.id.' . $data['old_projet']->id . ']');
+        $this->form_validation->set_rules('nom', '"Nom"', 'trim|required|encode_php_tags|xss_clean|update_unique[projet$nom$id$' . $data['old_projet']->id . ']');
         $this->form_validation->set_rules('budget', '"Budget"', 'trim|required|encode_php_tags|numeric|xss_clean');
         $this->form_validation->set_rules('adresse', '"Adresse"', 'trim|required|encode_php_tags|xss_clean');
         $this->form_validation->set_rules('codepostal', '"Code postal"', 'trim|required|numeric|encode_php_tags|xss_clean');
@@ -292,7 +304,7 @@ class Projet extends CI_Controller {
             $projet->cp = $this->input->post('codepostal');
             $projet->ville = $this->input->post('ville');
             $projet->commentaire = $this->input->post('commentaire');
-            $projet->url = slugify($projet->nom);
+            $projet->url = ucfirst(slugify("$projet->ville $projet->nom"));
             
             $result = $this->projets->update($projet, $data['old_projet']->id);
 

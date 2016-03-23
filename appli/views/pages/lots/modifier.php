@@ -11,7 +11,7 @@
                 <label class="control-label col-sm-3 col-centered" for="actif">Type de lot :</label>  
                 <div class="controls col-xs-12 col-sm-8 col-md-8 col-centered" style='text-align:center;'>
                     <h5 style='color:whitesmoke;'><input type="radio" value="principal" name="type" <?php if($lot->type == "principal"){echo "checked";}?>/>&nbsp;&nbsp;Lot principal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="secondaire" name="type" <?php if($lot->type == "secondaire"){echo "checked";}?>/>&nbsp;&nbsp;Lot secondaire</h5>
-                <?php echo form_error('type'); ?>
+                <?php echo form_error('type'); ?> 
                     </div>
             </div>
             <div class="row" style="margin:0;">
@@ -69,6 +69,10 @@
                                 foreach($pieces as $piece){?>
                                 <tr><td><input name="pieces_existantes[]" type="text" placeholder="" class="form-control" value="<?= $piece->piece; ?>"></td><td><input id="surface" name="surfaces_existantes[]" type="text" placeholder="" class="form-control" value="<?= $piece->taille; ?>"><input type="hidden" name="id_existants[]" value="<?= $piece->id; ?>"/></td></tr>
                                 <?php }} ?>
+                                <?php if(isset($save_surfaces)){ 
+                                foreach($save_surfaces as $piece => $surface){?>
+                                <tr><td><input name="pieces[]" type="text" placeholder="" class="form-control" value="<?= $piece; ?>"></td><td><input id="surface" name="surfaces[]" type="text" placeholder="" class="form-control" value="<?= $surface; ?>"></td></tr>
+                                <?php }} ?>
                             <tr><td><input name="pieces[]" type="text" placeholder="" class="form-control" value=""></td><td><input id="surface" name="surfaces[]" type="text" placeholder="" class="form-control" value=""></td></tr>
                             <tr><td><?php echo form_error('pieces[]');?></td><td><?php echo form_error('surfaces[]'); ?></td></tr>
                         </table>
@@ -118,6 +122,13 @@
                         <?php echo form_error('tvaprixnetvendeur'); ?>
                     </div>
                 </div>
+            </div>
+            <div class="form-group paddingTop">
+                <label class="control-label col-sm-3 col-centered" for="typefraisagence">Type de frais d'agence :</label>  
+                <div class="controls col-xs-12 col-sm-8 col-md-8 col-centered" style='text-align:center;'>
+                    <h5 style='color:whitesmoke;'><input type="radio" value="acquereur" name="typefraisagence" <?php if("acquereur" == $lot->typefraisagence){echo "checked";} ?>/>&nbsp;&nbsp;Charge acquéreur&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="vendeur" name="typefraisagence" <?php if("vendeur" == $lot->typefraisagence){echo "checked";} ?>/>&nbsp;&nbsp;Charge vendeur</h5>
+                <?php echo form_error('typefraisagence'); ?>
+                    </div>
             </div>
             <div class="row" style="margin:0;">
                 <div class="control-group">

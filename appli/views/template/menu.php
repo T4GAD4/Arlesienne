@@ -42,8 +42,4 @@
         </div><!-- /.container-fluid -->
 
     </nav>
-    <!--        Fil d'ariane-->
-    <div class="breadcrumb">
-        <?php echo set_breadcrumb(); ?>
-    </div>
 </div>

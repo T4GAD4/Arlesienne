@@ -1,7 +1,9 @@
 <div class="container">
     <br/>
     <div class="row">
-
+        <input type="button" class="btn btn-warning pull-left" onclick="history.go(-1)" value="Retour"/>
+    </div>
+    <div class="row">
         <?php echo form_open_multipart(base_url('mail/envoyer')); ?>
 
         <fieldset>
@@ -10,7 +12,7 @@
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
   <strong>Félicitations !</strong> Votre email à bien été envoyé! :D
 </div>
-            <?php }else{ ?>
+            <?php }else if(isset($email) && $email == false){ ?>
 <div class="alert alert-warning alert-dismissible" role="alert">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
   <strong>Attention !</strong> Votre email n'a pas pu être envoyé, peut-être n'avez vous pas mis de pièces jointe! :/

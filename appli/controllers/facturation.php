@@ -40,10 +40,10 @@ class Facturation extends CI_Controller {
         $data['projets'] = $this->projets->getAll();
         $this->form_validation->set_rules('entreprise', '"Entreprise"', 'trim|required|encode_php_tags|xss_clean');
         $this->form_validation->set_rules('objet', '"Objet"', 'trim|required|encode_php_tags|xss_clean');
-        $this->form_validation->set_rules('date', '"Date"', 'regex_match[/[0-9]{2}-[0-12]{2}-[0-9]{4}/]|trim|required|encode_php_tags|xss_clean');
-        $this->form_validation->set_rules('date_echeance', '"Date échéance"', 'regex_match[/[0-9]{2}-[0-12]{2}-[0-9]{4}/]|trim|required|encode_php_tags|xss_clean');
-        $this->form_validation->set_rules('numero', '"Numero"', 'trim|required|encode_php_tags|xss_clean|numero_facture[' . $this->input->post('entreprise') . '.' . $this->input->post('numero') . ']');
-        $this->form_validation->set_rules('montantHT', '"Montant HT"', 'trim|numeric|required|encode_php_tags|xss_clean');
+        $this->form_validation->set_rules('date', '"Date"', 'trim|required|encode_php_tags|xss_clean');
+        $this->form_validation->set_rules('date_echeance', '"Date échéance"', 'trim|required|encode_php_tags|xss_clean');
+        $this->form_validation->set_rules('numero', '"Numero"', 'trim|required|encode_php_tags|xss_clean|numero_facture[' . $this->input->post('entreprise') . '$' . $this->input->post('numero') . ']');
+        $this->form_validation->set_rules('montantHT', '"Montant HT"', 'trim|required|encode_php_tags|xss_clean');
         $this->form_validation->set_rules('tva', '"TVA"', 'trim|required|encode_php_tags|xss_clean');
         $this->form_validation->set_rules('rg', '"RG"', 'trim|encode_php_tags|xss_clean');
         $this->form_validation->set_rules('avoir', '"Avoir"', 'trim|encode_php_tags|numeric|xss_clean');
@@ -51,8 +51,6 @@ class Facturation extends CI_Controller {
 
         if ($this->form_validation->run()) {
 
-            $date = DateTime::createFromFormat("d-m-Y", $this->input->post('date'));
-            $date_echeance = DateTime::createFromFormat("d-m-Y", $this->input->post('date_echeance'));
             if($this->input->post('projet') == 0){
                 $projet = null;
             }else{
@@ -63,8 +61,8 @@ class Facturation extends CI_Controller {
             $facture->idProjet = $projet;
             $facture->objet = $this->input->post('objet');
             $facture->numFacture = $this->input->post('numero');
-            $facture->dateFacture = $date->format("Y-m-d");
-            $facture->dateEcheance = $date_echeance->format("Y-m-d");
+            $facture->dateFacture = $this->input->post('date');
+            $facture->dateEcheance = $this->input->post('date_echeance');
             $facture->montantHT = $this->input->post('montantHT');
             $facture->tva = $this->input->post('tva');
             $facture->rg = $this->input->post('rg');
@@ -112,30 +110,23 @@ class Facturation extends CI_Controller {
         $data['menu'] = $this->load->view('template/menu', $data, true);
         $data['entreprises'] = $this->entreprises->getAll();
         $data['facture'] = $this->factures->constructeur($id)[0];
-        $data['facture']->dateFacture = explode("-", $data['facture']->dateFacture)[2] . '-' . explode("-", $data['facture']->dateFacture)[1] . '-' . explode("-", $data['facture']->dateFacture)[0];
-        $data['facture']->dateEcheance = explode("-", $data['facture']->dateEcheance)[2] . '-' . explode("-", $data['facture']->dateEcheance)[1] . '-' . explode("-", $data['facture']->dateEcheance)[0];
-
         $this->form_validation->set_rules('entreprise', '"Entreprise"', 'trim|required|encode_php_tags|xss_clean');
         $this->form_validation->set_rules('objet', '"Objet"', 'trim|required|encode_php_tags|xss_clean');
-        $this->form_validation->set_rules('date', '"Date"', 'regex_match[/[0-9]{2}-[0-12]{2}-[0-9]{4}/]|trim|required|encode_php_tags|xss_clean');
-        $this->form_validation->set_rules('date_echeance', '"Date échéance"', 'regex_match[/[0-9]{2}-[0-12]{2}-[0-9]{4}/]|trim|required|encode_php_tags|xss_clean');
-        $this->form_validation->set_rules('numero', '"Numero"', 'trim|required|encode_php_tags|xss_clean|numero_facture_update[' . $this->input->post('entreprise') . '.' . $this->input->post('numero') . '.' . $id . ']');
+        $this->form_validation->set_rules('date', '"Date"', 'regex_match[/^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/]|trim|required|encode_php_tags|xss_clean');
+        $this->form_validation->set_rules('date_echeance', '"Date échéance"', 'regex_match[/^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/]|trim|required|encode_php_tags|xss_clean');
+        $this->form_validation->set_rules('numero', '"Numero"', 'trim|required|encode_php_tags|xss_clean|numero_facture_update[' . $this->input->post('entreprise') . '$' . $this->input->post('numero') . '$' . $id . ']');
         $this->form_validation->set_rules('montantHT', '"Montant HT"', 'trim|numeric|required|encode_php_tags|xss_clean');
         $this->form_validation->set_rules('tva', '"TVA"', 'trim|required|encode_php_tags|xss_clean');
         $this->form_validation->set_rules('rg', '"RG"', 'trim|encode_php_tags|xss_clean');
         $this->form_validation->set_rules('avoir', '"Avoir"', 'trim|encode_php_tags|numeric|xss_clean');
 
         if ($this->form_validation->run()) {
-
-            $date = DateTime::createFromFormat("d-m-Y", $this->input->post('date'));
-            $date_echeance = DateTime::createFromFormat("d-m-Y", $this->input->post('date_echeance'));
-
             $facture = new stdClass();
             $facture->idEntreprise = $this->input->post('entreprise');
             $facture->objet = $this->input->post('objet');
             $facture->numFacture = $this->input->post('numero');
-            $facture->dateFacture = $date->format("Y-m-d");
-            $facture->dateEcheance = $date_echeance->format("Y-m-d");
+            $facture->dateFacture = $this->input->post('date');
+            $facture->dateEcheance = $this->input->post('date_echeance');
             $facture->montantHT = $this->input->post('montantHT');
             $facture->tva = $this->input->post('tva');
             $facture->rg = $this->input->post('rg');
@@ -178,6 +169,30 @@ class Facturation extends CI_Controller {
         $this->load->view('template/footer');
     }
 
+    public function details_repartition($id = 0) {
+        if ($id == 0) {
+            redirect($_SERVER['HTTP_REFERER']);
+        }
+        $data = array();
+        $data['reparti'] = $this->montants_repartis->getId($id)[0];
+        
+        $this->form_validation->set_rules('montant', '"Montant"', 'trim|required|encode_php_tags|numeric|xss_clean');
+        
+        if($this->form_validation->run()){
+            $repartition = new StdClass();
+            $repartition->montant = $this->input->post('montant');
+            $this->montants_repartis->update($repartition, $data['reparti']->id);
+            
+            redirect(base_url('facturation/repartir/'.$data['reparti']->idFacture));
+        }
+        
+        $this->load->view('template/header');
+        $this->load->view('template/sidebar', $data);
+        $this->load->view('pages/facturation/repartition/modifier');
+        $this->load->view('template/footer');
+    }
+
+    
     public function regler($id = 0) {
         if ($id == 0) {
             redirect($_SERVER['HTTP_REFERER']);
@@ -212,7 +227,7 @@ class Facturation extends CI_Controller {
         $data = array();
         $data['user'] = $this->session->userdata('user');
 
-        $this->form_validation->set_rules('montant', '"Montant"', 'trim|required|encode_php_tags|numeric|xss_clean');
+        $this->form_validation->set_rules('montant', '"Montant"', 'trim|required|encode_php_tags|xss_clean');
         $this->form_validation->set_rules('compte', '"Compte"', 'trim|required|encode_php_tags|xss_clean');
 
         if ($this->form_validation->run()) {
@@ -223,7 +238,7 @@ class Facturation extends CI_Controller {
             $reglement->montant = $this->input->post('montant');
 
             $result = $this->reglements->creer($reglement);
-
+            var_dump($result);
             if ($result) {
                 redirect(base_url() . 'facturation/regler/' . $id);
             }
@@ -267,6 +282,13 @@ class Facturation extends CI_Controller {
         $this->reglements->delete($reglement);
 
         redirect(base_url('facturation/regler/' . $id));
+    }
+    
+    public function supprimer($id = 0) {
+
+        $this->factures->delete($id);
+
+        redirect($_SERVER['HTTP_REFERER']);
     }
     
     public function supprimer_repartition($id = 0, $repartition = 0) {

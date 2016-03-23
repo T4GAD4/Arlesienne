@@ -79,7 +79,7 @@ class Mail extends CI_Controller {
     public function details($id) {
         $data = array();
         $data['email'] = $this->emailing->constructeur($id)[0];
-     
+        
         //chrgement des données et appel des vues
         
         $data['user'] = $this->session->userdata('user');

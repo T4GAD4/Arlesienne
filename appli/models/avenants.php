@@ -22,6 +22,14 @@ class Avenants extends CI_Model {
         return $compte;
     }
     
+    public function getAll(){
+        $avenant = $this->db->select('*')
+                                  ->from($this->table)
+                                  ->get()
+                                  ->result();
+        return $avenant;
+    }
+    
     public function getFromMarches($id = 0){
         
         if($id == 0){
@@ -34,6 +42,21 @@ class Avenants extends CI_Model {
                                   ->get()
                                   ->result();
         return $avenant;
+    }
+    
+    public function getFromMarchesEntreprise($idMarche = 0,$idEntreprise = 0){
+        
+        if($idMarche == 0 || $idEntreprise == 0){
+            return false;
+        }
+        
+        $avenants = $this->db->select('*')
+                                  ->from($this->table)
+                                  ->where('idMarche',$idMarche)
+                                  ->where('idEntreprise',$idEntreprise)
+                                  ->get()
+                                  ->result();
+        return $avenants;
     }
     
     public function creer($data = ''){

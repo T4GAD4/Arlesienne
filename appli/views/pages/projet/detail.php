@@ -7,6 +7,18 @@
     <h3 class="hr"><?php echo $projet->nom; ?></h3>
     <br/>
     <div class='row detailsProjets'>
+        <div class='col-md-3 center'>
+            <a width="100%" height="100%" href="<?= base_url('marche/liste/' . $projet->url); ?>" data-toggle="tooltip" title="" data-original-title="Marchés du projet"><img src="<?= img_url('menu/marches.png'); ?>"/></a><br/>
+        </div>
+        <div class='col-md-3 center'>
+            <a width="100%" height="100%" href="<?= base_url('lot/liste/' . $projet->url); ?>" data-toggle="tooltip" title="" data-original-title="Lots du projet"><img src="<?= img_url('menu/lots.png'); ?>"/></a><br/>
+        </div>
+        <div class='col-md-3 center'>
+            <a width="100%" height="100%" href="<?= base_url('vente/liste/' . $projet->url); ?>" data-toggle="tooltip" title="" data-original-title="Ventes du projet"><img src="<?= img_url('menu/ventes.png'); ?>"/></a><br/>
+        </div>
+        <div class='col-md-3 center'>
+            <a width="100%" height="100%" href="<?= base_url('rapprochements_clients/vue/' . $projet->url); ?>" data-toggle="tooltip" title="" data-original-title="Rapprochement clients"><img src="<?= img_url('menu/rapprochement.png'); ?>"/></a><br/> 
+        </div>
         <div class='col-md-12 center'>
             <h3 class='hr'>Chiffres du projet</h3>
             <?php
@@ -54,9 +66,9 @@
                 </div>
                 <div class='col-md-12 center'>
                     <?php
-                    if (substr(($totalFacturesHT / $baseHT) * 100, 0, 5) < 20) {
+                    if (substr(($baseHT / $totalFacturesHT) * 100, 0, 5) < 20) {
                         $class = "progress-bar-danger";
-                    } else if (substr(($totalFacturesHT / $baseHT) * 100, 0, 5) < 50) {
+                    } else if (substr(($baseHT / $totalFacturesHT) * 100, 0, 5) < 50) {
                         $class = "progress-bar-warning";
                     } else {
                         $class = "progress-bar-success";
@@ -64,12 +76,12 @@
                     ?>
                     <p class='text-muted'>POURCENTAGE</p>
                     <div class="progress">
-                        <div class="progress-bar <?= $class; ?> progress-bar-striped active" role="progressbar" aria-valuenow="<?= substr(($totalFacturesHT / $baseHT) * 100, 0, 5) ?>"
-                             aria-valuemin="0" aria-valuemax="100" style="width:<?= substr(($totalFacturesHT / $baseHT) * 100, 0, 5) ?>%;text-align:center;">
-                            <?= substr(($totalFacturesHT / $baseHT) * 100, 0, 5) ?> %
+                        <div class="progress-bar <?= $class; ?> progress-bar-striped active" role="progressbar" aria-valuenow="<?= substr(($baseHT / $totalFacturesHT) * 100, 0, 5) ?>"
+                             aria-valuemin="0" aria-valuemax="100" style="width:<?= substr(($baseHT / $totalFacturesHT) * 100, 0, 5) ?>%;text-align:center;">
+                            <?= substr(($baseHT / $totalFacturesHT) * 100, 0, 5) ?> %
                         </div>
                     </div>
-                    <p class='text-muted'>Sommes des montants TTC des factures recus / Total HT du projet</p>
+                    <p class='text-muted'>Total HT du projet / Total HT des factures recues</p>
                 </div>
             </div>
             <div class='row'>
@@ -130,9 +142,3 @@
         </div>  
     </div>
 </div>
-
-<div class="detail-projet-menu">
-    <a width="100%" height="100%" href="<?= base_url('marche/liste/' . $projet->url); ?>" data-toggle="tooltip" title="" data-original-title="Marchés du projet"><img src="<?= img_url('menu/marches.png'); ?>"/></a><br/>
-    <a width="100%" height="100%" href="<?= base_url('lot/liste/' . $projet->url); ?>" data-toggle="tooltip" title="" data-original-title="Lots du projet"><img src="<?= img_url('menu/lots.png'); ?>"/></a><br/>
-    <a width="100%" height="100%" href="<?= base_url('rapprochements_clients/vue/' . $projet->url); ?>" data-toggle="tooltip" title="" data-original-title="Rapprochement clients"><img src="<?= img_url('menu/rapprochement.png'); ?>"/></a><br/>
-</div>   

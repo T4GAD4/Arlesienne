@@ -7,11 +7,16 @@
                 Créer une action pour le contact <?= $contact->nom . ' ' . $contact->prenom; ?> : 
             </legend>
             <div class="row-centered" style="margin:0;">
-                <div class="control-group">
-                    <label class="control-label col-sm-2 col-centered" for="budget">Date *</label>
-                    <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
-                        <input id="date" name="date" placeholder="DD-MM-YYYY" type="text" value="<?php echo set_value('date', Date("d-m-Y")); ?>" class="form-control">
-                        <?php echo form_error('date')." Le format est DD-MM-YYYY"; ?>
+                <!-- Date input-->
+                <div class="form-group paddingTop">
+                    <label class="col-md-2 control-label col-md-offset-2" for="date">Date :</label> 
+                    <div class='col-md-6 input-group date' id='datetimepicker'>
+                        <input type='text' name="date" value="<?php echo set_value('date', Date('Y-m-d')); ?>" class="input-md form-control" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar">
+                            </span>
+                        </span>
+                        <?php echo form_error('date'); ?>
                     </div>
                 </div>
                 <div class="row" style="margin:0;">
@@ -34,11 +39,23 @@
                         <input id="rappel" name="rappel" placeholder="DD-MM-YYYY" value='true' type="checkbox" class="form-control">
                     </div>
                 </div>
+                <!-- Date input-->
+                <div class="form-group paddingTop">
+                    <label class="col-md-2 control-label col-md-offset-2" for="rappel_date">Date :</label> 
+                    <div class='col-md-6 input-group date' id='datetimepicker1'>
+                        <input type='text' name="rappel_date" value="<?php echo set_value('rappel_date'); ?>" class="input-md form-control" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar">
+                            </span>
+                        </span>
+                        <?php echo form_error('rappel_date'); ?>
+                    </div>
+                </div>
                 <div class="control-group">
-                    <label class="control-label col-sm-2 col-centered" for="budget">Date *</label>
+                    <label class="control-label col-sm-2 col-centered" for="rappel_heure">Heure *</label>
                     <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
-                        <input id="date" name="rappel_date" placeholder="DD-MM-YYYY" type="text" value="<?php echo set_value('rappel_date', Date("d-m-Y")); ?>" class="form-control">
-                        <?php echo form_error('rappel_date')." Le format est DD-MM-YYYY"; ?>
+                        <input id="heure" name="rappel_heure" placeholder="10:20" type="text" value="<?php echo set_value('rappel_heure'); ?>" class="form-control">
+                        <?php echo form_error('rappel_heure'); ?>
                     </div>
                 </div>
                 <div class="row" style="margin:0;">

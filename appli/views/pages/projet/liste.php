@@ -45,7 +45,7 @@
                                 </div>
                                 <div class="projet-body">
                                     <p><span style="font-size : 18px;"><?php echo $projet->adresse; ?> <?php echo $projet->cp; ?> <?php echo $projet->ville; ?>&nbsp;&nbsp;&nbsp;<a href="http://www.maps.google.fr/maps?f=q&hl=fr&q=<?php echo str_replace(' ','+',$projet->adresse); ?>+<?php echo str_replace(' ','+',$projet->cp); ?>+<?php echo str_replace(' ','+',$projet->ville); ?>" target="_blank"><i class="fa fa-location-arrow"></i></a></span></p>
-                                    <div class="row projet-details">
+                                    <!--<div class="row projet-details">
                                         <div class="col-md-6 detail-left">
                                             <p>Budget global : <?php echo number_format($projet->budget,2,'.',' '); ?> €</p>
                                             <p>Marchés signés : <?php echo $projet->nb_marche_signes; ?></p>
@@ -57,7 +57,7 @@
                                             <p>Lots sous compromis : </p>
                                             <p>Lots actés : </p>
                                         </div>
-                                    </div>
+                                    </div>-->
                                     <div class="row projet-aide">
                                         <div class="col-md-12 text-left">
                                             Changer l'état du projet :
@@ -65,10 +65,10 @@
                                     </div>
                                     <div class="row projet-btn">
                                         <div class="col-md-6 text-left">
-                                            <a href="<?php if($etat != "Projets en cours"){echo base_url("projet/en_cours/$projet->id");} ?>" class="btn small text-left <?php if($etat == "Projets en cours"){ echo "active"; } ?>">Projet en cours</a>
-                                            <a href="<?php if($etat != "Projets terminés"){echo base_url("projet/termine/$projet->id");} ?>" class="btn small text-left <?php if($etat == "Projets terminés"){ echo "active"; } ?>">Projet terminé</a>
-                                            <a href="<?php if($etat != "Projets abandonnés"){echo base_url("projet/abandonne/$projet->id");} ?>" class="btn small text-left <?php if($etat == "Projets abandonnés"){ echo "active"; } ?>">Projet abandonné</a>
-                                            <a href="<?php if($etat != "Projets à l étude"){echo base_url("projet/etude/$projet->id");} ?>" class="btn small text-left <?php if($etat == "Projets à l étude"){ echo "active"; } ?>">Projet à l'étude</a>
+                                            <a onclick='validate("<?php if($etat != "Projets en cours"){echo base_url("projet/en_cours/$projet->id");} ?>");' class="btn small text-left <?php if($etat == "Projets en cours"){ echo "active"; } ?>">Projet en cours</a>
+                                            <a onclick='validate("<?php if($etat != "Projets terminés"){echo base_url("projet/termine/$projet->id");} ?>");' class="btn small text-left <?php if($etat == "Projets terminés"){ echo "active"; } ?>">Projet terminé</a>
+                                            <a onclick='validate("<?php if($etat != "Projets abandonnés"){echo base_url("projet/abandonne/$projet->id");} ?>");' class="btn small text-left <?php if($etat == "Projets abandonnés"){ echo "active"; } ?>">Projet abandonné</a>
+                                            <a onclick='validate("<?php if($etat != "Projets à l étude"){echo base_url("projet/etude/$projet->id");} ?>");' class="btn small text-left <?php if($etat == "Projets à l étude"){ echo "active"; } ?>">Projet à l'étude</a>
                                         </div>
                                         <div class="col-md-6 text-right">
                                             <a href="<?php echo base_url("projet/modifier/$projet->url"); ?>" class="btn">Modifier</a>

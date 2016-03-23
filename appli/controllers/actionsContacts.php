@@ -39,18 +39,19 @@ class ActionsContacts extends CI_Controller {
         $data['menu'] = $this->load->view('template/menu',$data,true);            
         $data['contact'] = $this->contacts->getId($id)[0];     
         
-        $this->form_validation->set_rules('date', '"Date"', 'regex_match[/[0-9]{2}-[0-12]{2}-[0-9]{4}/]|trim|required|encode_php_tags|xss_clean');
+        $this->form_validation->set_rules('date', '"Date"', 'regex_match[/^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/]|trim|required|encode_php_tags|xss_clean');
         $this->form_validation->set_rules('commentaire', '"Commentaire"', 'trim|required|encode_php_tags|xss_clean');
         
         if($this->input->post('rappel') == "true"){
-            $this->form_validation->set_rules('rappel_date', '"Date"', 'regex_match[/[0-9]{2}-[0-12]{2}-[0-9]{4}/]|trim|required|encode_php_tags|xss_clean');
+            $this->form_validation->set_rules('rappel_date', '"Date"', 'regex_match[/^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/]|trim|required|encode_php_tags|xss_clean');
+            $this->form_validation->set_rules('rappel_heure', '"Heure"', 'trim|encode_php_tags|xss_clean');
             $this->form_validation->set_rules('rappel_commentaire', '"Commentaire"', 'trim|required|encode_php_tags|xss_clean');
         }
         
         if($this->form_validation->run()){
             $action = new StdClass();
             $action->idContact = $id;
-            $action->date = DateTime::createFromFormat("d-m-Y", $this->input->post('date'))->format("Y-m-d");
+            $action->date = $this->input->post('date');
             $action->utilisateur = strtoupper($data['user']->nom).' '.ucfirst($data['user']->prenom);
             $action->commentaire = $this->input->post('commentaire');
             
@@ -59,7 +60,8 @@ class ActionsContacts extends CI_Controller {
             if($this->input->post('rappel') == "true"){
                 $rappel = new StdClass();
                 $rappel->idContact = $id;
-                $rappel->date = DateTime::createFromFormat("d-m-Y", $this->input->post('rappel_date'))->format("Y-m-d");
+                $rappel->heure = $this->input->post('rappel_heure');
+                $rappel->date = $this->input->post('rappel_date');
                 $rappel->utilisateur = strtoupper($data['user']->nom).' '.ucfirst($data['user']->prenom);
                 $rappel->commentaire = $this->input->post('rappel_commentaire');
                 
@@ -86,12 +88,12 @@ class ActionsContacts extends CI_Controller {
         $data['menu'] = $this->load->view('template/menu',$data,true);            
         $data['action'] = $this->actions->getId($id)[0];     
         
-        $this->form_validation->set_rules('date', '"Date"', 'regex_match[/[0-9]{2}-[0-12]{2}-[0-9]{4}/]|trim|required|encode_php_tags|xss_clean');
+        $this->form_validation->set_rules('date', '"Date"', 'regex_match[/^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/]|trim|required|encode_php_tags|xss_clean');
         $this->form_validation->set_rules('commentaire', '"Commentaire"', 'trim|required|encode_php_tags|xss_clean');
                 
         if($this->form_validation->run()){
             $action = new StdClass();
-            $action->date = DateTime::createFromFormat("d-m-Y", $this->input->post('date'))->format("Y-m-d");
+            $action->date = $this->input->post('date');
             $action->commentaire = $this->input->post('commentaire');
             
             $this->actions->update($action,$id);

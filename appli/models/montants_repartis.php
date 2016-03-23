@@ -121,4 +121,34 @@ class Montants_repartis extends CI_Model {
         return $regle;
     }
     
+    public function countFromAvenant($id = 0) {
+
+        if ($id == 0) {
+            return false;
+        }
+
+        $regle = $this->db->select('sum(montant) as montant')
+                ->from($this->table)
+                ->where('idAvenant', $id)
+                ->get()
+                ->result();
+
+        return $regle;
+    }
+    
+    public function countNbFacturesFromAvenant($id = 0) {
+
+        if ($id == 0) {
+            return false;
+        }
+
+        $regle = $this->db->select('count(*) as nombre')
+                ->from($this->table)
+                ->where('idAvenant', $id)
+                ->get()
+                ->result();
+
+        return $regle;
+    }
+    
 }

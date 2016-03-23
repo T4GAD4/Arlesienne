@@ -37,6 +37,20 @@ class Lots extends CI_Model {
         return $lot;
     }
     
+    public function getFromProjet($id = 0){
+        
+        if($id == 0){
+            return false;
+        }
+        
+        $lot = $this->db->select('*')
+                                  ->from($this->table)
+                                  ->where('idProjet',$id)
+                                  ->get()
+                                  ->result();
+        return $lot;
+    }
+    
     public function countAllFromProjet($id = 0){
         
         if($id == 0){

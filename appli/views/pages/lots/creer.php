@@ -104,7 +104,7 @@
             <div class="form-group paddingTop">
                 <label class="control-label col-sm-3 col-centered" for="typeTVA">Type TVA :</label>  
                 <div class="controls col-xs-12 col-sm-8 col-md-8 col-centered" style='text-align:center;'>
-                    <h5 style='color:whitesmoke;'><input type="radio" value="montant" name="typeTVA"/>&nbsp;&nbsp;Montant&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="pourcentage" name="typeTVA"/>&nbsp;&nbsp;Pourcentage</h5>
+                    <h5 style='color:whitesmoke;'><input type="radio" value="montant" name="typeTVA" <?php if(set_value('typeTVA') == "montant"){echo "checked";} ?>/>&nbsp;&nbsp;Montant&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="pourcentage" name="typeTVA" <?php if(set_value('typeTVA') == "pourcentage"){echo "checked";} ?>/>&nbsp;&nbsp;Pourcentage</h5>
                 <?php echo form_error('typeTVA'); ?>
                     </div>
             </div>
@@ -116,6 +116,13 @@
                         <?php echo form_error('tvaprixnetvendeur'); ?>
                     </div>
                 </div>
+            </div>
+            <div class="form-group paddingTop">
+                <label class="control-label col-sm-3 col-centered" for="typefraisagence">Type de frais d'agence :</label>  
+                <div class="controls col-xs-12 col-sm-8 col-md-8 col-centered" style='text-align:center;'>
+                    <h5 style='color:whitesmoke;'><input type="radio" value="acquereur" name="typefraisagence" <?php if(set_value('typefraisagence') == "acquereur"){echo "checked";} ?>/>&nbsp;&nbsp;Charge acquéreur&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="vendeur" name="typefraisagence" <?php if(set_value('typefraisagence') == "vendeur"){echo "checked";} ?>/>&nbsp;&nbsp;Charge vendeur</h5>
+                <?php echo form_error('typefraisagence'); ?>
+                    </div>
             </div>
             <div class="row" style="margin:0;">
                 <div class="control-group">

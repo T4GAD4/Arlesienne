@@ -42,18 +42,28 @@
                     <?php echo form_error('objet'); ?>
                 </div>
             </div>
-            <div class="control-group">
-                <label class="control-label col-sm-2 col-centered" for="budget">Date *</label>
-                <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
-                    <input id="budget" name="date" placeholder="DD-MM-YYYY" type="text" value="<?php echo set_value('date'); ?>" class="form-control">
-                    <?php echo form_error('date')." Le format est DD-MM-YYYY"; ?>
+            <!-- Date input-->
+            <div class="form-group paddingTop">
+                <label class="col-md-2 control-label col-md-offset-2" for="date">Date :</label> 
+                <div class='col-md-6 input-group date' id='datetimepicker'>
+                    <input type='text' name="date" value="<?php echo set_value('date', Date('Y-m-d')); ?>" class="input-md form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar">
+                        </span>
+                    </span>
+                    <?php echo form_error('date'); ?>
                 </div>
             </div>
-            <div class="control-group">
-                <label class="control-label col-sm-2 col-centered" for="budget">Date échéance *</label>
-                <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
-                    <input id="budget" name="date_echeance" placeholder="DD-MM-YYYY" type="text" value="<?php echo set_value('date_echeance'); ?>" class="form-control">
-                    <?php echo form_error('date_echeance')." Le format est DD-MM-YYYY"; ?>
+            <!-- Date input-->
+            <div class="form-group paddingTop">
+                <label class="col-md-2 control-label col-md-offset-2" for="date_echeance">Date échéance :</label> 
+                <div class='col-md-6 input-group date' id='datetimepicker1'>
+                    <input type='text' name="date_echeance" value="<?php echo set_value('date_echeance', Date('Y-m-d')); ?>" class="input-md form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar">
+                        </span>
+                    </span>
+                    <?php echo form_error('date_echeance'); ?>
                 </div>
             </div>
             <div class="control-group">
@@ -63,20 +73,27 @@
                     <?php echo form_error('numero'); ?>
                 </div>
             </div>
+            <p style="color:red;"><b>!ATTENTION! Les virgules ne sont pas acceptées pour les décimales. UNIQUEMENT UN POINT</b></p>
             <h3>Montant : </h3>
             <!-- Number input-->
             <div class="control-group">
                 <label class="control-label col-sm-2 col-centered" for="budget">Montant HT *</label>
                 <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
-                    <input id="budget" name="montantHT" type="number" value="<?php echo set_value('montantHT'); ?>" class="form-control">
+                    <input id="budget" name="montantHT" type="text" value="<?php echo set_value('montantHT'); ?>" class="form-control">
                     <?php echo form_error('montantHT'); ?>
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label col-sm-2 col-centered" for="budget">TVA *</label>
                 <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
-                    <input id="budget" name="tva" type="number" value="<?php echo set_value('tva'); ?>" class="form-control">
+                    <input id="budget" name="tva" type="number" value="<?php echo set_value('tva',20); ?>" class="form-control">
                     <?php echo form_error('tva'); ?>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label col-sm-2 col-centered" for="budget">Montant TTC</label>
+                <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
+                    <input id="ttc" type="text" class="form-control">
                 </div>
             </div>
             <h3>Options : </h3>
@@ -95,6 +112,9 @@
                     <?php echo form_error('avoir'); ?>
                 </div>
             </div>
+            <legend>
+                Créer le réglement ?
+            </legend>
             <div class="control-group">
                 <label class="control-label col-sm-2 col-centered" for="budget">Créer le réglement automatique?</label>
                 <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
@@ -104,7 +124,7 @@
             <div class="control-group">
                 <label class="control-label col-sm-2 col-centered" for="budget">Société</label>
                 <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
-                    <select class="form-control" name="societe" id="societeliste">
+                    <select class="chosen-select" name="societe" id="societeliste">
                         <?php foreach ($societes as $societe) { ?>
                             <option value="<?php echo $societe->id; ?>"><?php echo $societe->nom; ?></option>
                         <?php } ?>
@@ -114,11 +134,56 @@
             <div class="control-group">
                 <label class="control-label col-sm-2 col-centered" for="budget">Compte</label>
                 <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
-                    <select class="form-control" name="compte">
+                    <select class="chosen-select" name="compte">
                         <?php foreach ($comptes as $compte) { ?>
                             <option value="<?php echo $compte->id; ?>"><?php echo $compte->banque . " | " . $compte->numero; ?></option>
                         <?php } ?>
                     </select>
+                </div>
+            </div>
+            <legend>
+                Créer l'avenant ?
+            </legend>
+            <div class="control-group">
+                <label class="control-label col-sm-2 col-centered" for="avenant_automatique">Créer l'avenant automatique?</label>
+                <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
+                    <input type="checkbox" class="form-control" name="avenant_automatique"/>
+                </div>
+            </div>
+            <!-- TypeAhead input-->
+            <div class="control-group">
+                <label class="control-label col-sm-2 col-centered" for="budget">Marché *</label>
+                <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
+                    <select data-placeholder="Choisissez un marché" name="marché" id="select-entreprise" class="chosen-select" style="width:100%;" tabindex="4">
+                        
+                    </select>
+                    <?php echo form_error('marche'); ?>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label col-sm-2 col-centered" for="num_devis">Numéro de devis</label>
+                <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
+                    <input id="num_devis" name="num_devis" type="number" value="<?php echo set_value('num_devis'); ?>" class="form-control">
+                    <?php echo form_error('num_devis'); ?>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label col-sm-2 col-centered" for="objet_devis">Objet</label>
+                <div class="controls col-xs-12 col-sm-8 col-md-6 col-centered">
+                    <input id="objet_devis" name="objet_devis" type="text" value="<?php echo set_value('objet_devis'); ?>" class="form-control">
+                    <?php echo form_error('objet_devis'); ?>
+                </div>
+            </div>
+            <!-- Date input-->
+            <div class="form-group paddingTop">
+                <label class="col-md-2 control-label col-md-offset-2" for="date_devis">Date :</label> 
+                <div class='col-md-6 input-group date' id='datetimepicker2'>
+                    <input type='text' name="date_devis" value="<?php echo set_value('date_devis', Date('Y-m-d')); ?>" class="input-md form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar">
+                        </span>
+                    </span>
+                    <?php echo form_error('date_devis'); ?>
                 </div>
             </div>
             <div class="col-xs-12">
@@ -138,6 +203,26 @@
             $('[name=bootstrapswitch-rg]').bootstrapSwitch('state', false);
             $('#rg').val("false");
 <?php } ?>
+    
+        $('#ttc').on('blur', function(){
+            var ttc = $(this).val();
+            var tva = $('[name=tva]').val();
+            if(ttc != ''){
+                var ht = ttc / (1 + (tva/100));
+                ht = ht.toFixed(2);
+                $('[name=montantHT]').val(ht);
+            }
+        });
+        
+        $('[name=tva]').on('blur', function(){
+            var tva = $(this).val();
+            var ttc = $('#ttc').val();
+            if(ttc != ''){
+                var ht = ttc / (1 + (tva/100));
+                ht = ht.toFixed(2);
+                $('[name=montantHT]').val(ht);
+            }
+        });
     });
 </script>
 

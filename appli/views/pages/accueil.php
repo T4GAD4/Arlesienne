@@ -34,7 +34,7 @@ $(document).ready(function(){
         var nb_messages = <?php echo $nb_messages ?>;
         if(nb_messages != 0){
             $('.bottom-left').notify({
-                message:{text :"Vous avez "+nb_messages+" messages non lus! "}
+                message:{text :"Vous avez "+nb_messages+" message(s) non lu(s)! "}
             }).show();
         }
     }

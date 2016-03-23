@@ -34,6 +34,16 @@ class Marches extends CI_Model {
         return $this->db->insert_id();
     }
     
+    public function getAll(){
+        $marches = $this->db->select('*')
+                             ->from($this->table)
+                             ->order_by('nom ASC')
+                             ->get()
+                             ->result();
+        
+        return $marches;
+    }
+    
     public function getFromProjet($id = 0){
         
         if($id == 0){
@@ -43,6 +53,23 @@ class Marches extends CI_Model {
         $marches = $this->db->select('*')
                              ->from($this->table)
                              ->where('idProjet',$id)
+                             ->order_by('nom ASC')
+                             ->get()
+                             ->result();
+        
+        return $marches;
+    }
+    
+    public function getFromProjetAndCategorie($id = 0,$categorie = ""){
+        
+        if($id == 0 && $categorie == ""){
+            return false;
+        }
+        
+        $marches = $this->db->select('*')
+                             ->from($this->table)
+                             ->where('idProjet',$id)
+                             ->where('categorie',$categorie)
                              ->order_by('nom ASC')
                              ->get()
                              ->result();

@@ -17,6 +17,11 @@ class Contact extends CI_Controller {
         $data['nb_messages'] = $this->nb_messages;
         $data['user'] = $this->session->userdata('user');
         $data['contacts'] = $this->contacts->getAll();
+        $clients = $this->ventes_client->getAllClients();
+        $data['clients'] = Array();
+        foreach($clients as $client){
+            array_push($data['clients'],$client->idClient);
+        }
         foreach ($data['contacts'] as $contact){
             $temp = array();
             $poste_entreprises = $this->poste_entreprise->getId($contact->id);            
@@ -133,7 +138,6 @@ class Contact extends CI_Controller {
             $contact->portable = $this->input->post('portable');
             $contact->email = $this->input->post('email');
             $contact->data = $this->input->post('data');
-            
             // On ajoute le contact
             $this->contacts->update($contact,$id);
                     
@@ -156,7 +160,7 @@ class Contact extends CI_Controller {
         //On recupere le contact
         $data['contact'] = $this->contacts->getId($id)[0];
         //On recuperer les postes du contact
-        $data['postes'] = $this->poste_entreprise->getId($data['contact']->id);
+        $data['postes'] = $this->poste_entreprise->getId($data['contact']->id); 
         //Pour chaque poste, on va récupérer l'entreprise
         if($data['postes'] != null){
             foreach($data['postes'] as $poste){

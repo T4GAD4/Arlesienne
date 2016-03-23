@@ -28,11 +28,11 @@ if (!function_exists('creer_marches')) {
 
 if (!function_exists('calc_tva')) {
 
-    function calc_tva($montant,$tva,$format) {
+    function calc_tva($montant,$tva,$format = false) {
         if($format == true){
-            return format_number(intval($montant)+((intval($montant)*intval($tva))/100));
+            return format_number(floatval($montant)*(1+ (floatval($tva)/100)));
         }else{
-            return intval($montant)+((intval($montant)*intval($tva))/100);
+            return floatval($montant)*(1+ (floatval($tva)/100));
         }
     }
 }
@@ -40,6 +40,6 @@ if (!function_exists('calc_tva')) {
 if (!function_exists('format_number')) {
 
     function format_number($montant) {
-        return "<b>".number_format($montant,2,"."," ")."</b>";
+        return number_format($montant,2,","," ");
     }
 }

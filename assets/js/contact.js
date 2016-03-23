@@ -1,6 +1,12 @@
 
 window.addEventListener("load", function()
 {
+    
+    $(".remove-champs").on("click", function()
+    {
+        console.log($(this));
+            $(this).parent().remove();
+    });
 	if($(".chosen-select").length > 0)
 	{
 		var templateEntreprise = '<div class="col-md-5 col-md-offset-4 liste">\
@@ -104,6 +110,7 @@ window.addEventListener("load", function()
 			
 			$(".remove-champs").on("click", function()
 			{
+                            console.log($(this));
 				$(this).parent().remove();
 			});
 		});

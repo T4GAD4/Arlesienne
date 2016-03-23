@@ -33,7 +33,18 @@ class Entreprises extends CI_Model {
     }
     
     
-     public function creer($data = ''){
+    public function getMetiers(){
+        
+        $metiers = $this->db->select('corps_metier')
+                             ->from($this->table)
+                             ->get()
+                             ->result();
+        
+        return $metiers;
+    }
+    
+    
+    public function creer($data = ''){
         
         if($data == ''){
             return false;

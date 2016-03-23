@@ -39,14 +39,16 @@ class Rappel extends CI_Controller {
         $data['menu'] = $this->load->view('template/menu',$data,true);            
         $data['contact'] = $this->contacts->getId($id)[0];     
         
-        $this->form_validation->set_rules('date', '"Date"', 'regex_match[/[0-9]{2}-[0-12]{2}-[0-9]{4}/]|trim|required|encode_php_tags|xss_clean');
+        $this->form_validation->set_rules('date', '"Date"', 'regex_match[/^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/]|trim|required|encode_php_tags|xss_clean');
+        $this->form_validation->set_rules('heure', '"Heure"', 'trim|encode_php_tags|xss_clean');
         $this->form_validation->set_rules('commentaire', '"Commentaire"', 'trim|required|encode_php_tags|xss_clean');
         
         if($this->form_validation->run()){
             
             $rappel = new StdClass();
             $rappel->idContact = $id;
-            $rappel->date = DateTime::createFromFormat("d-m-Y", $this->input->post('date'))->format("Y-m-d");
+            $rappel->heure = $this->input->post('heure');
+            $rappel->date = $this->input->post('date');
             $rappel->utilisateur = strtoupper($data['user']->nom).' '.ucfirst($data['user']->prenom);
             $rappel->commentaire = $this->input->post('commentaire');
 
@@ -72,13 +74,15 @@ class Rappel extends CI_Controller {
         $data['menu'] = $this->load->view('template/menu',$data,true);            
         $data['rappel'] = $this->rappels->getId($id)[0];     
         
-        $this->form_validation->set_rules('date', '"Date"', 'regex_match[/[0-9]{2}-[0-12]{2}-[0-9]{4}/]|trim|required|encode_php_tags|xss_clean');
+        $this->form_validation->set_rules('date', '"Date"', 'regex_match[/^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/]|trim|required|encode_php_tags|xss_clean');
+        $this->form_validation->set_rules('heure', '"Heure"', 'trim|encode_php_tags|xss_clean');
         $this->form_validation->set_rules('commentaire', '"Commentaire"', 'trim|required|encode_php_tags|xss_clean');
         
         if($this->form_validation->run()){
             
             $rappel = new StdClass();
-            $rappel->date = DateTime::createFromFormat("d-m-Y", $this->input->post('date'))->format("Y-m-d");
+            $rappel->heure = $this->input->post('heure');
+            $rappel->date = $this->input->post('date');
             $rappel->utilisateur = strtoupper($data['user']->nom).' '.ucfirst($data['user']->prenom);
             $rappel->commentaire = $this->input->post('commentaire');
 
